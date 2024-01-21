@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:muslim_guide/screens/register_screen.dart';
+import 'package:muslim_guide/screens/login_screen.dart';
 
 class MuslimGuide extends StatefulWidget {
   const MuslimGuide({super.key});
@@ -13,7 +13,8 @@ class MuslimGuide extends StatefulWidget {
 class _MuslimGuideState extends State<MuslimGuide> {
   var activeScreen = 'login-screen';
 
-  void switchScreen(String switchingScreen) { //maybe change the parameter or method
+  void switchScreen(String switchingScreen) {
+    //maybe change the parameter or method
     setState(() {
       activeScreen = switchingScreen;
     });
@@ -21,9 +22,9 @@ class _MuslimGuideState extends State<MuslimGuide> {
 
   @override
   Widget build(context) {
-    return const MaterialApp(
+    return MaterialApp(
       home: Scaffold(
-        body: RegisterScreen(),
+        body: LoginScreen(),
       ),
     );
   }
