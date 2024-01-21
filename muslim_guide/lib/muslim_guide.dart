@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:muslim_guide/screens/register_screen.dart';
 
 class MuslimGuide extends StatefulWidget {
   const MuslimGuide({super.key});
@@ -20,6 +21,10 @@ class _MuslimGuideState extends State<MuslimGuide> {
 
   @override
   Widget build(context) {
-    return ;
+    return const MaterialApp(
+      home: Scaffold(
+        body: RegisterScreen(),
+      ),
+    );
   }
 }
