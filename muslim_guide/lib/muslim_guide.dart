@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:muslim_guide/screens/home_screen.dart';
 import 'package:muslim_guide/screens/register_screen.dart';
 
 class MuslimGuide extends StatefulWidget {
@@ -11,9 +12,9 @@ class MuslimGuide extends StatefulWidget {
 }
 
 class _MuslimGuideState extends State<MuslimGuide> {
-  var activeScreen = 'login-screen';
+  int activeScreen = 1;
 
-  void switchScreen(String switchingScreen) {
+  void switchScreen(int switchingScreen) {
     //maybe change the parameter or method
     setState(() {
       activeScreen = switchingScreen;
@@ -24,7 +25,33 @@ class _MuslimGuideState extends State<MuslimGuide> {
   Widget build(context) {
     return MaterialApp(
       home: Scaffold(
-        body: RegisterScreen(),
+        body: HomeScreen(),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          selectedFontSize: 12,
+          unselectedFontSize: 12,
+          // Customize height
+          iconSize: 24,
+          onTap: (int index) {
+            setState(() {
+              activeScreen = index;
+            });
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_filled),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.bar_chart), label: 'Performence'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.calendar_month), label: 'Schedule'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.book_sharp), label: 'Quran'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.settings), label: 'Setting'),
+          ],
+        ),
       ),
     );
   }
