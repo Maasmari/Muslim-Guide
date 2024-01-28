@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-<<<<<<< Updated upstream
 import 'package:muslim_guide/screens/home_screen.dart';
-import 'package:muslim_guide/screens/register_screen.dart';
-=======
 import 'package:muslim_guide/screens/schedule_screen.dart';
->>>>>>> Stashed changes
 
 class MuslimGuide extends StatefulWidget {
   const MuslimGuide({super.key});
@@ -29,8 +25,7 @@ class _MuslimGuideState extends State<MuslimGuide> {
   Widget build(context) {
     return MaterialApp(
       home: Scaffold(
-<<<<<<< Updated upstream
-        body: HomeScreen(),
+        body: ScheduleScreen(),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           selectedFontSize: 12,
@@ -57,9 +52,6 @@ class _MuslimGuideState extends State<MuslimGuide> {
                 icon: Icon(Icons.settings), label: 'Setting'),
           ],
         ),
-=======
-        body: ScheduleScreen(),
->>>>>>> Stashed changes
       ),
     );
   }
