@@ -9,9 +9,6 @@ const uuid = Uuid();
 enum TaskType { optional, compulsory }
 
 enum TaskFrequency { daily, weekly, monthly, yearly, other, once }
-enum TaskType { optional, compulsory }
-
-enum TaskFrequency { daily, weekly, monthly, yearly, other, once }
 
 class Task {
   Task({
@@ -19,11 +16,11 @@ class Task {
     required this.taskDescription,
     required this.taskType,
     required this.taskFrequency,
+    required this.isCompleted,
   })  : id = uuid.v4(),
         date = DateTime.now(),
         time = DateTime.now();
-    required this.isCompleted,
-  }) : id = uuid.v4();
+  
 
   final String id;
   final String taskName;
@@ -32,6 +29,7 @@ class Task {
   TaskFrequency taskFrequency;
   DateTime date;
   DateTime time;
+  bool isCompleted;
 
   String get formattedDate {
     return formatterYMD.format(date);
@@ -39,5 +37,5 @@ class Task {
   String get formattedTime {
       return formatterHour.format(time);
   }
-  bool isCompleted;
+
 }

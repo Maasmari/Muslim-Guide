@@ -27,11 +27,7 @@ class _MuslimGuideState extends State<MuslimGuide> {
   Widget build(context) {
     return MaterialApp(
       home: Scaffold(
-<<<<<<< HEAD
         body: const Tasks(),
-=======
-        body: const HomeScreen(),
->>>>>>> a4407c6f7afeb86a64825ac833ebff64d1ce4c4b
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           selectedFontSize: 12,
