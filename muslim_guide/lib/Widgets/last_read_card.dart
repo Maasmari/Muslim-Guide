@@ -20,7 +20,7 @@ class LastReadCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.green, // Adjust the color to match your design
         borderRadius: BorderRadius.circular(10.0),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             color: Colors.black26,
             blurRadius: 8.0,
@@ -28,16 +28,22 @@ class LastReadCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Last Read',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 22.0,
-            ),
+          Row(
+            children: [
+              Text(
+                'Last Read',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20.0,
+                ),
+              ),
+              Spacer(),
+              Icon(Icons.arrow_forward_ios, color: Colors.white, size: 30.0),
+            ],
           ),
           SizedBox(height: 10.0),
           Text(
@@ -45,14 +51,14 @@ class LastReadCard extends StatelessWidget {
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
-              fontSize: 16.0,
+              fontSize: 14.0,
             ),
           ),
           Text(
             'Ayah No: 285',
             style: TextStyle(
               color: Colors.white70,
-              fontSize: 14.0,
+              fontSize: 11.0,
             ),
           ),
         ],
