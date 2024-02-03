@@ -17,17 +17,20 @@ class _TasksState extends State<Tasks> {
         taskName: 'Surat Al Kahf',
         taskDescription: 'Read Surat Al Kahf.',
         taskType: TaskType.optional,
-        taskFrequency: TaskFrequency.once),
+        taskFrequency: TaskFrequency.once,
+        isCompleted: false),
     Task(
         taskName: 'Read Dua',
         taskDescription: 'Don\'t forget to read dua!',
         taskType: TaskType.optional,
-        taskFrequency: TaskFrequency.daily),
+        taskFrequency: TaskFrequency.daily,
+        isCompleted: false),
     Task(
         taskName: 'Fasting',
         taskDescription: 'Do not drink or eat until Adhaan Al Maghreb!',
         taskType: TaskType.optional,
-        taskFrequency: TaskFrequency.monthly)
+        taskFrequency: TaskFrequency.monthly,
+        isCompleted: false)
   ];
 
   @override
