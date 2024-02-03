@@ -27,7 +27,6 @@ class _MuslimGuideState extends State<MuslimGuide> {
     return MaterialApp(
       home: Scaffold(
         body: ScheduleScreen(),
-        body: ScheduleScreen(),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           selectedFontSize: 12,
