@@ -33,6 +33,14 @@ class _TasksState extends State<Tasks> {
   @override
   Widget build(context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text(
+          'List of tasks',
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 30, 87, 32),
+      ),
       body: Column(
         children: [
           Expanded(

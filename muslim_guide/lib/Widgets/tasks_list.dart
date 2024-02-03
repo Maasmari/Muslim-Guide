@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:muslim_guide/Widgets/task_item.dart';
 import 'package:muslim_guide/models/task.dart';
 
 class TasksList extends StatelessWidget {
@@ -8,6 +9,6 @@ class TasksList extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(itemCount: tasks.length,itemBuilder: (ctx, index) => Text(tasks[index].taskName),);
+    return ListView.builder(itemCount: tasks.length,itemBuilder: (ctx, index) => TaskItem(task: tasks[index]),);
   }
 }

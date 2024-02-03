@@ -1,9 +1,14 @@
 import 'package:uuid/uuid.dart';
+import 'package:intl/intl.dart';
+
+final formatterYMD = DateFormat.yMd();
+final formatterHour = DateFormat.jm(); //jm = hour minute
 
 const uuid = Uuid();
 
-enum TaskType {optional, compulsory}
-enum TaskFrequency{daily, weekly, monthly, yearly, other, once}
+enum TaskType { optional, compulsory }
+
+enum TaskFrequency { daily, weekly, monthly, yearly, other, once }
 
 class Task {
   Task({
@@ -11,11 +16,22 @@ class Task {
     required this.taskDescription,
     required this.taskType,
     required this.taskFrequency,
-  }) : id = uuid.v4();
+  })  : id = uuid.v4(),
+        date = DateTime.now(),
+        time = DateTime.now();
 
   final String id;
   final String taskName;
   String taskDescription;
   TaskType taskType;
   TaskFrequency taskFrequency;
+  DateTime date;
+  DateTime time;
+
+  String get formattedDate {
+    return formatterYMD.format(date);
+  }
+  String get formattedTime {
+      return formatterHour.format(time);
+  }
 }

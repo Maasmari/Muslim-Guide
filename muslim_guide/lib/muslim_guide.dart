@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:muslim_guide/Widgets/tasks.dart';
 import 'package:muslim_guide/screens/home_screen.dart';
 import 'package:muslim_guide/screens/register_screen.dart';
 import 'package:muslim_guide/screens/schedule_screen.dart';
@@ -26,7 +27,7 @@ class _MuslimGuideState extends State<MuslimGuide> {
   Widget build(context) {
     return MaterialApp(
       home: Scaffold(
-        body: const ScheduleScreen(),
+        body: const Tasks(),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           selectedFontSize: 12,

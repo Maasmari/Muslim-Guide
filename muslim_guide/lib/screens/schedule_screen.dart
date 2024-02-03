@@ -38,7 +38,7 @@ class _ScheduleState extends State<ScheduleScreen> {
   Widget content() {
     return Padding(
       padding: const EdgeInsets.all(15.0),
-      child: ListView( //might need to be adjust to add itemBuilder (Vid 101)
+      child: Column( //might need to be adjust to add itemBuilder (Vid 101)
         children: [
           TableCalendar(
             focusedDay: today,
