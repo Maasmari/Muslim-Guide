@@ -9,7 +9,7 @@ class TaskItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.blueGrey,
+      color: const Color.fromARGB(255, 9, 91, 185),
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
@@ -17,17 +17,20 @@ class TaskItem extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Text(task.taskName, style: const TextStyle(fontSize: 24),),
+            Text(
+              task.taskName,
+              style: const TextStyle(fontSize: 24),
+            ),
             const SizedBox(height: 4),
             Text(task.taskDescription),
-            const SizedBox(height: 4),
-            Text('(${task.taskFrequency.name.toUpperCase()})'),
             const SizedBox(height: 4),
             Row(
               children: [
                 const Icon(Icons.alarm),
                 const SizedBox(width: 4),
                 Text(task.formattedTime),
+                const Spacer(),
+                Text('(${task.taskFrequency.name.toUpperCase()})'),
               ],
             ),
           ],

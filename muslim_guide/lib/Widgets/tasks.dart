@@ -33,16 +33,30 @@ class _TasksState extends State<Tasks> {
         isCompleted: false)
   ];
 
+  void _openAddTaskOverlay() {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) => const Text('Modal bottom sheet'),
+    );
+  }
+
   @override
   Widget build(context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'List of tasks',
+          'List of scheduled tasks',
           style: TextStyle(color: Colors.white),
         ),
-        centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 30, 87, 32),
+        actions: [
+          IconButton.outlined(
+            onPressed: _openAddTaskOverlay,
+            icon: const Icon(Icons.add),
+            color: Colors.white,
+            highlightColor: const Color.fromARGB(255, 40, 116, 42),
+          ),
+        ],
       ),
       body: Column(
         children: [

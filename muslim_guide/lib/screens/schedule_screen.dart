@@ -14,6 +14,9 @@ class _ScheduleState extends State<ScheduleScreen> {
   bool isCompleted = false;
 
   DateTime today = DateTime.now();
+  DateTime firstDate = DateTime(DateTime.now().year - 1, DateTime.now().month, DateTime.now().day);
+  DateTime lastDate = DateTime(DateTime.now().year + 1, DateTime.now().month, DateTime.now().day);
+
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
       today = day;
@@ -42,8 +45,8 @@ class _ScheduleState extends State<ScheduleScreen> {
         children: [
           TableCalendar(
             focusedDay: today,
-            firstDay: DateTime.utc(2024, 1, 1),
-            lastDay: DateTime.utc(2099, 12, 31),
+            firstDay: firstDate,
+            lastDay: lastDate,
             locale: 'en_US',
             headerStyle: const HeaderStyle(
                 formatButtonVisible: false, titleCentered: true),
@@ -55,33 +58,34 @@ class _ScheduleState extends State<ScheduleScreen> {
             color: Colors.black,
             thickness: 2,
           ),
-          Row(
-            children: [
-              const Text('Task name here'),
-              const Spacer(),
-              Checkbox(
-                activeColor: Colors.green,
-                value: isCompleted,
-                onChanged: (value) {
-                  setState(
-                    () {
-                      isCompleted = value!;
-                    },
-                  );
-                },
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              const Text('Ex: 5:40 PM'),
-            ],
-          ),
-          const SizedBox(
-            height: 6,
-          ),
-          const Divider(
-            color: Colors.grey,
-          ),
+          
+          // Row(
+          //   children: [
+          //     const Text('Task name here'),
+          //     const Spacer(),
+          //     Checkbox(
+          //       activeColor: Colors.green,
+          //       value: isCompleted,
+          //       onChanged: (value) {
+          //         setState(
+          //           () {
+          //             isCompleted = value!;
+          //           },
+          //         );
+          //       },
+          //     ),
+          //     const SizedBox(
+          //       width: 5,
+          //     ),
+          //     const Text('Ex: 5:40 PM'),
+          //   ],
+          // ),
+          // const SizedBox(
+          //   height: 6,
+          // ),
+          // const Divider(
+          //   color: Colors.grey,
+          // ),
         ],
       ),
     );
