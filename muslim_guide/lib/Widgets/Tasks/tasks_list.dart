@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:muslim_guide/Widgets/task_item.dart';
+import 'package:muslim_guide/Widgets/Tasks/task_item.dart';
 import 'package:muslim_guide/models/task.dart';
 
 class TasksList extends StatelessWidget {
