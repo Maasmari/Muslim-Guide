@@ -18,7 +18,8 @@ class _TasksState extends State<Tasks> {
         taskDescription: 'Read Surat Al Kahf.',
         taskType: TaskType.optional,
         taskFrequency: TaskFrequency.once,
-        isCompleted: false),
+        isCompleted: false,
+        ),
     Task(
         taskName: 'Read Dua',
         taskDescription: 'Don\'t forget to read dua!',
@@ -33,38 +34,40 @@ class _TasksState extends State<Tasks> {
         isCompleted: false)
   ];
 
-  void _openAddTaskOverlay() {
-    showModalBottomSheet(
-      context: context,
-      builder: (ctx) => const Text('Modal bottom sheet'),
-    );
-  }
+  // void _openAddTaskOverlay() {
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (ctx) => const Text('Modal bottom sheet'),
+  //   );
+  // }
 
   @override
   Widget build(context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'List of scheduled tasks',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: const Color.fromARGB(255, 30, 87, 32),
-        actions: [
-          IconButton.outlined(
-            onPressed: _openAddTaskOverlay,
-            icon: const Icon(Icons.add),
-            color: Colors.white,
-            highlightColor: const Color.fromARGB(255, 40, 116, 42),
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
+     return 
+    // Scaffold(    //MAYBE USE THIS IF ADMIN WANTS TO ADD A TASK
+    //   appBar: AppBar(
+    //     title: const Text(
+    //       'List of scheduled tasks',
+    //       style: TextStyle(color: Colors.white),
+    //     ),
+    //     backgroundColor: const Color.fromARGB(255, 30, 87, 32),
+    //     actions: [
+    //       IconButton.outlined(
+    //         onPressed: _openAddTaskOverlay,
+    //         icon: const Icon(Icons.add),
+    //         color: Colors.white,
+    //         highlightColor: const Color.fromARGB(255, 40, 116, 42),
+    //       ),
+    //     ],
+    //   ),
+    //   body:
+      //Column(
+        //children: [
           Expanded(
             child: TasksList(tasks: _registeredTasks),
-          ),
-        ],
-      ),
+          //),
+        //],
+     // ),
     );
   }
 }

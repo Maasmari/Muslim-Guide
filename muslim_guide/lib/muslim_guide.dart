@@ -3,6 +3,7 @@ import 'package:muslim_guide/Widgets/Tasks/tasks.dart';
 import 'package:muslim_guide/screens/home_screen.dart';
 import 'package:muslim_guide/screens/register_screen.dart';
 import 'package:muslim_guide/screens/schedule_screen.dart';
+import 'package:muslim_guide/screens/settings_screen.dart';
 
 class MuslimGuide extends StatefulWidget {
   const MuslimGuide({super.key});
@@ -27,7 +28,7 @@ class _MuslimGuideState extends State<MuslimGuide> {
   Widget build(context) {
     return MaterialApp(
       home: Scaffold(
-        body: const Tasks(),
+        body: const ScheduleScreen(),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           selectedFontSize: 12,
