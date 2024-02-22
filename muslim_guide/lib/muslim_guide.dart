@@ -45,7 +45,7 @@ class _MuslimGuideState extends State<MuslimGuide> {
   Widget build(context) {
     return MaterialApp(
       home: Scaffold(
-        body: TaskListScreen()/*_getScreen(activeScreen)*/,
+        body: _getScreen(activeScreen),
         bottomNavigationBar: BottomNavigationBar(
           fixedColor: const Color.fromARGB(255, 30, 87, 32),
           type: BottomNavigationBarType.fixed,
