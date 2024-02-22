@@ -5,6 +5,7 @@ import 'package:muslim_guide/screens/home_screen.dart';
 import 'package:muslim_guide/screens/performance_screen.dart';
 import 'package:muslim_guide/screens/register_screen.dart';
 import 'package:muslim_guide/screens/schedule_screen.dart';
+import 'package:muslim_guide/screens/settings_screen.dart';
 
 class MuslimGuide extends StatefulWidget {
   const MuslimGuide({super.key});

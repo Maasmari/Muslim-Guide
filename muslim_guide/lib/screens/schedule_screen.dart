@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:muslim_guide/Widgets/Tasks/tasks.dart';
+import 'package:muslim_guide/models/task.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class ScheduleScreen extends StatefulWidget {
@@ -17,10 +19,17 @@ class _ScheduleState extends State<ScheduleScreen> {
   DateTime firstDate = DateTime(DateTime.now().year - 1, DateTime.now().month, DateTime.now().day);
   DateTime lastDate = DateTime(DateTime.now().year + 1, DateTime.now().month, DateTime.now().day);
 
+  Map<DateTime, List<Task>> tasksToday = {};
+
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
       today = day;
+      print(day);
     });
+  }
+
+  List<Task> _getTasksForDay(DateTime day) {
+    return tasksToday[day] ?? [];
   }
 
   @override
@@ -53,39 +62,14 @@ class _ScheduleState extends State<ScheduleScreen> {
             availableGestures: AvailableGestures.all,
             onDaySelected: _onDaySelected,
             selectedDayPredicate: (day) => isSameDay(day, today),
+            eventLoader: _getTasksForDay,
           ),
           const Divider(
             color: Colors.black,
             thickness: 2,
           ),
-          
-          // Row(
-          //   children: [
-          //     const Text('Task name here'),
-          //     const Spacer(),
-          //     Checkbox(
-          //       activeColor: Colors.green,
-          //       value: isCompleted,
-          //       onChanged: (value) {
-          //         setState(
-          //           () {
-          //             isCompleted = value!;
-          //           },
-          //         );
-          //       },
-          //     ),
-          //     const SizedBox(
-          //       width: 5,
-          //     ),
-          //     const Text('Ex: 5:40 PM'),
-          //   ],
-          // ),
-          // const SizedBox(
-          //   height: 6,
-          // ),
-          // const Divider(
-          //   color: Colors.grey,
-          // ),
+          const Tasks(),
+
         ],
       ),
     );

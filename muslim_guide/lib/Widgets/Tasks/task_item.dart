@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:muslim_guide/Widgets/checkbox.dart';
 import 'package:muslim_guide/models/task.dart';
 
 class TaskItem extends StatelessWidget {
@@ -30,7 +31,8 @@ class TaskItem extends StatelessWidget {
                 const SizedBox(width: 4),
                 Text(task.formattedTime),
                 const Spacer(),
-                Text('(${task.taskFrequency.name.toUpperCase()})'),
+                const CheckboxTask(),
+                //Text('(${task.taskFrequency.name.toUpperCase()})'), THIS GETS THE FREQUENCY OF THE TASK
               ],
             ),
           ],
