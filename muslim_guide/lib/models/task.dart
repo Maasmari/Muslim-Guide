@@ -37,7 +37,7 @@ class Task {
     return formatterYMD.format(date);
   }
   String get formattedTime {
-      return formatterHour.format(time);
+    return formatterHour.format(time);
   }
 
 }

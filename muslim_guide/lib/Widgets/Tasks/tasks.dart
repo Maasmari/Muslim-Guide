@@ -12,7 +12,7 @@ class Tasks extends StatefulWidget {
 }
 
 class _TasksState extends State<Tasks> {
-  final List<Task> _registeredTasks = [
+  final List<Task> registeredTasks = [ //was a private list
     Task(
         taskName: 'Surat Al Kahf',
         taskDescription: 'Read Surat Al Kahf.',
@@ -64,7 +64,7 @@ class _TasksState extends State<Tasks> {
       //Column(
         //children: [
           Expanded(
-            child: TasksList(tasks: _registeredTasks),
+            child: TasksList(tasks: registeredTasks),
           //),
         //],
      // ),

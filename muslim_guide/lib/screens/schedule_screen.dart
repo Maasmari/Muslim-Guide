@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:muslim_guide/Widgets/Tasks/tasks.dart';
-import 'package:muslim_guide/models/task.dart';
+//import 'package:muslim_guide/models/task.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class ScheduleScreen extends StatefulWidget {
@@ -19,7 +19,7 @@ class _ScheduleState extends State<ScheduleScreen> {
   DateTime firstDate = DateTime(DateTime.now().year - 1, DateTime.now().month, DateTime.now().day);
   DateTime lastDate = DateTime(DateTime.now().year + 1, DateTime.now().month, DateTime.now().day);
 
-  Map<DateTime, List<Task>> tasksToday = {};
+  //Map<DateTime, List<Task>> tasksToday = {};
 
   void _onDaySelected(DateTime day, DateTime focusedDay) {
     setState(() {
@@ -28,9 +28,9 @@ class _ScheduleState extends State<ScheduleScreen> {
     });
   }
 
-  List<Task> _getTasksForDay(DateTime day) {
-    return tasksToday[day] ?? [];
-  }
+  // List<Task> _getTasksForDay(DateTime day) {
+  //   return tasksToday[day] ?? [];
+  // }
 
   @override
   Widget build(context) {
@@ -42,6 +42,7 @@ class _ScheduleState extends State<ScheduleScreen> {
         ),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 30, 87, 32),
+        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.add))],
       ),
       body: content(),
     );
@@ -62,7 +63,7 @@ class _ScheduleState extends State<ScheduleScreen> {
             availableGestures: AvailableGestures.all,
             onDaySelected: _onDaySelected,
             selectedDayPredicate: (day) => isSameDay(day, today),
-            eventLoader: _getTasksForDay,
+            //eventLoader: _getTasksForDay,
           ),
           const Divider(
             color: Colors.black,
