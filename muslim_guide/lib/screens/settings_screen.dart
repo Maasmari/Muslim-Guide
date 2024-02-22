@@ -1,65 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key});
-
   @override
-  State<SettingsScreen> createState() {
-    return _SettingsState();
-  }
+  _SettingsScreenState createState() => _SettingsScreenState();
 }
 
-class _SettingsState extends State<SettingsScreen> {
-  bool isSwitched = false;
+class _SettingsScreenState extends State<SettingsScreen> {
+  bool _darkMode = false; // Initial dark mode value
 
   @override
-  Widget build(context) {
-    return MaterialApp(
-      home: Scaffold(
+  Widget build(BuildContext context) {
+    return Scaffold(
         appBar: AppBar(
-          title: const Text('Settings', style: TextStyle(color: Colors.white),),
-          centerTitle: true,
+          title: Text('Settings', style: TextStyle(color: Colors.white)),
           backgroundColor: const Color.fromARGB(255, 30, 87, 32),
         ),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            children: [
-              const Text('To enable Dark/Light mode, change your systems Dark/Light mode setting.'),
-              const Divider(color: Colors.black),
-              const SizedBox(height: 6),
-              Row(
-                children: [
-                  const Text('Send feedback'),
-                  const Spacer(),
-                  IconButton.outlined(onPressed: () {}, icon: const Icon(Icons.arrow_right)),
-                ],
-              ),
-              const SizedBox(height: 16),
-              const Divider(color: Colors.black),
-              Row(
-                children: [
-                  const Text('Profile'),
-                  const Spacer(),
-                  IconButton.outlined(onPressed: () {}, icon: const Icon(Icons.account_circle)),
-                ],
-              ),
-              const SizedBox(height: 16),
-              const Divider(color: Colors.black),
-              Row(
-                children: [
-                  const Text(
-                    'Logout',
-                    style: TextStyle(color: Color.fromARGB(255, 202, 13, 0)),
+        body: ListView(
+          children: <Widget>[
+            CupertinoFormSection.insetGrouped(
+              header: Text('General'),
+              children: [
+                CupertinoFormRow(
+                  prefix: Text('Profile'),
+                  child: CupertinoButton(
+                    child: Text('View/Edit'),
+                    onPressed: () {
+                      // Navigate to profile view/edit screen
+                    },
                   ),
-                  const Spacer(),
-                  IconButton.outlined(onPressed: () {}, icon: const Icon(Icons.exit_to_app_rounded)),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+                ),
+                CupertinoFormRow(
+                  prefix: Text('Dark Mode'),
+                  child: CupertinoSwitch(
+                    value: _darkMode,
+                    onChanged: (bool value) {
+                      setState(() {
+                        _darkMode = value;
+                      });
+                      // Implement dark mode functionality here
+                    },
+                  ),
+                ),
+                CupertinoFormRow(
+                  prefix: Text('Send Feedback'),
+                  child: CupertinoButton(
+                    child: Text('Go'),
+                    onPressed: () {
+                      // Implement feedback functionality here
+                    },
+                  ),
+                ),
+                CupertinoFormRow(
+                  prefix: Text('Log Out'),
+                  child: CupertinoButton(
+                    child: Text('Tap to log out'),
+                    onPressed: () {
+                      // Implement logout functionality here
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ));
   }
 }

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:muslim_guide/Widgets/Tasks/tasks.dart';
-import 'package:muslim_guide/Widgets/chart.dart';
 import 'package:muslim_guide/screens/home_screen.dart';
 import 'package:muslim_guide/screens/performance_screen.dart';
-import 'package:muslim_guide/screens/register_screen.dart';
 import 'package:muslim_guide/screens/schedule_screen.dart';
 import 'package:muslim_guide/screens/settings_screen.dart';
 
@@ -17,31 +15,45 @@ class MuslimGuide extends StatefulWidget {
 }
 
 class _MuslimGuideState extends State<MuslimGuide> {
-  int activeScreen = 1;
+  int activeScreen = 0;
 
-  void switchScreen(int switchingScreen) {
-    //maybe change the parameter or method
+  void _selectPage(int index) {
     setState(() {
-      activeScreen = switchingScreen;
+      activeScreen = index;
     });
+  }
+
+  Widget _getScreen(int index) {
+    switch (index) {
+      case 0:
+        return HomeScreen();
+      case 1:
+        return PerformanceScreen();
+      case 2:
+        return ScheduleScreen();
+      case 3:
+        return Scaffold();
+      case 4:
+        return SettingsScreen();
+      default:
+        return HomeScreen();
+    }
   }
 
   @override
   Widget build(context) {
     return MaterialApp(
       home: Scaffold(
-        body: PerformanceScreen(),
+        body: _getScreen(activeScreen),
         bottomNavigationBar: BottomNavigationBar(
+          fixedColor: const Color.fromARGB(255, 30, 87, 32),
           type: BottomNavigationBarType.fixed,
           selectedFontSize: 12,
           unselectedFontSize: 12,
           // Customize height
           iconSize: 24,
-          onTap: (int index) {
-            setState(() {
-              activeScreen = index;
-            });
-          },
+          onTap: _selectPage,
+          currentIndex: activeScreen,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.home_filled),

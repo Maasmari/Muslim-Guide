@@ -14,7 +14,8 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Performance'),
+        title: Text('Performance', style: TextStyle(color: Colors.white)),
+        backgroundColor: const Color.fromARGB(255, 30, 87, 32),
       ),
       body: Center(
         child: Column(
