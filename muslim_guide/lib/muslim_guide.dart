@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:muslim_guide/Widgets/Tasks/tasks.dart';
+import 'package:muslim_guide/Widgets/chart.dart';
 import 'package:muslim_guide/screens/home_screen.dart';
+import 'package:muslim_guide/screens/performance_screen.dart';
 import 'package:muslim_guide/screens/register_screen.dart';
 import 'package:muslim_guide/screens/schedule_screen.dart';
 
@@ -27,7 +29,7 @@ class _MuslimGuideState extends State<MuslimGuide> {
   Widget build(context) {
     return MaterialApp(
       home: Scaffold(
-        body: const Tasks(),
+        body: PerformanceScreen(),
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           selectedFontSize: 12,
