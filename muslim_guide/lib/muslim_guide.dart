@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:muslim_guide/Widgets/Tasks/tasks.dart';
+//import 'package:muslim_guide/Widgets/Tasks/tasks.dart';
 import 'package:muslim_guide/screens/home_screen.dart';
 import 'package:muslim_guide/screens/performance_screen.dart';
 import 'package:muslim_guide/screens/schedule_screen.dart';
 import 'package:muslim_guide/screens/settings_screen.dart';
-import 'package:muslim_guide/screens/task_list_screen.dart';
+//import 'package:muslim_guide/screens/task_list_screen.dart';
+import 'package:muslim_guide/utilities/location_provider.dart';
 
 class MuslimGuide extends StatefulWidget {
   const MuslimGuide({super.key});
@@ -16,7 +17,13 @@ class MuslimGuide extends StatefulWidget {
 }
 
 class _MuslimGuideState extends State<MuslimGuide> {
-  int activeScreen = 0;
+  int activeScreen = 3;
+
+  @override
+  void initState() {
+    super.initState();
+    Widget Location = LocationScreen();
+  }
 
   void _selectPage(int index) {
     setState(() {
@@ -33,7 +40,8 @@ class _MuslimGuideState extends State<MuslimGuide> {
       case 2:
         return ScheduleScreen();
       case 3:
-        return Scaffold();
+        return LocationScreen();
+      //Scaffold();
       case 4:
         return SettingsScreen();
       default:

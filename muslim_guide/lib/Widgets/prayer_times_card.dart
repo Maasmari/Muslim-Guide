@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:hijri/hijri_calendar.dart';
 
 // Define a model for prayer times to pass to the widget
-class PrayerTimes {
+class LocalPrayerTimes {
   final String fajr;
   final String sunrise;
   final String dhuhr;
@@ -9,7 +10,7 @@ class PrayerTimes {
   final String maghrib;
   final String isha;
 
-  PrayerTimes({
+  LocalPrayerTimes({
     required this.fajr,
     required this.sunrise,
     required this.dhuhr,
@@ -19,8 +20,50 @@ class PrayerTimes {
   });
 }
 
+String formatCombinedDate() {
+  // Create a HijriCalendar instance for the current date
+  final HijriCalendar hijriDate = HijriCalendar.now();
+
+  // Create a DateTime instance for the current date
+  final DateTime gregorianDate = DateTime.now();
+
+  // List of week days
+  final List<String> weekDays = [
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
+    'Sunday'
+  ];
+
+  // List of Gregorian months
+  final List<String> gregorianMonths = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec'
+  ];
+
+  // Formatting the output
+  String formattedDate = '${weekDays[gregorianDate.weekday - 1]} '
+      '${hijriDate.hDay} ${hijriDate.longMonthName} | '
+      '${gregorianMonths[gregorianDate.month - 1]} ${gregorianDate.day}';
+
+  return formattedDate;
+}
+
 class PrayerTimeCard extends StatelessWidget {
-  final PrayerTimes prayerTimes;
+  final LocalPrayerTimes prayerTimes;
   final String city;
 
   PrayerTimeCard({required this.prayerTimes, required this.city});
@@ -38,7 +81,7 @@ class PrayerTimeCard extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            'Friday 19 Rabi 2 | Nov 3', // Replace with dynamic date
+            formatCombinedDate(), // Replace with dynamic date
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 8.0),
@@ -46,7 +89,7 @@ class PrayerTimeCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               _buildPrayerTimeColumn('Fajr', prayerTimes.fajr),
-              _buildPrayerTimeColumn('Sunrise', prayerTimes.sunrise),
+              // _buildPrayerTimeColumn('Sunrise', prayerTimes.sunrise),
               _buildPrayerTimeColumn('Dhuhr', prayerTimes.dhuhr),
               _buildPrayerTimeColumn('Asr', prayerTimes.asr),
               _buildPrayerTimeColumn('Maghrib', prayerTimes.maghrib),
@@ -73,7 +116,7 @@ class PrayerTimeCard extends StatelessWidget {
         Text(
           time,
           style: TextStyle(
-              color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.bold),
+              color: Colors.white, fontSize: 13.0, fontWeight: FontWeight.bold),
         ),
       ],
     );

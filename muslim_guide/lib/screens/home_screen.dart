@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:muslim_guide/Widgets/last_read_card.dart';
 import 'package:muslim_guide/Widgets/task_card.dart';
+import 'package:muslim_guide/Widgets/adhan_countdown.dart';
 import 'package:muslim_guide/models/task.dart';
 import 'package:muslim_guide/widgets/prayer_times_card.dart';
+import 'package:muslim_guide/utilities/location_provider.dart';
+import 'package:adhan/adhan.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,13 +24,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget prayers = PrayerTimeCard(
-    prayerTimes: PrayerTimes(
-      fajr: '4:41',
-      sunrise: '5:59',
-      dhuhr: '11:37',
-      asr: '2:50',
-      maghrib: '5:14',
-      isha: '6:44',
+    prayerTimes: LocalPrayerTimes(
+      fajr: DateFormat.jm().format(prayerTimes.fajr).toString(),
+      sunrise: DateFormat.jm().format(prayerTimes.sunrise).toString(),
+      dhuhr: DateFormat.jm().format(prayerTimes.dhuhr).toString(),
+      asr: DateFormat.jm().format(prayerTimes.asr).toString(),
+      maghrib: DateFormat.jm().format(prayerTimes.maghrib).toString(),
+      isha: DateFormat.jm().format(prayerTimes.isha).toString(),
     ),
     city: 'Riyadh',
   );
@@ -42,7 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home Screen'),
+        title: AdhanCountdown(
+          //coordinates: Coordinates(getLatitude(), getLongitude()),
+          coordinates: Coordinates(24.7136, 46.6753),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(

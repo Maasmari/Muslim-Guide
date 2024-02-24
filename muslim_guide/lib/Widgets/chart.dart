@@ -67,6 +67,7 @@ class Chart extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
+                // ignore: unused_local_variable
                 for (final day in days) // alternative to map()
                   ChartBar(
                     fill: 1,
