@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:muslim_guide/Widgets/last_read_card.dart';
 import 'package:muslim_guide/Widgets/task_card.dart';
 import 'package:muslim_guide/Widgets/adhan_countdown.dart';
 import 'package:muslim_guide/models/task.dart';
 import 'package:muslim_guide/widgets/prayer_times_card.dart';
-import 'package:muslim_guide/utilities/location_provider.dart';
 import 'package:adhan/adhan.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,17 +21,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
   }
 
-  Widget prayers = PrayerTimeCard(
-    prayerTimes: LocalPrayerTimes(
-      fajr: DateFormat.jm().format(prayerTimes.fajr).toString(),
-      sunrise: DateFormat.jm().format(prayerTimes.sunrise).toString(),
-      dhuhr: DateFormat.jm().format(prayerTimes.dhuhr).toString(),
-      asr: DateFormat.jm().format(prayerTimes.asr).toString(),
-      maghrib: DateFormat.jm().format(prayerTimes.maghrib).toString(),
-      isha: DateFormat.jm().format(prayerTimes.isha).toString(),
-    ),
-    city: 'Riyadh',
-  );
+  Widget prayers = PrayerTimeCard(city: 'Riyadh');
 
   Widget lastRead = LastReadCard(
     lastRead: LastRead(

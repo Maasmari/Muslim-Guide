@@ -73,7 +73,7 @@ class _AdhanCountdownState extends State<AdhanCountdown> {
     prayerName = prayerName[0].toUpperCase() + prayerName.substring(1);
     return Center(
       child: Text(
-        // '$prayerName Prayer in: $_timeLeft',
+        //'$prayerName Prayer in: $_timeLeft',
         'Muslim Guide',
         style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
       ),
