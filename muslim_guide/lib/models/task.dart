@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
 
@@ -21,7 +22,7 @@ class Task {
     //required this.time
   })  : id = uuid.v4(),
         date = DateTime.now(),
-        time = DateTime.now();
+        time = TimeOfDay.now();
   
 
   final String id;
@@ -30,14 +31,14 @@ class Task {
   TaskType taskType;
   TaskFrequency taskFrequency;
   DateTime date;
-  DateTime time;
+  TimeOfDay time;
   bool isCompleted;
 
   String get formattedDate {
     return formatterYMD.format(date);
   }
   String get formattedTime {
-    return formatterHour.format(time);
+    return formatterHour.format(date);
   }
 
 }

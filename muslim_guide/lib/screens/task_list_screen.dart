@@ -13,8 +13,7 @@ class TaskListScreen extends StatefulWidget {
   }
 }
 
-class _TaskListState extends State<TaskListScreen> {
-  final List<Task> listOfTasks = [
+final List<Task> listOfTasks = [
     //was a private list
     Task(
       taskName: 'Surat Al Kahf',
@@ -42,6 +41,9 @@ class _TaskListState extends State<TaskListScreen> {
         taskFrequency: TaskFrequency.daily,
         isCompleted: false),
   ];
+
+class _TaskListState extends State<TaskListScreen> {
+
 
   @override
   Widget build(context) {

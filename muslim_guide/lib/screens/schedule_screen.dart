@@ -42,7 +42,7 @@ class _ScheduleState extends State<ScheduleScreen> {
         ),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 30, 87, 32),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.add))],
+        actions: [IconButton(onPressed: () {} /* change active screen to TaskListScreen() */, icon: const Icon(Icons.add))],
       ),
       body: content(),
     );

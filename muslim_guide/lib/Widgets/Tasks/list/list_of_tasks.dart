@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:muslim_guide/models/task.dart';
-//this class is the same as task_item.dart but without the checkbox
+
+//this class is the same as task_item.dart but without the checkbox and with an add button
 class ListofTaskItems extends StatelessWidget {
   const ListofTaskItems({super.key, required this.task});
 
   final Task task;
-
+  
   @override
   Widget build(BuildContext context) {
+
+    void _presentDatePicker() {
+      final now = DateTime.now();
+      DateTime firstDate = DateTime(DateTime.now().year - 1, DateTime.now().month, DateTime.now().day);
+      DateTime lastDate = DateTime(DateTime.now().year + 1, DateTime.now().month, DateTime.now().day);
+      showDatePicker(context: context, firstDate: firstDate, lastDate: lastDate, initialDate: now);
+    }
+
     return Card(
       color: const Color.fromARGB(255, 9, 91, 185),
       child: Padding(
@@ -27,8 +36,12 @@ class ListofTaskItems extends StatelessWidget {
             Row(
               children: [
                 const Spacer(),
-                IconButton.filled(onPressed: () {}, icon: const Icon(Icons.add))
-                //Text('(${task.taskFrequency.name.toUpperCase()})'), THIS GETS THE FREQUENCY OF THE TASK
+                IconButton.filled(
+                  onPressed: () {
+                    _presentDatePicker();
+                  },
+                  icon: const Icon(Icons.add),
+                ),
               ],
             ),
           ],
