@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:muslim_guide/quran/constant.dart';
 import 'package:muslim_guide/screens/home_screen.dart';
 import 'package:muslim_guide/screens/performance_screen.dart';
 import 'package:muslim_guide/screens/schedule_screen.dart';
 import 'package:muslim_guide/screens/settings_screen.dart';
+import 'package:muslim_guide/quran/quran.dart';
 
 class MuslimGuide extends StatefulWidget {
   const MuslimGuide({super.key});
@@ -36,7 +38,7 @@ class _MuslimGuideState extends State<MuslimGuide> {
       case 2:
         return ScheduleScreen();
       case 3:
-        return Scaffold();
+        return Quran();
       case 4:
         return SettingsScreen();
       default:
@@ -46,6 +48,7 @@ class _MuslimGuideState extends State<MuslimGuide> {
 
   @override
   Widget build(context) {
+    readBookmark();
     return MaterialApp(
       home: Scaffold(
         body: _getScreen(activeScreen),
