@@ -142,7 +142,16 @@ class _PrayerTimeCardState extends State<PrayerTimeCard> {
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
-      return Center(child: CircularProgressIndicator());
+      return Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 39, 45, 213),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          child: Center(
+            child: CircularProgressIndicator(),
+          ));
     }
 
     if (_error != null) {

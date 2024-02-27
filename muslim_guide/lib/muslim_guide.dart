@@ -32,7 +32,7 @@ class _MuslimGuideState extends State<MuslimGuide> {
   Widget _getScreen(int index) {
     switch (index) {
       case 0:
-        return HomeScreen();
+        return HomeScreen(changeScreen: _selectPage);
       case 1:
         return PerformanceScreen();
       case 2:

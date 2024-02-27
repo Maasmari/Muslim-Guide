@@ -72,10 +72,28 @@ class _AdhanCountdownState extends State<AdhanCountdown> {
     var prayerName = _nextPrayer.name.toString();
     prayerName = prayerName[0].toUpperCase() + prayerName.substring(1);
     return Center(
-      child: Text(
-        //'$prayerName Prayer in: $_timeLeft',
-        'Muslim Guide',
-        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      child: RichText(
+        textAlign: TextAlign.center, // Applies to all TextSpans
+        text: TextSpan(
+          children: [
+            TextSpan(
+              text: 'Time till $prayerName \n',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black, // Specify the color for text
+              ),
+            ),
+            TextSpan(
+              text: '$_timeLeft',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black, // Specify the color for text
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -7,7 +7,8 @@ import 'package:muslim_guide/widgets/prayer_times_card.dart';
 import 'package:adhan/adhan.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final Function? changeScreen;
+  const HomeScreen({super.key, this.changeScreen});
 
   @override
   State<HomeScreen> createState() {
@@ -16,32 +17,35 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late Widget prayers;
+  late Widget lastRead;
+
   @override
   void initState() {
     super.initState();
+    prayers = PrayerTimeCard(city: 'Riyadh');
+    // Assuming `widget.changeScreen` is the function you want to pass
+    lastRead = LastReadCard(changeScreen: widget.changeScreen);
   }
-
-  Widget prayers = PrayerTimeCard(city: 'Riyadh');
-
-  Widget lastRead = LastReadCard(
-    lastRead: LastRead(
-      title: 'Al-Baqarah',
-      verseNumber: 285,
-    ),
-  );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: AdhanCountdown(
-          //coordinates: Coordinates(getLatitude(), getLongitude()),
-          coordinates: Coordinates(24.7136, 46.6753),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(30.0), // Set your desired height here
+        child: AppBar(
+          //title: Text('Muslim Guide'),
+          centerTitle: true,
         ),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            AdhanCountdown(
+              //coordinates: Coordinates(getLatitude(), getLongitude()),
+              coordinates: Coordinates(24.7136, 46.6753),
+            ),
+            SizedBox(height: 15),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: prayers,
