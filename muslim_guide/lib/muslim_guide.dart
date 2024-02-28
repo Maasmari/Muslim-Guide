@@ -5,6 +5,7 @@ import 'package:muslim_guide/screens/performance_screen.dart';
 import 'package:muslim_guide/screens/schedule_screen.dart';
 import 'package:muslim_guide/screens/settings_screen.dart';
 import 'package:muslim_guide/quran/quran.dart';
+import 'package:muslim_guide/screens/task_list_screen.dart';
 
 class MuslimGuide extends StatefulWidget {
   const MuslimGuide({super.key});
@@ -51,7 +52,7 @@ class _MuslimGuideState extends State<MuslimGuide> {
     readBookmark();
     return MaterialApp(
       home: Scaffold(
-        body: _getScreen(activeScreen),
+        body: TaskListScreen()/*_getScreen(activeScreen)*/,
         bottomNavigationBar: BottomNavigationBar(
           fixedColor: const Color.fromARGB(255, 30, 87, 32),
           type: BottomNavigationBarType.fixed,

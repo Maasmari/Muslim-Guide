@@ -10,9 +10,7 @@ class Tasks extends StatefulWidget {
     return _TasksState();
   }
 }
-
-class _TasksState extends State<Tasks> {
-  final List<Task> registeredTasks = [ //was a private list
+final List<Task> registeredTasks = [ //was a private list
     Task(
         taskName: 'Surat Al Kahf',
         taskDescription: 'Read Surat Al Kahf.',
@@ -33,41 +31,13 @@ class _TasksState extends State<Tasks> {
         taskFrequency: TaskFrequency.monthly,
         isCompleted: false)
   ];
-
-  // void _openAddTaskOverlay() {
-  //   showModalBottomSheet(
-  //     context: context,
-  //     builder: (ctx) => const Text('Modal bottom sheet'),
-  //   );
-  // }
-
+class _TasksState extends State<Tasks> {
+  
   @override
   Widget build(context) {
      return 
-    // Scaffold(    //MAYBE USE THIS IF ADMIN WANTS TO ADD A TASK
-    //   appBar: AppBar(
-    //     title: const Text(
-    //       'List of scheduled tasks',
-    //       style: TextStyle(color: Colors.white),
-    //     ),
-    //     backgroundColor: const Color.fromARGB(255, 30, 87, 32),
-    //     actions: [
-    //       IconButton.outlined(
-    //         onPressed: _openAddTaskOverlay,
-    //         icon: const Icon(Icons.add),
-    //         color: Colors.white,
-    //         highlightColor: const Color.fromARGB(255, 40, 116, 42),
-    //       ),
-    //     ],
-    //   ),
-    //   body:
-      //Column(
-        //children: [
           Expanded(
             child: TasksList(tasks: registeredTasks),
-          //),
-        //],
-     // ),
     );
   }
 }

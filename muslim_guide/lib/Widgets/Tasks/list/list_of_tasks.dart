@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:muslim_guide/models/task.dart';
+import 'package:muslim_guide/Widgets/Tasks/schedule_task.dart';
 
 //this class is the same as task_item.dart but without the checkbox and with an add button
 class ListofTaskItems extends StatelessWidget {
@@ -10,11 +11,8 @@ class ListofTaskItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    void _presentDatePicker() {
-      final now = DateTime.now();
-      DateTime firstDate = DateTime(DateTime.now().year - 1, DateTime.now().month, DateTime.now().day);
-      DateTime lastDate = DateTime(DateTime.now().year + 1, DateTime.now().month, DateTime.now().day);
-      showDatePicker(context: context, firstDate: firstDate, lastDate: lastDate, initialDate: now);
+    void _openAddTaskOverlay() {
+      showModalBottomSheet(context: context, builder: (ctx) => ScheduleTask(task: task));
     }
 
     return Card(
@@ -37,9 +35,7 @@ class ListofTaskItems extends StatelessWidget {
               children: [
                 const Spacer(),
                 IconButton.filled(
-                  onPressed: () {
-                    _presentDatePicker();
-                  },
+                  onPressed: _openAddTaskOverlay,
                   icon: const Icon(Icons.add),
                 ),
               ],
