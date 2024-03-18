@@ -49,7 +49,7 @@ class _ScheduleState extends State<ScheduleScreen> {
           IconButton(
               onPressed: () {
                 Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => TaskListScreen()));
+                    MaterialPageRoute(builder: (context) => const TaskListScreen()));
               } /* change active screen to TaskListScreen() */,
               icon: const Icon(Icons.add, color: Colors.white))
         ],
