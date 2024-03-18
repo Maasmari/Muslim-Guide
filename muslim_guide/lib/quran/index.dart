@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'quran.dart';
+//import 'quran.dart';
 import 'surah_builder.dart';
 import 'constant.dart';
 import 'package:muslim_guide/quran/arabic_sura_number.dart';

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:muslim_guide/Widgets/Tasks/tasks.dart';
+import 'package:muslim_guide/screens/task_list_screen.dart';
 //import 'package:muslim_guide/models/task.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -16,8 +17,10 @@ class _ScheduleState extends State<ScheduleScreen> {
   bool isCompleted = false;
 
   DateTime today = DateTime.now();
-  DateTime firstDate = DateTime(DateTime.now().year - 1, DateTime.now().month, DateTime.now().day);
-  DateTime lastDate = DateTime(DateTime.now().year + 1, DateTime.now().month, DateTime.now().day);
+  DateTime firstDate = DateTime(
+      DateTime.now().year - 1, DateTime.now().month, DateTime.now().day);
+  DateTime lastDate = DateTime(
+      DateTime.now().year + 1, DateTime.now().month, DateTime.now().day);
 
   //Map<DateTime, List<Task>> tasksToday = {};
 
@@ -42,7 +45,14 @@ class _ScheduleState extends State<ScheduleScreen> {
         ),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 30, 87, 32),
-        actions: [IconButton(onPressed: () {} /* change active screen to TaskListScreen() */, icon: const Icon(Icons.add))],
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => TaskListScreen()));
+              } /* change active screen to TaskListScreen() */,
+              icon: const Icon(Icons.add, color: Colors.white))
+        ],
       ),
       body: content(),
     );
@@ -51,7 +61,8 @@ class _ScheduleState extends State<ScheduleScreen> {
   Widget content() {
     return Padding(
       padding: const EdgeInsets.all(15.0),
-      child: Column( //might need to be adjust to add itemBuilder (Vid 101)
+      child: Column(
+        //might need to be adjust to add itemBuilder (Vid 101)
         children: [
           TableCalendar(
             focusedDay: today,
@@ -70,7 +81,6 @@ class _ScheduleState extends State<ScheduleScreen> {
             thickness: 2,
           ),
           const Tasks(),
-
         ],
       ),
     );

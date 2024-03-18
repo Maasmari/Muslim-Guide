@@ -14,37 +14,35 @@ class TaskListScreen extends StatefulWidget {
 }
 
 final List<Task> listOfTasks = [
-    //was a private list
-    Task(
-      taskName: 'Surat Al Kahf',
-      taskDescription: 'Read Surat Al Kahf.',
+  //was a private list
+  Task(
+    taskName: 'Surat Al Kahf',
+    taskDescription: 'Read Surat Al Kahf.',
+    taskType: TaskType.optional,
+    taskFrequency: TaskFrequency.once,
+    isCompleted: false,
+  ),
+  Task(
+      taskName: 'Read Dua',
+      taskDescription: 'Don\'t forget to read dua!',
       taskType: TaskType.optional,
-      taskFrequency: TaskFrequency.once,
-      isCompleted: false,
-    ),
-    Task(
-        taskName: 'Read Dua',
-        taskDescription: 'Don\'t forget to read dua!',
-        taskType: TaskType.optional,
-        taskFrequency: TaskFrequency.daily,
-        isCompleted: false),
-    Task(
-        taskName: 'Fasting',
-        taskDescription: 'Do not drink or eat until Adhaan Al Maghreb!',
-        taskType: TaskType.optional,
-        taskFrequency: TaskFrequency.monthly,
-        isCompleted: false),
-    Task(
-        taskName: 'Sunnah',
-        taskDescription: 'Perform sunnah prayer.',
-        taskType: TaskType.optional,
-        taskFrequency: TaskFrequency.daily,
-        isCompleted: false),
-  ];
+      taskFrequency: TaskFrequency.daily,
+      isCompleted: false),
+  Task(
+      taskName: 'Fasting',
+      taskDescription: 'Do not drink or eat until Adhaan Al Maghreb!',
+      taskType: TaskType.optional,
+      taskFrequency: TaskFrequency.monthly,
+      isCompleted: false),
+  Task(
+      taskName: 'Sunnah',
+      taskDescription: 'Perform sunnah prayer.',
+      taskType: TaskType.optional,
+      taskFrequency: TaskFrequency.daily,
+      isCompleted: false),
+];
 
 class _TaskListState extends State<TaskListScreen> {
-
-
   @override
   Widget build(context) {
     return Scaffold(
@@ -53,11 +51,11 @@ class _TaskListState extends State<TaskListScreen> {
           'List of tasks',
           style: TextStyle(color: Colors.white),
         ),
+        iconTheme: IconThemeData(
+          color: Colors.white, // Set the color of icons to white
+        ),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 30, 87, 32),
-        leading: IconButton(
-            onPressed: () {} /* change active screen to ScheduleScreen() */,
-            icon: const Icon(Icons.arrow_back)),
       ),
       body: content(),
     );

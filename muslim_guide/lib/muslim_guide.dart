@@ -37,13 +37,13 @@ class _MuslimGuideState extends State<MuslimGuide> {
       case 1:
         return PerformanceScreen();
       case 2:
-        return ScheduleScreen();
+        return const ScheduleScreen();
       case 3:
-        return Quran();
+        return const Quran();
       case 4:
         return SettingsScreen();
       default:
-        return HomeScreen();
+        return const HomeScreen();
     }
   }
 
@@ -52,7 +52,8 @@ class _MuslimGuideState extends State<MuslimGuide> {
     readBookmark();
     return MaterialApp(
       home: Scaffold(
-        body: TaskListScreen()/*_getScreen(activeScreen)*/,
+        body: //TaskListScreen()
+            _getScreen(activeScreen),
         bottomNavigationBar: BottomNavigationBar(
           fixedColor: const Color.fromARGB(255, 30, 87, 32),
           type: BottomNavigationBarType.fixed,
