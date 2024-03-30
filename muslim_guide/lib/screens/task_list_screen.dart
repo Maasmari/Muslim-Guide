@@ -51,7 +51,7 @@ class _TaskListState extends State<TaskListScreen> {
           'List of tasks',
           style: TextStyle(color: Colors.white),
         ),
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.white, // Set the color of icons to white
         ),
         centerTitle: true,
