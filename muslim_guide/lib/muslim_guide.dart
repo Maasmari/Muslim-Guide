@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:muslim_guide/quran/constant.dart';
 import 'package:muslim_guide/screens/home_screen.dart';
@@ -50,6 +51,10 @@ class _MuslimGuideState extends State<MuslimGuide> {
   @override
   Widget build(context) {
     readBookmark();
+    User? user = FirebaseAuth.instance.currentUser;
+    String? uid = user?.uid;
+    String? email = user?.email;
+    print('uid: $uid, email: $email');
     return MaterialApp(
       home: Scaffold(
         body: _getScreen(activeScreen),

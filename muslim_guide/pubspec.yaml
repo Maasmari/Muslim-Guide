@@ -42,6 +42,8 @@ dependencies:
   hijri: ^3.0.0
   shared_preferences: ^2.2.2
   scrollable_positioned_list: ^0.3.8
+  firebase_core: ^2.27.0
+  firebase_auth: ^4.17.8
 
 dev_dependencies:
   flutter_test:

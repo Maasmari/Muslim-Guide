@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import '../auth.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -8,6 +9,10 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _darkMode = false; // Initial dark mode value
+
+  Future<void> signOut() async {
+    await Auth().signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +59,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 CupertinoFormRow(
                   prefix: Text('Log Out'),
                   child: CupertinoButton(
-                    child: Text('Tap to log out'),
+                    child: Text('Tap to log out',
+                        style: TextStyle(color: Colors.red)),
                     onPressed: () {
-                      // Implement logout functionality here
+                      signOut();
                     },
                   ),
                 ),
