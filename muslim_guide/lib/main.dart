@@ -1,11 +1,20 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:muslim_guide/muslim_guide.dart';
+import 'dart:io';
 import 'package:muslim_guide/widget_tree.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  Platform.isAndroid?
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyB_fvadZ4e8ccKEXn8rKehJQOV_I_Rm6Ik",
+      appId: "1:439190466191:android:812b97c2af1e5a00c70afa",
+      messagingSenderId: "439190466191",
+      projectId: "muslim-guide-417618",
+    ),
+  )
+  :await Firebase.initializeApp();
   runApp(MyApp());
 }
 
