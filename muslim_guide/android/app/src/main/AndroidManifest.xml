@@ -28,6 +28,8 @@
     <!-- Permissions for accessing location -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
 
     <!-- If targeting SDK 29 (Android 10) or higher, consider adding this permission for background location access -->
     <!-- <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/> -->

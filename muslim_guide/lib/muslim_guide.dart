@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:muslim_guide/database/register_user.dart';
 import 'package:muslim_guide/quran/constant.dart';
 import 'package:muslim_guide/screens/home_screen.dart';
 import 'package:muslim_guide/screens/performance_screen.dart';
@@ -7,6 +8,7 @@ import 'package:muslim_guide/screens/schedule_screen.dart';
 import 'package:muslim_guide/screens/settings_screen.dart';
 import 'package:muslim_guide/quran/quran.dart';
 import 'package:muslim_guide/screens/task_list_screen.dart';
+import 'package:muslim_guide/test_node.dart';
 
 class MuslimGuide extends StatefulWidget {
   const MuslimGuide({super.key});
@@ -36,7 +38,8 @@ class _MuslimGuideState extends State<MuslimGuide> {
       case 0:
         return HomeScreen(changeScreen: _selectPage);
       case 1:
-        return PerformanceScreen();
+        // return PerformanceScreen();
+        return MyApp();
       case 2:
         return const ScheduleScreen();
       case 3:
@@ -55,6 +58,9 @@ class _MuslimGuideState extends State<MuslimGuide> {
     String? uid = user?.uid;
     String? email = user?.email;
     print('uid: $uid, email: $email');
+    String? displayName = user?.displayName;
+    print('Username (displayName) set to: $displayName');
+    //registerUser(uid!, email!, displayName!);
     return MaterialApp(
       home: Scaffold(
         body: _getScreen(activeScreen),

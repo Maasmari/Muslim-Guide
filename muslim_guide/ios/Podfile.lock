@@ -97,7 +97,7 @@ SPEC CHECKSUMS:
   FirebaseCore: 0326ec9b05fbed8f8716cddbf0e36894a13837f7
   FirebaseCoreInternal: 6a292e6f0bece1243a737e81556e56e5e19282e3
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  geolocator_apple: 9157311f654584b9bb72686c55fc02a97b73f461
+  geolocator_apple: 6cbaf322953988e009e5ecb481f07efece75c450
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   GTMSessionFetcher: 0e876eea9782ec6462e91ab872711c357322c94f
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
