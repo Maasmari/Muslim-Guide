@@ -1,12 +1,11 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 
 Future<void> registerUser(String id, String email, String username) async {
-  String apiUrl = 'http://localhost:3000/register';
-  if (Platform.isAndroid) {
-    apiUrl = 'http://10.0.2.2:3000/register';
-  }
+  String apiUrl =
+      'https://us-central1-muslim-guide-417618.cloudfunctions.net/app/register';
 
   try {
     final response = await http.post(
