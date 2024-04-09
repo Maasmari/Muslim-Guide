@@ -101,8 +101,18 @@ class _ScheduleTaskState extends State<ScheduleTask> {
                   if(_selectedDate != null && _selectedTime != null) {
                     task.date = _selectedDate!;
                     task.time = _selectedTime!;
+                    var NoConflict = true;
+                    for(int i=0;i<registeredTasks.length-1;i++){
+                      if(registeredTasks[i].time == task.time && registeredTasks[i].date == task.date) {
+                        showFlashError(context, 'Another task with the same Time and Date exists.');
+                        NoConflict = false;
+                        break;
+                      }
+                    }
+                    if (NoConflict) {
                     registeredTasks.add(task);
                     showFlashError(context, 'Task has been added successfully');
+                    }
                   }
                   else {
                     showFlashError(context, 'Please enter both date and time to add the task to your schedule.');
