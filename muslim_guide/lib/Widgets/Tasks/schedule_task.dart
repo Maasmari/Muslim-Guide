@@ -102,7 +102,7 @@ class _ScheduleTaskState extends State<ScheduleTask> {
                     task.date = _selectedDate!;
                     task.time = _selectedTime!;
                     var NoConflict = true;
-                    for(int i=0;i<registeredTasks.length-1;i++){
+                    for(int i=0;i<registeredTasks.length;i++){
                       if(registeredTasks[i].time == task.time && registeredTasks[i].date == task.date) {
                         showFlashError(context, 'Another task with the same Time and Date exists.');
                         NoConflict = false;

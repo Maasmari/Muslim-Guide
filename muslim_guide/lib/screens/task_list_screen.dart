@@ -21,25 +21,36 @@ final List<Task> listOfTasks = [
     taskType: TaskType.optional,
     taskFrequency: TaskFrequency.once,
     isCompleted: false,
+    date: DateTime.now(),
+    time: TimeOfDay.now()
   ),
   Task(
       taskName: 'Read Dua',
       taskDescription: 'Don\'t forget to read dua!',
       taskType: TaskType.optional,
       taskFrequency: TaskFrequency.daily,
-      isCompleted: false),
+      isCompleted: false,
+      date: DateTime.now(),
+      time: TimeOfDay.now()
+    ),
   Task(
       taskName: 'Fasting',
       taskDescription: 'Do not drink or eat until Adhaan Al Maghreb!',
       taskType: TaskType.optional,
       taskFrequency: TaskFrequency.monthly,
-      isCompleted: false),
+      isCompleted: false,
+      date: DateTime.now(),
+      time: TimeOfDay.now()
+      ),
   Task(
       taskName: 'Sunnah',
       taskDescription: 'Perform sunnah prayer.',
       taskType: TaskType.optional,
       taskFrequency: TaskFrequency.daily,
-      isCompleted: false),
+      isCompleted: false,
+      date: DateTime.now(),
+      time: TimeOfDay.now()
+      ),
 ];
 
 class _TaskListState extends State<TaskListScreen> {

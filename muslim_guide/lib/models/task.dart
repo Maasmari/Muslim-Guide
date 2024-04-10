@@ -18,11 +18,9 @@ class Task {
     required this.taskType,
     required this.taskFrequency,
     required this.isCompleted,
-    //required this.date //maybe? then adjust it when user adds it
-    //required this.time
-  })  : id = uuid.v4(),
-        date = DateTime.now(),
-        time = TimeOfDay.now();
+    required this.date, //maybe? then adjust it when user adds it
+    required this.time,
+  })  : id = uuid.v4();
   
 
   final String id;
@@ -37,8 +35,5 @@ class Task {
   String get formattedDate {
     return formatterYMD.format(date);
   }
-  String get formattedTime {
-    return formatterHour.format(date);
-  }
-
+  
 }

@@ -1,30 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:muslim_guide/Widgets/Tasks/tasks.dart';
 import 'package:muslim_guide/Widgets/chart_bar.dart';
 import 'package:muslim_guide/models/task.dart';
 
 class Chart extends StatelessWidget {
   Chart({super.key});
 
-  final List<Task> tasks = [
-    Task(
-        taskName: 'Surat Al Kahf',
-        taskDescription: 'Read Surat Al Kahf.',
-        taskType: TaskType.optional,
-        taskFrequency: TaskFrequency.once,
-        isCompleted: false),
-    Task(
-        taskName: 'Read Dua',
-        taskDescription: 'Don\'t forget to read dua!',
-        taskType: TaskType.optional,
-        taskFrequency: TaskFrequency.daily,
-        isCompleted: false),
-    Task(
-        taskName: 'Fasting',
-        taskDescription: 'Do not drink or eat until Adhaan Al Maghreb!',
-        taskType: TaskType.optional,
-        taskFrequency: TaskFrequency.monthly,
-        isCompleted: false)
-  ];
+  final List<Task> tasks = registeredTasks; 
   final List days = [' Sun', ' Mon', ' Tue', ' Wed', ' Thu', ' Fri', ' Sat'];
 
   // double get maxTotalExpense {

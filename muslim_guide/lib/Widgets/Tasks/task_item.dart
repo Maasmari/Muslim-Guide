@@ -29,10 +29,10 @@ class TaskItem extends StatelessWidget {
               children: [
                 const Icon(Icons.alarm),
                 const SizedBox(width: 4),
-                Text(task.formattedTime),
+                Text(task.time.format(context)),
                 const Spacer(),
                 const CheckboxTask(),
-                //Text('(${task.taskFrequency.name.toUpperCase()})'), THIS GETS THE FREQUENCY OF THE TASK
+                //Text('(${task.taskFrequency.name.toUpperCase()})'), THIS DISPLAY THE FREQUENCY OF THE TASK
               ],
             ),
           ],
