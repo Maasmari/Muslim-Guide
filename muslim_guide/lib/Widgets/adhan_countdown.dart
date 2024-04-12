@@ -11,7 +11,7 @@ class AdhanCountdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (_) => PrayerCountdownNotifier(coordinates as Coordinates),
+      create: (_) => PrayerCountdownNotifier(coordinates),
       child: Consumer<PrayerCountdownNotifier>(
         builder: (context, notifier, _) {
           return Center(
@@ -20,7 +20,7 @@ class AdhanCountdown extends StatelessWidget {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: 'Time till ${notifier.nextPrayer.name} \n',
+                    text: 'Time till ${notifier.nextPrayer?.name} \n',
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
