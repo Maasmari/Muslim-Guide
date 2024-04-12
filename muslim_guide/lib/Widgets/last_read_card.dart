@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:muslim_guide/publishers/event_publisher.dart';
 import 'package:muslim_guide/quran/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,21 +15,31 @@ class LastReadCard extends StatefulWidget {
 class _LastReadCardState extends State<LastReadCard> {
   int bookmarkedAyahs = 1;
   int bookmarkedSuras = 1;
+  late StreamSubscription _subscription;
 
   @override
   void initState() {
     super.initState();
     readBookmarks();
+    _subscription = EventPublisher().onEvent.listen((event) {
+      if (event == 'updateBookmarks') {
+        readBookmarks();
+      }
+    });
   }
 
   void readBookmarks() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      bookmarkedAyahs =
-          prefs.getInt('ayah') ?? 1; // Using 1 as a fallback value
-      bookmarkedSuras =
-          prefs.getInt('surah') ?? 1; // Using 1 as a fallback value
+      bookmarkedAyahs = prefs.getInt('ayah') ?? 1;
+      bookmarkedSuras = prefs.getInt('surah') ?? 1;
     });
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
   }
 
   String getSurahName(int surahNumber) {

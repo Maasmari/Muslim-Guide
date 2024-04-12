@@ -46,11 +46,11 @@ dependencies:
   firebase_auth: ^4.17.8
   http: ^1.2.0
   flutter_launcher_icons: ^0.13.1
+  provider: ^6.1.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: "^0.13.1"
 
 flutter_launcher_icons:
   android: "launcher_icon"

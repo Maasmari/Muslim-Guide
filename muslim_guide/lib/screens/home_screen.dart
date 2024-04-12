@@ -3,7 +3,6 @@ import 'package:muslim_guide/Widgets/Tasks/tasks.dart';
 import 'package:muslim_guide/Widgets/last_read_card.dart';
 import 'package:muslim_guide/Widgets/task_card.dart';
 import 'package:muslim_guide/Widgets/adhan_countdown.dart';
-import 'package:muslim_guide/models/task.dart';
 import 'package:muslim_guide/widgets/prayer_times_card.dart';
 import 'package:adhan/adhan.dart';
 
@@ -59,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(8.0),
               child: TaskCard(
                 title: 'Your Tasks',
-                tasks: registeredTasks,
+                tasks: registeredTasks.sublist(0, 3),
                 color: Colors.purple,
               ),
             ),
@@ -67,35 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(8.0),
               child: TaskCard(
                 title: 'Optional Tasks',
-                tasks: [
-                  Task(
-                    taskName: 'Surat Al Kahf',
-                    taskDescription: 'Read Surat Al Kahf.',
-                    taskType: TaskType.optional,
-                    taskFrequency: TaskFrequency.once,
-                    isCompleted: false,
-                    date: DateTime.now(), //the dates and times here are just placeholders and will be changed when a user adds them to his schedule
-                    time: TimeOfDay.now(),
-                  ),
-                  Task(
-                    taskName: 'Read Dua',
-                    taskDescription: 'Don\'t forget to read dua!',
-                    taskType: TaskType.optional,
-                    taskFrequency: TaskFrequency.daily,
-                    isCompleted: false,
-                    date: DateTime.now(),
-                    time: TimeOfDay.now(),
-                  ),
-                  Task(
-                    taskName: 'Fasting',
-                    taskDescription:'Do not drink or eat until Adhaan Al Maghreb!',
-                    taskType: TaskType.optional,
-                    taskFrequency: TaskFrequency.monthly,
-                    isCompleted: false,
-                    date: DateTime.now(),
-                    time: TimeOfDay.now(),
-                  ),
-                ],
+                tasks: registeredTasks.sublist(0, 3),
                 color: Color.fromARGB(255, 31, 175, 195),
               ),
             ),

@@ -1,3 +1,4 @@
+import 'package:muslim_guide/publishers/event_publisher.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 import 'package:flutter/services.dart';
@@ -38,6 +39,8 @@ saveBookMark(surah, ayah) async {
   final prefs = await SharedPreferences.getInstance();
   await prefs.setInt("surah", surah);
   await prefs.setInt("ayah", ayah);
+  EventPublisher()
+      .publish('updateBookmarks'); // Notify listeners about the update
 }
 
 readBookmark() async {
