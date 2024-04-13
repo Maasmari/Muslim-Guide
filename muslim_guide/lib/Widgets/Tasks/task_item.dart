@@ -3,7 +3,7 @@ import 'package:muslim_guide/Widgets/checkbox.dart';
 import 'package:muslim_guide/models/task.dart';
 
 class TaskItem extends StatelessWidget {
-  const TaskItem({super.key, required this.task});
+  const TaskItem({Key? key, required this.task}) : super(key: key);
 
   final Task task;
 

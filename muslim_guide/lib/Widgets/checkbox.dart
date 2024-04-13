@@ -2,20 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:muslim_guide/models/task.dart';
 
 class CheckboxTask extends StatefulWidget {
-  CheckboxTask({super.key, required this.task});
+  CheckboxTask({Key? key, required this.task}) : super(key: key);
 
   final Task task;
 
   @override
   State<CheckboxTask> createState() {
-    return _CheckboxTaskState(task: task);
+    return _CheckboxTaskState();
   }
 }
 
 class _CheckboxTaskState extends State<CheckboxTask> {
-  _CheckboxTaskState({required this.task});
+  late Task _task;
 
-  final Task task;
+  @override
+  void initState() {
+    super.initState();
+    _task = widget.task;
+  }
   
   Color getColor(Set<MaterialState> states) {
       const Set<MaterialState> interactiveStates = <MaterialState>{
@@ -35,10 +39,10 @@ class _CheckboxTaskState extends State<CheckboxTask> {
     return Checkbox(
       checkColor: Colors.white,
       fillColor:MaterialStateProperty.resolveWith(getColor),
-      value: task.isCompleted,
+      value: _task.isCompleted,
       onChanged: (bool? value) {
         setState(() {
-          task.isCompleted = value!;
+          _task.isCompleted = value ?? false;
         });
       },
     );
