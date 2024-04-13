@@ -3,11 +3,22 @@ import 'package:muslim_guide/Widgets/Tasks/tasks.dart';
 import 'package:muslim_guide/Widgets/chart_bar.dart';
 import 'package:muslim_guide/models/task.dart';
 
+List<Task> getCompletedTasks() {
+  List<Task> completed = [];
+    for(int i = 0; i < registeredTasks.length; i++){
+      if(registeredTasks[i].isCompleted){
+        completed.add(registeredTasks[i]);
+      }
+    }
+    return completed;
+  }
+
 class Chart extends StatelessWidget {
   Chart({super.key});
 
   final List<Task> tasks = registeredTasks; 
   final List days = [' Sun', ' Mon', ' Tue', ' Wed', ' Thu', ' Fri', ' Sat'];
+  final List<Task> completedtasks = getCompletedTasks(); 
 
   // double get maxTotalExpense {
   //   double maxTotalExpense = 0;
