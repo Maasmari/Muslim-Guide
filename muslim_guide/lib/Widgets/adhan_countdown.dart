@@ -3,10 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:muslim_guide/providers/prayer_countdown_notifier.dart';
 import 'package:provider/provider.dart';
 
+final brightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
+bool isDarkMode = brightness == Brightness.dark;
+
 class AdhanCountdown extends StatelessWidget {
   final Coordinates coordinates;
 
   AdhanCountdown({Key? key, required this.coordinates}) : super(key: key);
+
+Color Checkdarkmode () {
+  Color textcolor = Colors.black;
+  if (isDarkMode) {
+    textcolor= Colors.white;
+  }
+  return textcolor;
+}
 
   @override
   Widget build(BuildContext context) {
@@ -24,14 +35,14 @@ class AdhanCountdown extends StatelessWidget {
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                        color: Checkdarkmode()),
                   ),
                   TextSpan(
                     text: '${notifier.timeLeft}',
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                        color: Checkdarkmode()),
                   ),
                 ],
               ),

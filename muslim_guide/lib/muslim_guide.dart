@@ -5,6 +5,15 @@ import 'package:muslim_guide/screens/schedule_screen.dart';
 import 'package:muslim_guide/screens/settings_screen.dart';
 import 'package:muslim_guide/quran/quran.dart';
 
+var kColorScheme = ColorScheme.fromSeed(
+  seedColor: Color.fromARGB(255, 0, 134, 0),
+);
+
+var kDarkColorScheme = ColorScheme.fromSeed(
+  brightness: Brightness.dark,
+  seedColor: Color.fromARGB(255, 0, 54, 7),
+);
+
 class MuslimGuide extends StatefulWidget {
   const MuslimGuide({super.key});
 
@@ -38,6 +47,48 @@ class _MuslimGuideState extends State<MuslimGuide> {
   Widget build(BuildContext context) {
     // For simplicity, user information retrieval has been removed. Implement as necessary.
     return MaterialApp(
+      darkTheme: ThemeData.dark().copyWith(
+        colorScheme: kDarkColorScheme,
+        cardTheme: const CardTheme().copyWith(
+          color: kDarkColorScheme.secondaryContainer,
+          margin: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: kDarkColorScheme.primaryContainer,
+            foregroundColor: kDarkColorScheme.onPrimaryContainer,
+          ),
+        ),
+      ),
+      theme: ThemeData().copyWith(
+        colorScheme: kColorScheme,
+        appBarTheme: const AppBarTheme().copyWith(
+          backgroundColor: kColorScheme.onPrimaryContainer,
+          foregroundColor: kColorScheme.primaryContainer,
+        ),
+        cardTheme: const CardTheme().copyWith(
+          color: kColorScheme.secondaryContainer,
+          margin: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: kColorScheme.primaryContainer,
+          ),
+        ),
+        textTheme: ThemeData().textTheme.copyWith(
+              titleLarge: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: kColorScheme.onSecondaryContainer,
+                fontSize: 16,
+              ),
+            ),
+      ),
       home: Scaffold(
         body: IndexedStack(
           index: activeScreen,

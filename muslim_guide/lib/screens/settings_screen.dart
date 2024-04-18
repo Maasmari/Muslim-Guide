@@ -8,7 +8,6 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool _darkMode = false; // Initial dark mode value
 
   Future<void> signOut() async {
     await Auth().signOut();
@@ -63,18 +62,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               CupertinoFormRow(
-                prefix: Text('Dark Mode'),
-                child: CupertinoSwitch(
-                  value: _darkMode,
-                  onChanged: (bool value) {
-                    setState(() {
-                      _darkMode = value;
-                    });
-                    // Implement dark mode functionality here
-                  },
-                ),
-              ),
-              CupertinoFormRow(
                 prefix: Text('Send Feedback'),
                 child: CupertinoButton(
                   child: Text('Go'),
@@ -90,6 +77,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       style: TextStyle(color: Colors.red)),
                   onPressed: () => confirmSignOut(context),
                 ),
+              ),
+              CupertinoFormRow(
+                child: Column(children: [
+                  Text('Dark/Light Mode'),
+                  Text('Change your device from Dark/Light mode to switch.'),],),
               ),
             ],
           ),
