@@ -3,6 +3,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:muslim_guide/database/register_user.dart';
 import '../auth.dart';
 
+var kColorScheme = ColorScheme.fromSeed(
+  seedColor: Color.fromARGB(255, 0, 134, 0),
+);
+
+var kDarkColorScheme = ColorScheme.fromSeed(
+  brightness: Brightness.dark,
+  seedColor: Color.fromARGB(255, 0, 54, 7),
+);
+
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -163,39 +172,83 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(appbarText,
-              style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
+    return MaterialApp(
+      darkTheme: ThemeData.dark().copyWith(
+        colorScheme: kDarkColorScheme,
+        cardTheme: const CardTheme().copyWith(
+          color: kDarkColorScheme.secondaryContainer,
+          margin: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
         ),
-        body: SingleChildScrollView(
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-                  // Conditionally show the username field for registration first
-                  if (!isLogin) ...[
-                    _entryField('Username', _controllerUsername,
-                        isUsername: true),
-                    SizedBox(height: 20),
-                  ],
-                  _entryField('Email', _controllerEmail),
-                  SizedBox(height: 20),
-                  _entryField('Password', _controllerPassword,
-                      isPassword: true),
-                  SizedBox(height: 20),
-                  _errorMessage(),
-                  SizedBox(height: 20),
-                  _submitButton(),
-                  _loginOrRegisterButton(),
-                ],
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: kDarkColorScheme.primaryContainer,
+            foregroundColor: kDarkColorScheme.onPrimaryContainer,
+          ),
+        ),
+      ),
+      theme: ThemeData().copyWith(
+        colorScheme: kColorScheme,
+        appBarTheme: const AppBarTheme().copyWith(
+          backgroundColor: kColorScheme.onPrimaryContainer,
+          foregroundColor: kColorScheme.primaryContainer,
+        ),
+        cardTheme: const CardTheme().copyWith(
+          color: kColorScheme.secondaryContainer,
+          margin: const EdgeInsets.symmetric(
+            horizontal: 16,
+            vertical: 8,
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: kColorScheme.primaryContainer,
+          ),
+        ),
+        textTheme: ThemeData().textTheme.copyWith(
+              titleLarge: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: kColorScheme.onSecondaryContainer,
+                fontSize: 16,
               ),
             ),
+      ),
+      home: Scaffold(
+          appBar: AppBar(
+            title: Text(appbarText,
+                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
           ),
-        ));
+          body: SingleChildScrollView(
+            child: Container(
+              padding: const EdgeInsets.all(20),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+                    // Conditionally show the username field for registration first
+                    if (!isLogin) ...[
+                      _entryField('Username', _controllerUsername,
+                          isUsername: true),
+                      SizedBox(height: 20),
+                    ],
+                    _entryField('Email', _controllerEmail),
+                    SizedBox(height: 20),
+                    _entryField('Password', _controllerPassword,
+                        isPassword: true),
+                    SizedBox(height: 20),
+                    _errorMessage(),
+                    SizedBox(height: 20),
+                    _submitButton(),
+                    _loginOrRegisterButton(),
+                  ],
+                ),
+              ),
+            ),
+          )),
+    );
   }
 }
