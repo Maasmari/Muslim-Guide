@@ -95,7 +95,7 @@ class _MuslimGuideState extends State<MuslimGuide> {
           children: pages,
         ),
         bottomNavigationBar: BottomNavigationBar(
-          fixedColor: const Color.fromARGB(255, 30, 87, 32),
+          fixedColor: Color.fromARGB(255, 43, 122, 46),
           type: BottomNavigationBarType.fixed,
           selectedFontSize: 12,
           unselectedFontSize: 12,

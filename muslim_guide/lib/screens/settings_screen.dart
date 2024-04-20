@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
+import 'package:muslim_guide/screens/profile_screen.dart';
+import 'package:muslim_guide/screens/write_suggestion_screen.dart';
 import '../auth.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -8,21 +11,30 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-
   Future<void> signOut() async {
     await Auth().signOut();
   }
 
   void confirmSignOut(BuildContext context) {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
     showCupertinoDialog(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text('Confirm Logout'),
-          content: Text('Are you sure you want to log out?'),
+          title: Text(
+            'Confirm Logout',
+            style: TextStyle(color: isDarkMode ? Colors.white : Colors.black),
+          ),
+          content: Text(
+            'Are you sure you want to log out?',
+            style: TextStyle(color: isDarkMode ? Colors.white : Colors.black),
+          ),
           actions: <Widget>[
             CupertinoDialogAction(
-              child: Text('Cancel'),
+              child: Text('Cancel',
+                  style:
+                      TextStyle(color: isDarkMode ? Colors.blue : Colors.blue)),
               onPressed: () {
                 Navigator.of(context).pop(); // Close the dialog
               },
@@ -57,7 +69,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: CupertinoButton(
                   child: Text('View'),
                   onPressed: () {
-                    // Navigate to profile view/edit screen
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const ProfileScreen()));
                   },
                 ),
               ),
@@ -66,7 +79,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: CupertinoButton(
                   child: Text('Go'),
                   onPressed: () {
-                    // Implement feedback functionality here
+                    // Navigate to profile writeSuggestionScreen() screen
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const WriteSuggestionScreen()));
                   },
                 ),
               ),
@@ -79,9 +94,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               CupertinoFormRow(
-                child: Column(children: [
-                  Text('Dark/Light Mode'),
-                  Text('Change your device from Dark/Light mode to switch.'),],),
+                child: Column(
+                  children: [
+                    Text('Dark/Light Mode'),
+                    Text('Change your device from Dark/Light mode to switch.'),
+                  ],
+                ),
               ),
             ],
           ),

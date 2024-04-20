@@ -5,19 +5,27 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              'Profile',
-            ),
-            const SizedBox(height: 20),
-          ],
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Profile',
+          ),
+          centerTitle: true,
+          backgroundColor: const Color.fromARGB(255, 30, 87, 32),
         ),
-      ),
-    );
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Profile',
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
+          ),
+        ));
   }
 }

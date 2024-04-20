@@ -35,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
         preferredSize: Size.fromHeight(30.0), // Set your desired height here
         child: AppBar(
           //title: Text('Muslim Guide'),
+
           centerTitle: true,
         ),
       ),

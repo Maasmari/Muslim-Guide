@@ -51,6 +51,9 @@ PODS:
     - GoogleUtilities/Logger
     - GoogleUtilities/Privacy
   - GTMSessionFetcher/Core (3.3.2)
+  - path_provider_foundation (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - PromisesObjC (2.4.0)
   - RecaptchaInterop (100.0.0)
   - shared_preferences_foundation (0.0.1):
@@ -62,6 +65,7 @@ DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
+  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
 
 SPEC REPOS:
@@ -85,6 +89,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   geolocator_apple:
     :path: ".symlinks/plugins/geolocator_apple/ios"
+  path_provider_foundation:
+    :path: ".symlinks/plugins/path_provider_foundation/darwin"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
 
@@ -100,10 +106,11 @@ SPEC CHECKSUMS:
   geolocator_apple: 6cbaf322953988e009e5ecb481f07efece75c450
   GoogleUtilities: d053d902a8edaa9904e1bd00c37535385b8ed152
   GTMSessionFetcher: 0e876eea9782ec6462e91ab872711c357322c94f
+  path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
   PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
   RecaptchaInterop: 7d1a4a01a6b2cb1610a47ef3f85f0c411434cb21
   shared_preferences_foundation: b4c3b4cddf1c21f02770737f147a3f5da9d39695
 
 PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
 
-COCOAPODS: 1.13.0
+COCOAPODS: 1.15.2
