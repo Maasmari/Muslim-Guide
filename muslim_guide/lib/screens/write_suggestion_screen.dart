@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class WriteSuggestionrScreen extends StatelessWidget {
-  const WriteSuggestionrScreen({super.key});
+class WriteSuggestionScreen extends StatelessWidget {
+  const WriteSuggestionScreen({super.key});
 
   @override
   Widget build(context) {
