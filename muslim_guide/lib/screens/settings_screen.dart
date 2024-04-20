@@ -55,7 +55,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               CupertinoFormRow(
                 prefix: Text('Profile'),
                 child: CupertinoButton(
-                  child: Text('View/Edit'),
+                  child: Text('View'),
                   onPressed: () {
                     // Navigate to profile view/edit screen
                   },
