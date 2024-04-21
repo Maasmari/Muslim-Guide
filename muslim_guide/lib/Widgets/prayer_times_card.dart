@@ -117,7 +117,7 @@ class _PrayerTimeCardState extends State<PrayerTimeCard> {
           position.latitude,
           position
               .longitude); // Use actual position but doesnt work in emulator
-      //myCoordinates = Coordinates(24.7136, 46.6753);
+      myCoordinates = Coordinates(24.7136, 46.6753);
       // Calculate tomorrow's date components
       DateTime tomorrow = DateTime.now().add(Duration(days: 0));
       DateComponents tomorrowDateComponents =

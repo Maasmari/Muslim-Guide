@@ -1,52 +1,78 @@
 import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class MyApp extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
+Future<List<dynamic>> fetchTasks(String userID) async {
+  final response = await http.get(
+    Uri.parse(
+        'https://us-central1-muslim-guide-417618.cloudfunctions.net/app/get_tasks/tasks/$userID'),
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 200 OK response, then parse the JSON.
+    return json.decode(response.body)['tasks'];
+  } else {
+    // If the server did not return a 200 OK response,
+    // then throw an exception.
+    throw Exception('Failed to load tasks');
+  }
 }
 
-class _MyAppState extends State<MyApp> {
-  String _data = 'Press the button to fetch data';
+class TaskScreenDB extends StatefulWidget {
+  @override
+  _TaskScreenDBState createState() => _TaskScreenDBState();
+}
 
-  Future<void> fetchData() async {
-    final url = Uri.parse(
-        'http://localhost:3000/test-connection'); // Change to your server's IP if not running locally
-    final response = await http.get(url);
+class _TaskScreenDBState extends State<TaskScreenDB> {
+  late Future<List<dynamic>> futureTasks;
 
-    if (response.statusCode == 200) {
-      final result = jsonDecode(response.body);
+  @override
+  void initState() {
+    super.initState();
+    initTasks();
+  }
+
+  void initTasks() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = await auth.currentUser;
+    if (user != null) {
+      String userID = user.uid;
       setState(() {
-        _data = result.containsKey('tables')
-            ? 'Tables: ${result['tables'].join(', ')}'
-            : result['message'];
+        futureTasks = fetchTasks(userID);
       });
     } else {
-      setState(() {
-        _data = 'Failed to fetch data';
-      });
+      // Handle user not being signed in
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Fetch Data from Node.js'),
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(_data),
-              ElevatedButton(
-                onPressed: fetchData,
-                child: Text('Fetch Data'),
-              ),
-            ],
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Tasks'),
+      ),
+      body: Center(
+        child: FutureBuilder<List<dynamic>>(
+          future: futureTasks,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text("Error: ${snapshot.error}");
+            }
+
+            return ListView.builder(
+              itemCount: snapshot.data?.length ?? 0,
+              itemBuilder: (context, index) {
+                var task = snapshot.data![index];
+                return ListTile(
+                  title: Text(task['taskName']),
+                  subtitle: Text(task['taskDescription']),
+                );
+              },
+            );
+          },
         ),
       ),
     );

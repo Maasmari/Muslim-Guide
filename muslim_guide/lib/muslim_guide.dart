@@ -4,6 +4,7 @@ import 'package:muslim_guide/screens/performance_screen.dart';
 import 'package:muslim_guide/screens/schedule_screen.dart';
 import 'package:muslim_guide/screens/settings_screen.dart';
 import 'package:muslim_guide/quran/quran.dart';
+import 'package:muslim_guide/test_node.dart';
 
 var kColorScheme = ColorScheme.fromSeed(
   seedColor: Color.fromARGB(255, 0, 134, 0),
@@ -32,6 +33,7 @@ class _MuslimGuideState extends State<MuslimGuide> {
         changeScreen:
             _selectPage)); // Assuming HomeScreen accepts and correctly handles changeScreen callback
     pages.add(PerformanceScreen());
+    pages.add(TaskScreenDB());
     pages.add(const ScheduleScreen());
     pages.add(const Quran());
     pages.add(SettingsScreen());
@@ -111,6 +113,7 @@ class _MuslimGuideState extends State<MuslimGuide> {
               icon: Icon(Icons.bar_chart),
               label: 'Performance',
             ),
+            BottomNavigationBarItem(icon: Icon(Icons.task), label: 'Tasks'),
             BottomNavigationBarItem(
               icon: Icon(Icons.calendar_month),
               label: 'Schedule',
