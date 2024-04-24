@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:muslim_guide/auth.dart';
+import 'package:muslim_guide/database/auth.dart';
 import 'package:muslim_guide/muslim_guide.dart';
 import 'package:muslim_guide/screens/login_screen.dart';
 

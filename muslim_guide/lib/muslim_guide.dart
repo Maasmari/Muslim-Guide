@@ -4,7 +4,7 @@ import 'package:muslim_guide/screens/performance_screen.dart';
 import 'package:muslim_guide/screens/schedule_screen.dart';
 import 'package:muslim_guide/screens/settings_screen.dart';
 import 'package:muslim_guide/quran/quran.dart';
-import 'package:muslim_guide/test_node.dart';
+import 'package:muslim_guide/database/test_node.dart';
 
 var kColorScheme = ColorScheme.fromSeed(
   seedColor: Color.fromARGB(255, 0, 134, 0),
@@ -29,9 +29,7 @@ class _MuslimGuideState extends State<MuslimGuide> {
   @override
   void initState() {
     super.initState();
-    pages.add(HomeScreen(
-        changeScreen:
-            _selectPage)); // Assuming HomeScreen accepts and correctly handles changeScreen callback
+    pages.add(HomeScreen(changeScreen: _selectPage));
     pages.add(PerformanceScreen());
     pages.add(TaskScreenDB());
     pages.add(const ScheduleScreen());
