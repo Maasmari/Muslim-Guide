@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:muslim_guide/models/task.dart';
 import 'package:muslim_guide/Widgets/Tasks/tasks.dart';
 
+TaskFrequency taskF = TaskFrequency.once;
+
 class ScheduleTask extends StatefulWidget {
   const ScheduleTask({super.key, required this.task});
 
@@ -88,6 +90,28 @@ class _ScheduleTaskState extends State<ScheduleTask> {
             ],
           ),
           const SizedBox(height: 16),
+          DropdownButton<TaskFrequency>(
+          value: taskF,
+          icon: const Icon(Icons.arrow_downward),
+          elevation: 16,
+          style: const TextStyle(color: Colors.deepPurple),
+          underline: Container(
+            height: 2,
+            color: Colors.deepPurpleAccent,
+          ),
+          onChanged: (TaskFrequency? value) {
+        // This is called when the user selects an item.
+         setState(() {
+          taskF = value!;
+          });
+         },
+          items: TaskFrequency.values.map((TaskFrequency TF) {
+              return DropdownMenuItem<TaskFrequency>(
+                value: TF,
+                child: Text(TF.toString()));
+          },
+          ).toList()),
+          const SizedBox(height: 16),
           Row(
             children: [
               TextButton(
@@ -101,6 +125,7 @@ class _ScheduleTaskState extends State<ScheduleTask> {
                   if(_selectedDate != null && _selectedTime != null) {
                     task.date = _selectedDate!;
                     task.time = _selectedTime!;
+                    task.taskFrequency = taskF;
                     var NoConflict = true;
                     for(int i=0;i<registeredTasks.length;i++){
                       if(registeredTasks[i].time == task.time && registeredTasks[i].date == task.date) {
