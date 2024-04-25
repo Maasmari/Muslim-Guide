@@ -32,7 +32,7 @@ class TaskItem extends StatelessWidget {
                 Text(task.time.format(context)),
                 const Spacer(),
                 CheckboxTask(task: task),
-                //Text('(${task.taskFrequency.name.toUpperCase()})'), THIS DISPLAY THE FREQUENCY OF THE TASK
+                Text('(${task.taskFrequency.name.toUpperCase()})'),
               ],
             ),
           ],

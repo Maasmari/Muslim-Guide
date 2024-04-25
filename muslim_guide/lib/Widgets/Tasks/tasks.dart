@@ -35,7 +35,7 @@ final List<Task> registeredTasks = [
     taskName: 'Fasting',
     taskDescription: 'Do not drink or eat until Adhan of Maghreb',
     taskType: TaskType.optional,
-    taskFrequency: TaskFrequency.monthly,
+    taskFrequency: TaskFrequency.weekly,
     isCompleted: false,
     date: DateTime.utc(2024, 4, 15),
     time: TimeOfDay(hour: 4, minute: 0),

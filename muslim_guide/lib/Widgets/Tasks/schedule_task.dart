@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:muslim_guide/models/task.dart';
 import 'package:muslim_guide/Widgets/Tasks/tasks.dart';
 
-TaskFrequency taskF = TaskFrequency.once;
-
 class ScheduleTask extends StatefulWidget {
   const ScheduleTask({super.key, required this.task});
 
@@ -21,13 +19,28 @@ class _ScheduleTaskState extends State<ScheduleTask> {
   final Task task;
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
+  TaskFrequency? taskF;
+
+DateTime CheckFrequency(TaskFrequency freq) {
+//if daily,weekly,monthly.......
+if(taskF == TaskFrequency.daily){
+  return DateTime.now();
+}
+else if(taskF == TaskFrequency.weekly) {
+  return DateTime(DateTime.now().year , DateTime.now().month, DateTime.now().day + 7);
+}
+else if(taskF == TaskFrequency.monthly) {
+  return DateTime(DateTime.now().year , DateTime.now().month + 1, DateTime.now().day);
+}
+else 
+  return DateTime(DateTime.now().year + 1, DateTime.now().month, DateTime.now().day);
+
+}
 
   void _presentDatePicker() async {
     final now = DateTime.now();
-    DateTime firstDate = DateTime(
-        DateTime.now().year - 1, DateTime.now().month, DateTime.now().day);
-    DateTime lastDate = DateTime(
-        DateTime.now().year + 1, DateTime.now().month, DateTime.now().day);
+    DateTime firstDate = now;
+    DateTime lastDate = CheckFrequency(taskF!);
     final pickedDate = await showDatePicker(
         context: context,
         firstDate: firstDate,
@@ -60,6 +73,28 @@ class _ScheduleTaskState extends State<ScheduleTask> {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
+          DropdownButton<TaskFrequency>(
+          value: taskF,
+          icon: const Icon(Icons.arrow_downward),
+          elevation: 16,
+          style: const TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+          underline: Container(
+            height: 2,
+            color: Color.fromARGB(255, 14, 85, 0),
+          ),
+          onChanged: (TaskFrequency? value) {
+        // This is called when the user selects an item.
+         setState(() {
+          taskF = value!;
+          });
+         },
+          items: TaskFrequency.values.map((TaskFrequency TF) {
+              return DropdownMenuItem<TaskFrequency>(
+                value: TF,
+                child: Text(TF.name));
+          },
+          ).toList()),
+          const SizedBox(height: 16),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -90,28 +125,6 @@ class _ScheduleTaskState extends State<ScheduleTask> {
             ],
           ),
           const SizedBox(height: 16),
-          DropdownButton<TaskFrequency>(
-          value: taskF,
-          icon: const Icon(Icons.arrow_downward),
-          elevation: 16,
-          style: const TextStyle(color: Colors.deepPurple),
-          underline: Container(
-            height: 2,
-            color: Colors.deepPurpleAccent,
-          ),
-          onChanged: (TaskFrequency? value) {
-        // This is called when the user selects an item.
-         setState(() {
-          taskF = value!;
-          });
-         },
-          items: TaskFrequency.values.map((TaskFrequency TF) {
-              return DropdownMenuItem<TaskFrequency>(
-                value: TF,
-                child: Text(TF.toString()));
-          },
-          ).toList()),
-          const SizedBox(height: 16),
           Row(
             children: [
               TextButton(
@@ -125,7 +138,7 @@ class _ScheduleTaskState extends State<ScheduleTask> {
                   if(_selectedDate != null && _selectedTime != null) {
                     task.date = _selectedDate!;
                     task.time = _selectedTime!;
-                    task.taskFrequency = taskF;
+                    task.taskFrequency = taskF!;
                     var NoConflict = true;
                     for(int i=0;i<registeredTasks.length;i++){
                       if(registeredTasks[i].time == task.time && registeredTasks[i].date == task.date) {

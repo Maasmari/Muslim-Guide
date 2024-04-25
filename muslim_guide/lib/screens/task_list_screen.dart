@@ -19,7 +19,7 @@ final List<Task> listOfTasks = [
     taskName: 'Surat Al Kahf',
     taskDescription: 'Read Surat Al Kahf.',
     taskType: TaskType.optional,
-    taskFrequency: TaskFrequency.once,
+    taskFrequency: TaskFrequency.weekly,
     isCompleted: false,
     date: DateTime.now(),
     time: TimeOfDay.now()

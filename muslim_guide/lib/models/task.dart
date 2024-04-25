@@ -9,7 +9,7 @@ const uuid = Uuid();
 
 enum TaskType { optional, compulsory }
 
-enum TaskFrequency { daily, weekly, monthly, yearly, other, once }
+enum TaskFrequency { daily, weekly, monthly, yearly, once }
 
 class Task {
   Task({
