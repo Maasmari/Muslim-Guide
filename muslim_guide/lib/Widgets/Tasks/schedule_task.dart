@@ -140,6 +140,37 @@ else
                     task.time = _selectedTime!;
                     task.taskFrequency = taskF!;
                     var NoConflict = true;
+
+                    if(taskF == TaskFrequency.daily && _selectedDate!.day != DateTime.now().day || _selectedDate!.month != DateTime.now().month){
+                        showFlashError(context, 'Incorrect date, please select again.');
+                        NoConflict = false;
+                    }
+                    else if(taskF == TaskFrequency.weekly && _selectedDate!.difference(DateTime.now()).inDays > 7){
+                        showFlashError(context, 'Incorrect date, please select again.');
+                        NoConflict = false;
+                    }
+                    else if(taskF == TaskFrequency.monthly){
+                      if (_selectedDate!.month == 1 || _selectedDate!.month == 3 || _selectedDate!.month == 5 || _selectedDate!.month == 7 || _selectedDate!.month == 8 || 
+                       _selectedDate!.month == 10 || _selectedDate!.month == 12 && _selectedDate!.difference(DateTime.now()).inDays > 31) {
+                        showFlashError(context, 'Incorrect date, please select again.');
+                        NoConflict = false;
+                        }
+                      else if (_selectedDate!.month == 4 || _selectedDate!.month == 6 || _selectedDate!.month == 9 || _selectedDate!.month == 11 && _selectedDate!.difference(DateTime.now()).inDays > 31) {
+                        showFlashError(context, 'Incorrect date, please select again.');
+                        NoConflict = false;
+                        }
+                        else {
+                          if (_selectedDate!.year % 4 == 0  && _selectedDate!.difference(DateTime.now()).inDays > 29) { //maybe needs adjustment, need to test
+                        showFlashError(context, 'Incorrect date, please select again.');
+                        NoConflict = false;
+                        }
+                        else if (_selectedDate!.year % 4 != 0  &&_selectedDate!.difference(DateTime.now()).inDays > 28) {
+                        showFlashError(context, 'Incorrect date, please select again.');
+                        NoConflict = false;
+                        }
+                        }
+                    }
+
                     for(int i=0;i<registeredTasks.length;i++){
                       if(registeredTasks[i].time == task.time && registeredTasks[i].date == task.date) {
                         showFlashError(context, 'Another task with the same Time and Date exists.');
@@ -153,7 +184,7 @@ else
                     }
                   }
                   else {
-                    showFlashError(context, 'Please enter both date and time to add the task to your schedule.');
+                    showFlashError(context, 'Please enter valid date and time to add the task to your schedule.');
                   }
                   Navigator.pop(context);
                 },
