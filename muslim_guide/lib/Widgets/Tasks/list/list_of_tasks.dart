@@ -7,12 +7,12 @@ class ListofTaskItems extends StatelessWidget {
   const ListofTaskItems({super.key, required this.task});
 
   final Task task;
-  
+
   @override
   Widget build(BuildContext context) {
-
     void _openAddTaskOverlay() {
-      showModalBottomSheet(context: context, builder: (ctx) => ScheduleTask(task: task));
+      showModalBottomSheet(
+          context: context, builder: (ctx) => ScheduleTask(task: task));
     }
 
     return Card(

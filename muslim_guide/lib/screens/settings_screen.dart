@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 import 'package:muslim_guide/screens/profile_screen.dart';
 import 'package:muslim_guide/screens/write_suggestion_screen.dart';
 import '../database/auth.dart';

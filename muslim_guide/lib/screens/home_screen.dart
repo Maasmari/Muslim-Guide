@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:muslim_guide/Widgets/Tasks/tasks.dart';
 import 'package:muslim_guide/Widgets/last_read_card.dart';
 import 'package:muslim_guide/Widgets/task_card.dart';
 import 'package:muslim_guide/Widgets/adhan_countdown.dart';
+import 'package:muslim_guide/providers/task_provider.dart';
 import 'package:muslim_guide/widgets/prayer_times_card.dart';
 import 'package:adhan/adhan.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   final Function? changeScreen;
@@ -59,7 +60,8 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(8.0),
               child: TaskCard(
                 title: 'Your Tasks',
-                tasks: registeredTasks.sublist(0, 3),
+                tasks: Provider.of<TaskProvider>(context, listen: true)
+                    .assignedTasks,
                 color: Colors.purple,
               ),
             ),
@@ -67,7 +69,8 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(8.0),
               child: TaskCard(
                 title: 'Optional Tasks',
-                tasks: registeredTasks.sublist(0, 3),
+                tasks: Provider.of<TaskProvider>(context, listen: true)
+                    .assignedTasks,
                 color: Color.fromARGB(255, 31, 175, 195),
               ),
             ),

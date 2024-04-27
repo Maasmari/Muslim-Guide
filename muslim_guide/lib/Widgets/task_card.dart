@@ -35,32 +35,37 @@ class TaskCard extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 30.0),
+                const Icon(Icons.arrow_forward_ios,
+                    color: Colors.white, size: 30.0),
               ],
             ),
             const SizedBox(height: 8.0), // Spacing between title and tasks
-            ...tasks.map((task) => Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 4.0), // Reduced spacing between tasks
-                  child: Row(
-                    children: [
-                      Icon(
-                        task.isCompleted
-                            ? Icons.check_circle
-                            : Icons.radio_button_unchecked,
-                        color: Colors.white,
-                        size: 20.0, // Smaller icons
-                      ),
-                      const SizedBox(width: 8.0), // Spacing between icon and text
-                      Text(
-                        task.taskName,
-                        style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 14.0), // Smaller font size for task text
-                      ),
-                    ],
+            ...tasks.take(3).map(
+                  (task) => Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 4.0), // Reduced spacing between tasks
+                    child: Row(
+                      children: [
+                        Icon(
+                          task.isCompleted
+                              ? Icons.check_circle
+                              : Icons.radio_button_unchecked,
+                          color: Colors.white,
+                          size: 20.0, // Smaller icons
+                        ),
+                        const SizedBox(
+                            width: 8.0), // Spacing between icon and text
+                        Text(
+                          task.taskName,
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize:
+                                  14.0), // Smaller font size for task text
+                        ),
+                      ],
+                    ),
                   ),
-                )),
+                ),
           ],
         ),
       ),

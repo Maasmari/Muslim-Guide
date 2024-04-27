@@ -95,11 +95,13 @@ class _LoginScreenState extends State<LoginScreen> {
     return TextFormField(
       controller: controller,
       obscureText: isPassword ? _isPasswordHidden : false,
+      style: TextStyle(
+          color: kDarkColorScheme
+              .onSurface), // Ensures text is visible against dark background
       validator: (value) {
         if (value!.isEmpty) {
           return 'Please enter your $title';
         }
-        // Additional validation for the username can be placed here
         if (isUsername && value.length < 4) {
           return 'Username must be at least 4 characters long';
         }
@@ -107,15 +109,24 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       decoration: InputDecoration(
         labelText: title,
+        labelStyle: TextStyle(
+            color: kDarkColorScheme
+                .onBackground), // Label color for better visibility
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(
+              color: kDarkColorScheme.onBackground,
+              width: 1.0), // Visible border in dark mode
         ),
-        fillColor: Colors.white,
+        fillColor:
+            kDarkColorScheme.background, // Dark fill color for input field
         filled: true,
         suffixIcon: isPassword
             ? IconButton(
                 icon: Icon(
                   _isPasswordHidden ? Icons.visibility_off : Icons.visibility,
+                  color: kDarkColorScheme
+                      .onSurface, // Icon color in dark mode for visibility
                 ),
                 onPressed: () {
                   setState(() {
@@ -148,10 +159,6 @@ class _LoginScreenState extends State<LoginScreen> {
           createUserWithEmailAndPassword();
         }
       },
-      style: ElevatedButton.styleFrom(
-        primary: Colors.purple, // Background color
-        onPrimary: Colors.white, // Text Color (Foreground color)
-      ),
       child: Text(isLogin ? 'Login' : 'Register'),
     );
   }

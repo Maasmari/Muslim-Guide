@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:muslim_guide/Widgets/Tasks/list/task_list.dart';
-import 'package:muslim_guide/models/task.dart';
 
 //similar to tasks.dart
 class TaskListScreen extends StatefulWidget {
@@ -12,46 +11,6 @@ class TaskListScreen extends StatefulWidget {
     return _TaskListState();
   }
 }
-
-final List<Task> listOfTasks = [
-  //was a private list
-  Task(
-    taskName: 'Surat Al Kahf',
-    taskDescription: 'Read Surat Al Kahf.',
-    taskType: TaskType.optional,
-    taskFrequency: TaskFrequency.weekly,
-    isCompleted: false,
-    date: DateTime.now(),
-    time: TimeOfDay.now()
-  ),
-  Task(
-      taskName: 'Read Dua',
-      taskDescription: 'Don\'t forget to read dua!',
-      taskType: TaskType.optional,
-      taskFrequency: TaskFrequency.daily,
-      isCompleted: false,
-      date: DateTime.now(),
-      time: TimeOfDay.now()
-    ),
-  Task(
-      taskName: 'Fasting',
-      taskDescription: 'Do not drink or eat until Adhaan Al Maghreb!',
-      taskType: TaskType.optional,
-      taskFrequency: TaskFrequency.monthly,
-      isCompleted: false,
-      date: DateTime.now(),
-      time: TimeOfDay.now()
-      ),
-  Task(
-      taskName: 'Sunnah',
-      taskDescription: 'Perform sunnah prayer.',
-      taskType: TaskType.optional,
-      taskFrequency: TaskFrequency.daily,
-      isCompleted: false,
-      date: DateTime.now(),
-      time: TimeOfDay.now()
-      ),
-];
 
 class _TaskListState extends State<TaskListScreen> {
   @override
@@ -73,8 +32,6 @@ class _TaskListState extends State<TaskListScreen> {
   }
 
   Widget content() {
-    return Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: TaskList(tasks: listOfTasks));
+    return Padding(padding: const EdgeInsets.all(15.0), child: TaskList());
   }
 }
