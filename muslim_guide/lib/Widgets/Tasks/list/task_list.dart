@@ -13,7 +13,7 @@ class TaskList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Task> tasks =
-        Provider.of<TaskProvider>(context, listen: true).assignedTasks;
+        Provider.of<TaskProvider>(context, listen: true).unassignedTasks + Provider.of<TaskProvider>(context, listen: true).assignedTasks;
     return ListView.builder(
       itemCount: tasks.length,
       itemBuilder: (ctx, index) => ListofTaskItems(task: tasks[index]),
