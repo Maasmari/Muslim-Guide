@@ -20,7 +20,7 @@ class TasksList extends StatelessWidget {
 
     void CheckDateAndFrequency() { //this function changes the date of the task depending on its frequency.
       List<Task> tsks = Provider.of<TaskProvider>(context).assignedTasks;
-      for(int i = 0 , i < tsks.length , i++) {
+      for(int i = 0 ; i < tsks.length ; i++) {
 
         if (tsks[i].taskFrequency == TaskFrequency.daily && tsks[i].date.day != DateTime.now().day) {
           tsks[i].date = DateTime.now();
