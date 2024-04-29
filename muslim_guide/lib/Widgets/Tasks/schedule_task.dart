@@ -172,7 +172,7 @@ class _ScheduleTaskState extends State<ScheduleTask> {
                           _selectedDate!.month == 9 ||
                           _selectedDate!.month == 11 &&
                               _selectedDate!.difference(DateTime.now()).inDays >
-                                  31) {
+                                  30) {
                         showFlashError(
                             context, 'Incorrect date, please select again.');
                         NoConflict = false;
