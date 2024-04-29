@@ -26,14 +26,13 @@ class _ScheduleState extends State<ScheduleScreen> {
   @override
   void initState() {
     super.initState();
-    _selectedTasks =
-        ValueNotifier<List<Task>>([]); // Initialized with an empty list.
+    _selectedTasks = ValueNotifier<List<Task>>([]); // Initialized with an empty list.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         final taskProvider = Provider.of<TaskProvider>(context, listen: false);
         assignedTasks = taskProvider.assignedTasks;
         _selectedTasks.value =
-            _getTasksForDay(today); // Now safely updating the value.
+            _getTasksForDay(today); // Now safely updating the value. 
       }
     });
   }
@@ -94,7 +93,7 @@ class _ScheduleState extends State<ScheduleScreen> {
             child: ValueListenableBuilder<List<Task>>(
               valueListenable: _selectedTasks,
               builder: (context, value, _) {
-                return TasksList();
+                return TasksList(tasks: _getTasksForDay(today));
               },
             ),
           ),

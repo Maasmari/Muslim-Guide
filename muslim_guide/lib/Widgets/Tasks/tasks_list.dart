@@ -6,12 +6,17 @@ import 'package:muslim_guide/models/task.dart';
 import 'package:muslim_guide/providers/task_provider.dart';
 
 class TasksList extends StatelessWidget {
-  const TasksList({super.key});
+    const TasksList({
+    super.key,
+    required this.tasks,
+  });
+
+  final List<Task> tasks;
 
   @override
   Widget build(BuildContext context) {
     // Fetch tasks directly from the provider
-    List<Task> tasks = Provider.of<TaskProvider>(context).assignedTasks;
+    //List<Task> tasks = Provider.of<TaskProvider>(context).assignedTasks;
 
     return ListView.builder(
       itemCount: tasks.length,
