@@ -54,9 +54,12 @@ class TasksList extends StatelessWidget {
                 }
         } else if (tsks[i].taskFrequency == TaskFrequency.yearly && tsks[i].date.difference(DateTime.now()).inDays > 365){
           tsks[i].date = tsks[i].date.add(const Duration(days: 365));
+        } else if (tsks[i].taskFrequency == TaskFrequency.once && tsks[i].date.difference(DateTime.now()).inDays > 365){
+          tsks.remove(tsks[i]); //REMOVE TASK IF ITS OLDER THAN 1 YEAR, NEED TO REMOVE FROM DB 
         }
       }
     }
+
     CheckDateAndFrequency();
     return ListView.builder(
       itemCount: tasks.length,

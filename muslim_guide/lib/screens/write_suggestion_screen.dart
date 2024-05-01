@@ -21,9 +21,9 @@ class WriteSuggestionScreen extends StatelessWidget {
 
     void _submitSuggestion() {
       if(_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      ListOfSuggestions.add(Suggestion(taskName: _enteredName, taskDescription: _enteredDescription));
-      showFlashError(context, 'Your Suggestion has been submitted');
+        _formKey.currentState!.save();
+        ListOfSuggestions.add(Suggestion(taskName: _enteredName, taskDescription: _enteredDescription));
+        showFlashError(context, 'Your Suggestion has been submitted');
       }
     }
 
