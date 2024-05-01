@@ -26,13 +26,14 @@ class _ScheduleState extends State<ScheduleScreen> {
   @override
   void initState() {
     super.initState();
-    _selectedTasks = ValueNotifier<List<Task>>([]); // Initialized with an empty list.
+    _selectedTasks =
+        ValueNotifier<List<Task>>([]); // Initialized with an empty list.
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
         final taskProvider = Provider.of<TaskProvider>(context, listen: false);
         assignedTasks = taskProvider.assignedTasks;
         _selectedTasks.value =
-            _getTasksForDay(today); // Now safely updating the value. 
+            _getTasksForDay(today); // Now safely updating the value.
       }
     });
   }
@@ -45,16 +46,29 @@ class _ScheduleState extends State<ScheduleScreen> {
   }
 
   List<Task> _getTasksForDay(DateTime day) {
-    return assignedTasks
-        .where((task) =>
-            task.date.year == day.year &&
-            task.date.month == day.month &&
-            task.date.day == day.day)
-        .toList();
+    return assignedTasks.where((task) {
+      switch (task.taskFrequency) {
+        case TaskFrequency.daily:
+          return true; // Show daily tasks every day
+        case TaskFrequency.weekly:
+          return task.day_of_week ==
+              day.weekday; // Show weekly tasks on specified day
+        case TaskFrequency.monthly:
+          return task.day_of_month ==
+              day.day; // Show monthly tasks on specified day of month
+        default:
+          return false; // For other frequencies (yearly, once, etc.), don't show on this day
+      }
+    }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
+    // Listen to TaskProvider directly in the build method
+    final taskProvider = Provider.of<TaskProvider>(context);
+    assignedTasks = taskProvider
+        .assignedTasks; // This line will cause the widget to rebuild when assignedTasks changes
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Schedule'),
@@ -86,7 +100,7 @@ class _ScheduleState extends State<ScheduleScreen> {
             availableGestures: AvailableGestures.all,
             onDaySelected: _onDaySelected,
             selectedDayPredicate: (day) => isSameDay(day, today),
-            eventLoader: _getTasksForDay,
+            eventLoader: (day) => <dynamic>[],
           ),
           const Divider(color: Colors.black, thickness: 2),
           Expanded(

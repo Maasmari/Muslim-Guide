@@ -17,16 +17,20 @@ class Task {
   DateTime date;
   TimeOfDay time;
   bool isCompleted;
+  int day_of_week;
+  int day_of_month;
 
   Task({
-    required this.id, // ID is now a required parameter.
+    required this.id,
     required this.taskName,
     required this.taskDescription,
-    required this.taskType,
-    required this.taskFrequency,
+    required this.taskType, // optional or compulsory
+    required this.taskFrequency, // daily, weekly, monthly, yearly, once
     required this.isCompleted,
     required this.date,
     required this.time,
+    required this.day_of_week, // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+    required this.day_of_month, // 1-31
   });
 
   factory Task.fromJson(Map<String, dynamic> json) {
@@ -34,7 +38,7 @@ class Task {
       id: json['taskID'].toString(), // Convert taskID to string.
       taskName: json['taskName'] ?? 'Default Name',
       taskDescription: json['taskDescription'] ?? 'No description provided',
-      taskType: json['taskType'] == 'mandatory'
+      taskType: json['taskType'] == 'compulsory'
           ? TaskType.compulsory
           : TaskType.optional,
       taskFrequency: TaskFrequency.values.firstWhere(
@@ -48,6 +52,8 @@ class Task {
       time: json['time_of_day'] != null
           ? _parseTimeOfDay(json['time_of_day'])
           : TimeOfDay(hour: 0, minute: 0),
+      day_of_week: json['day_of_week'] ?? 0,
+      day_of_month: json['day_of_month'] ?? 0,
     );
   }
 

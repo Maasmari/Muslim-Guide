@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:muslim_guide/publishers/event_publisher.dart';
 import 'package:muslim_guide/quran/constant.dart';
+import 'package:muslim_guide/quran/surah_builder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LastReadCard extends StatefulWidget {
@@ -83,8 +84,22 @@ class _LastReadCardState extends State<LastReadCard> {
               ),
               Spacer(),
               GestureDetector(
-                onTap: () => widget.changeScreen?.call(
-                    3), // Assuming changeScreen is a method defined in your widget class
+                onTap: () async => {
+                  widget.changeScreen?.call(4),
+                  // if (await readBookmark() == true)
+                  //   {
+                  //     Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //             builder: (context) => SurahBuilder(
+                  //                   arabic: quran[0],
+                  //                   sura: bookmarkedSura - 1,
+                  //                   suraName: arabicName[bookmarkedSura - 1]
+                  //                       ['name'],
+                  //                   ayah: bookmarkedAyah,
+                  //                 )))
+                  //   }
+                }, // Assuming changeScreen is a method defined in your widget class
                 child: Icon(Icons.arrow_forward_ios,
                     color: Colors.white, size: 30.0),
               ),

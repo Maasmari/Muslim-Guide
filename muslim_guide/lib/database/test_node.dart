@@ -53,7 +53,7 @@ class _TaskScreenDBState extends State<TaskScreenDB> {
                       Task task = unassignedTasks[index];
                       return ListTile(
                         title: Text(
-                            '${task.taskName}, ID: ${task.id}, Type: ${task.taskType.toString().split('.').last}'),
+                            '${task.taskName}, ID: ${task.id}, Type: ${task.taskType.toString().split('.').last}, Freq: ${task.taskFrequency.toString().split('.').last}'),
                         subtitle: Text(task.taskDescription),
                         trailing: IconButton(
                           icon: Icon(Icons.add),
@@ -81,7 +81,7 @@ class _TaskScreenDBState extends State<TaskScreenDB> {
                       Task task = assignedTasks[index];
                       return ListTile(
                         title: Text(
-                            '${task.taskName}, ID: ${task.id}, Type: ${task.taskType.toString().split('.').last}'),
+                            '${task.taskName}, ID: ${task.id}, Type: ${task.taskType.toString().split('.').last}, Frequency: ${task.taskFrequency.toString().split('.').last}, day_of_week: ${task.day_of_week.toString()}, day_of_month: ${task.day_of_month.toString()}'),
                         subtitle: Text(task.taskDescription),
                         trailing: IconButton(
                           icon: Icon(Icons.delete),

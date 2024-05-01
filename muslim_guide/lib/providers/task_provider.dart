@@ -11,24 +11,23 @@ class TaskProvider with ChangeNotifier {
   List<Task> get assignedTasks => _assignedTasks;
 
   void setUnassignedTasks(List<dynamic> tasks) {
-    List<Task> newTasks =
+    _unassignedTasks =
         tasks.map((taskJson) => Task.fromJson(taskJson)).toList();
-    for (var newTask in newTasks) {
-      if (!_unassignedTasks.any((task) => task.id == newTask.id)) {
-        _unassignedTasks.add(newTask);
-      }
-    }
+    // for (var newTask in newTasks) {
+    //   if (!_unassignedTasks.any((task) => task.id == newTask.id)) {
+    //     _unassignedTasks.add(newTask);
+    //   }
+    // }
     notifyListeners();
   }
 
   void setAssignedTasks(List<dynamic> tasks) {
-    List<Task> newTasks =
-        tasks.map((taskJson) => Task.fromJson(taskJson)).toList();
-    for (var newTask in newTasks) {
-      if (!_assignedTasks.any((task) => task.id == newTask.id)) {
-        _assignedTasks.add(newTask);
-      }
-    }
+    _assignedTasks = tasks.map((taskJson) => Task.fromJson(taskJson)).toList();
+    // for (var newTask in newTasks) {
+    //   if (!_assignedTasks.any((task) => task.id == newTask.id)) {
+    //     _assignedTasks.add(newTask);
+    //   }
+    // }
     notifyListeners();
   }
 
