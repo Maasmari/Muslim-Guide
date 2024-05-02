@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:muslim_guide/Widgets/chart_bar.dart';
 import 'package:muslim_guide/models/task.dart';
+import 'package:muslim_guide/providers/task_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
-List<Task> getCompletedTasks() {
-  List<Task> completed = [];
-  // for(int i = 0; i < registeredTasks.length; i++){
-  //   if(registeredTasks[i].isCompleted){
-  //     completed.add(registeredTasks[i]);
-  //   }
-  // }
-  return completed;
-}
+final DateFormat formatter = DateFormat.E();
+
+// List<Task> getCompletedTasks() {
+//   List<Task> completed = [];
+//   for(int i = 0; i < registeredTasks.length; i++){
+//     if(registeredTasks[i].isCompleted){
+//       completed.add(registeredTasks[i]);
+//     }
+//    }
+//   return completed;
+// }
 
 class Chart extends StatelessWidget {
   Chart({super.key});
 
-  final List<Task> tasks = [];
-  final List days = [' Sun', ' Mon', ' Tue', ' Wed', ' Thu', ' Fri', ' Sat'];
-  final List<Task> completedtasks = getCompletedTasks();
+  // final List<Task> tasks = [];
+  final List days = [formatter.format(DateTime.now().subtract(const Duration(days: 6))),
+    formatter.format(DateTime.now().subtract(const Duration(days: 5))),
+    formatter.format(DateTime.now().subtract(const Duration(days: 4))),
+    formatter.format(DateTime.now().subtract(const Duration(days: 3))),
+    formatter.format(DateTime.now().subtract(const Duration(days: 2))),
+    formatter.format(DateTime.now().subtract(const Duration(days: 1))),
+    formatter.format(DateTime.now())];
+  // final List<Task> completedtasks = getCompletedTasks();
 
   // double get maxTotalExpense {
   //   double maxTotalExpense = 0;
@@ -33,6 +44,18 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Task> MyTasks = Provider.of<TaskProvider>(context).assignedTasks;
+
+    List<Task> getCompletedTasks() {
+      List<Task> completed = [];
+      for(int i = 0; i < MyTasks.length; i++){
+        if(MyTasks[i].isCompleted){
+          completed.add(MyTasks[i]);
+        }
+      }
+      return completed;
+    }
+
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.symmetric(
@@ -63,18 +86,18 @@ class Chart extends StatelessWidget {
                 for (final day in days) // alternative to map()
                   ChartBar(
                     fill: 1,
-                    color: Colors.red,
+                    color: Color.fromARGB(255, 199, 119, 0),
                   )
               ],
             ),
           ),
           const SizedBox(height: 12),
           Row(
-            children: days
-                .map(
+            children:
+            days.map(
                   (day) => Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      padding: const EdgeInsets.fromLTRB(14, 0, 4, 0),
                       child: Text(day),
                     ),
                   ),
