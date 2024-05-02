@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:muslim_guide/Widgets/chart.dart';
+import 'package:intl/intl.dart';
+
+final DateFormat formatterYMD = DateFormat.yMEd();
 
 class PerformanceScreen extends StatefulWidget {
   @override
@@ -9,11 +12,13 @@ class PerformanceScreen extends StatefulWidget {
 class _PerformanceScreenState extends State<PerformanceScreen> {
   @override
   Widget build(BuildContext context) {
-    int weekNumber = 1;
-    String date = '2021/09/01  -  2021/09/07';
+    String lastdate = formatterYMD.format(DateTime.now());
+    String firstdate =
+        formatterYMD.format(DateTime.now().subtract(const Duration(days: 6)));
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text('Performance',
             style: TextStyle(color: Colors.white, fontSize: 23)),
         backgroundColor: const Color.fromARGB(255, 30, 87, 32),
@@ -21,22 +26,14 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
       body: Center(
         child: Column(
           children: [
-            SizedBox(height: 20),
-            Row(
-              //make in the center
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.arrow_back_ios),
-                SizedBox(width: 20),
-                Text('Week $weekNumber',
-                    style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                SizedBox(width: 20),
-                Icon(Icons.arrow_forward_ios),
-              ],
+            SizedBox(
+              height: 20,
             ),
+            Text('Current 7 day period',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             SizedBox(height: 20),
-            Text(date, style: TextStyle(fontSize: 11, color: Colors.grey)),
+            Text(firstdate + ' - ' + lastdate,
+                style: TextStyle(fontSize: 11, color: Colors.grey)),
             Chart(),
           ],
         ),

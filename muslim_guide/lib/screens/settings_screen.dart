@@ -60,6 +60,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text('Settings',
             style: TextStyle(color: Colors.white, fontSize: 23)),
         backgroundColor: const Color.fromARGB(255, 30, 87, 32),
