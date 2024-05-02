@@ -21,35 +21,42 @@ class Chart extends StatelessWidget {
   Chart({super.key});
 
   // final List<Task> tasks = [];
-  final List days = [formatter.format(DateTime.now().subtract(const Duration(days: 6))),
-    formatter.format(DateTime.now().subtract(const Duration(days: 5))),
-    formatter.format(DateTime.now().subtract(const Duration(days: 4))),
-    formatter.format(DateTime.now().subtract(const Duration(days: 3))),
-    formatter.format(DateTime.now().subtract(const Duration(days: 2))),
-    formatter.format(DateTime.now().subtract(const Duration(days: 1))),
-    formatter.format(DateTime.now())];
+  final List days = [
+    DateTime.now().subtract(const Duration(days: 6)),
+    DateTime.now().subtract(const Duration(days: 5)),
+    DateTime.now().subtract(const Duration(days: 4)),
+    DateTime.now().subtract(const Duration(days: 3)),
+    DateTime.now().subtract(const Duration(days: 2)),
+    DateTime.now().subtract(const Duration(days: 1)),
+    DateTime.now()];
   // final List<Task> completedtasks = getCompletedTasks();
-
-  // double get maxTotalExpense {
-  //   double maxTotalExpense = 0;
-
-  //   for (final task in tasks) {
-  //     if (task.totalExpenses > maxTotalExpense) {
-  //       maxTotalExpense = bucket.totalExpenses;
-  //     }
-  //   }
-
-  //   return maxTotalExpense;
-  // }
 
   @override
   Widget build(BuildContext context) {
     List<Task> MyTasks = Provider.of<TaskProvider>(context).assignedTasks;
+    
+    double maxTotalTasksInADay() { //might be slow but it should work
+      double max = 0;
+      double counter = 0;
+      for(int i = 0; i < 7; i++) {
+        for(int j = 0; j < MyTasks.length; j++) {
+          if(MyTasks[j].date == DateTime.now().subtract(Duration(days: i))) {
+            ++counter;
+          }
+        }
+        if(counter > max) {
+          max = counter;
+        }
+        counter = 0;
+      }
+     return max;
+    }
+    double maxTotalTasksInDay = maxTotalTasksInADay();
 
-    List<Task> getCompletedTasks() {
+    List<Task> getCompletedTasks(DateTime day) {
       List<Task> completed = [];
       for(int i = 0; i < MyTasks.length; i++){
-        if(MyTasks[i].isCompleted){
+        if(MyTasks[i].date == day && MyTasks[i].isCompleted){
           completed.add(MyTasks[i]);
         }
       }
@@ -85,7 +92,7 @@ class Chart extends StatelessWidget {
                 // ignore: unused_local_variable
                 for (final day in days) // alternative to map()
                   ChartBar(
-                    fill: 1,
+                    fill: getCompletedTasks(day).length == 0 ? 0 : getCompletedTasks(day).length / maxTotalTasksInDay,
                     color: Color.fromARGB(255, 199, 119, 0),
                   )
               ],
@@ -98,7 +105,7 @@ class Chart extends StatelessWidget {
                   (day) => Expanded(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(14, 0, 4, 0),
-                      child: Text(day),
+                      child: Text(formatter.format(day)),
                     ),
                   ),
                 )
