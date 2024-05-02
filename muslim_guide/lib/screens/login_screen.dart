@@ -1,16 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:muslim_guide/database/register_user.dart';
-import '../database/auth.dart';
-
-var kColorScheme = ColorScheme.fromSeed(
-  seedColor: Color.fromARGB(255, 0, 134, 0),
-);
-
-var kDarkColorScheme = ColorScheme.fromSeed(
-  brightness: Brightness.dark,
-  seedColor: Color.fromARGB(255, 0, 54, 7),
-);
+import 'package:muslim_guide/database/auth.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -50,42 +40,13 @@ class _LoginScreenState extends State<LoginScreen> {
           email: _controllerEmail.text.trim(),
           password: _controllerPassword.text.trim(),
         );
-
-        // Updating the user's display name
         await userCredential.user!
             .updateDisplayName(_controllerUsername.text.trim());
-        await userCredential.user!.reload(); // Make sure the user is updated
-
-        // Fetch the updated user
-        User? updatedUser = FirebaseAuth.instance.currentUser;
-
-        // Additional check to ensure displayName is updated
-        final int maxRetries = 5;
-        int currentTry = 0;
-        while (updatedUser!.displayName == null && currentTry < maxRetries) {
-          await Future.delayed(Duration(seconds: 1)); // Wait for a second
-          await updatedUser.reload();
-          updatedUser = FirebaseAuth.instance.currentUser;
-          currentTry++;
-        }
-
-        if (updatedUser.displayName != null) {
-          // Call registerUser with non-null values
-          await registerUser(
-            updatedUser.uid,
-            updatedUser.email!,
-            updatedUser.displayName!,
-          );
-        } else {
-          print('Unable to update displayName after retries.');
-          // Handle the case where displayName is still not updated
-        }
+        await userCredential.user!.reload();
       } on FirebaseAuthException catch (e) {
         setState(() {
           errorMessage = e.message;
         });
-      } catch (e) {
-        print('An unexpected error occurred: $e');
       }
     }
   }
@@ -95,39 +56,27 @@ class _LoginScreenState extends State<LoginScreen> {
     return TextFormField(
       controller: controller,
       obscureText: isPassword ? _isPasswordHidden : false,
-      style: TextStyle(
-          color: kDarkColorScheme
-              .onSurface), // Ensures text is visible against dark background
       validator: (value) {
-        if (value!.isEmpty) {
-          return 'Please enter your $title';
-        }
-        if (isUsername && value.length < 4) {
+        if (value!.isEmpty) return 'Please enter your $title';
+        if (isUsername && value.length < 4)
           return 'Username must be at least 4 characters long';
-        }
         return null;
       },
       decoration: InputDecoration(
+        labelStyle: TextStyle(color: const Color.fromARGB(255, 33, 133, 37)),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: const Color.fromARGB(255, 33, 133, 37)),
+        ),
         labelText: title,
-        labelStyle: TextStyle(
-            color: kDarkColorScheme
-                .onBackground), // Label color for better visibility
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(
-              color: kDarkColorScheme.onBackground,
-              width: 1.0), // Visible border in dark mode
+          borderSide: BorderSide(color: Colors.green),
         ),
-        fillColor:
-            kDarkColorScheme.background, // Dark fill color for input field
-        filled: true,
         suffixIcon: isPassword
             ? IconButton(
-                icon: Icon(
-                  _isPasswordHidden ? Icons.visibility_off : Icons.visibility,
-                  color: kDarkColorScheme
-                      .onSurface, // Icon color in dark mode for visibility
-                ),
+                icon: Icon(_isPasswordHidden
+                    ? Icons.visibility_off
+                    : Icons.visibility),
                 onPressed: () {
                   setState(() {
                     _isPasswordHidden = !_isPasswordHidden;
@@ -140,26 +89,26 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _errorMessage() {
-    return Visibility(
-      visible: errorMessage!.isNotEmpty,
-      child: Text(
-        errorMessage!,
-        style: TextStyle(color: Colors.redAccent),
-      ),
-    );
+    return Text(errorMessage ?? '', style: TextStyle(color: Colors.redAccent));
   }
 
   Widget _submitButton() {
     return ElevatedButton(
       onPressed: () {
-        FocusScope.of(context).unfocus(); // Hide keyboard
-        if (isLogin) {
-          signInWithEmailAndPassword();
-        } else {
-          createUserWithEmailAndPassword();
-        }
+        FocusScope.of(context).unfocus();
+        isLogin
+            ? signInWithEmailAndPassword()
+            : createUserWithEmailAndPassword();
       },
-      child: Text(isLogin ? 'Login' : 'Register'),
+      child: Text(
+        isLogin ? 'Login' : 'Register',
+      ),
+      style: ElevatedButton.styleFrom(
+        primary: const Color.fromARGB(255, 33, 133, 37),
+        onPrimary: Colors.white,
+        padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
     );
   }
 
@@ -168,94 +117,46 @@ class _LoginScreenState extends State<LoginScreen> {
       onPressed: () {
         setState(() {
           isLogin = !isLogin;
-          errorMessage = ''; // Reset error message
+          errorMessage = '';
           appbarText = isLogin ? 'Login' : 'Register';
         });
       },
       child: Text(
-          isLogin ? 'Need an account? Register' : 'Have an account? Login'),
+        isLogin ? 'Need an account? Register' : 'Have an account? Login',
+        style: TextStyle(color: const Color.fromARGB(255, 33, 133, 37)),
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      darkTheme: ThemeData.dark().copyWith(
-        colorScheme: kDarkColorScheme,
-        cardTheme: const CardTheme().copyWith(
-          color: kDarkColorScheme.secondaryContainer,
-          margin: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 8,
-          ),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: kDarkColorScheme.primaryContainer,
-            foregroundColor: kDarkColorScheme.onPrimaryContainer,
+    return Scaffold(
+      appBar: AppBar(),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Text(appbarText,
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+              SizedBox(height: 40),
+              if (!isLogin) ...[
+                _entryField('Username', _controllerUsername, isUsername: true),
+                SizedBox(height: 20),
+              ],
+              _entryField('Email', _controllerEmail),
+              SizedBox(height: 20),
+              _entryField('Password', _controllerPassword, isPassword: true),
+              SizedBox(height: 20),
+              _errorMessage(),
+              SizedBox(height: 20),
+              _submitButton(),
+              _loginOrRegisterButton(),
+            ],
           ),
         ),
       ),
-      theme: ThemeData().copyWith(
-        colorScheme: kColorScheme,
-        appBarTheme: const AppBarTheme().copyWith(
-          backgroundColor: kColorScheme.onPrimaryContainer,
-          foregroundColor: kColorScheme.primaryContainer,
-        ),
-        cardTheme: const CardTheme().copyWith(
-          color: kColorScheme.secondaryContainer,
-          margin: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 8,
-          ),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: kColorScheme.primaryContainer,
-          ),
-        ),
-        textTheme: ThemeData().textTheme.copyWith(
-              titleLarge: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: kColorScheme.onSecondaryContainer,
-                fontSize: 16,
-              ),
-            ),
-      ),
-      home: Scaffold(
-          appBar: AppBar(
-            title: Text(appbarText,
-                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
-          ),
-          body: SingleChildScrollView(
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-                    // Conditionally show the username field for registration first
-                    if (!isLogin) ...[
-                      _entryField('Username', _controllerUsername,
-                          isUsername: true),
-                      SizedBox(height: 20),
-                    ],
-                    _entryField('Email', _controllerEmail),
-                    SizedBox(height: 20),
-                    _entryField('Password', _controllerPassword,
-                        isPassword: true),
-                    SizedBox(height: 20),
-                    _errorMessage(),
-                    SizedBox(height: 20),
-                    _submitButton(),
-                    _loginOrRegisterButton(),
-                  ],
-                ),
-              ),
-            ),
-          )),
     );
   }
 }

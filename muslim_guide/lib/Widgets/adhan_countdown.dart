@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:muslim_guide/providers/prayer_countdown_notifier.dart';
 import 'package:provider/provider.dart';
 
-final brightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
+final brightness =
+    WidgetsBinding.instance.platformDispatcher.platformBrightness;
 bool isDarkMode = brightness == Brightness.dark;
 
 class AdhanCountdown extends StatelessWidget {
@@ -11,16 +12,17 @@ class AdhanCountdown extends StatelessWidget {
 
   AdhanCountdown({Key? key, required this.coordinates}) : super(key: key);
 
-Color Checkdarkmode () {
-  Color textcolor = Colors.black;
-  if (isDarkMode) {
-    textcolor= Colors.white;
+  Color Checkdarkmode() {
+    Color textcolor = Colors.black;
+    if (isDarkMode) {
+      textcolor = Colors.white;
+    }
+    return textcolor;
   }
-  return textcolor;
-}
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return ChangeNotifierProvider(
       create: (_) => PrayerCountdownNotifier(coordinates),
       child: Consumer<PrayerCountdownNotifier>(
@@ -33,16 +35,22 @@ Color Checkdarkmode () {
                   TextSpan(
                     text: 'Time till ${notifier.nextPrayer?.name} \n',
                     style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Checkdarkmode()),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: isDarkMode
+                          ? Color.fromARGB(255, 255, 255, 255)
+                          : const Color.fromARGB(255, 0, 0, 0),
+                    ),
                   ),
                   TextSpan(
                     text: '${notifier.timeLeft}',
                     style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Checkdarkmode()),
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: isDarkMode
+                          ? Color.fromARGB(255, 255, 255, 255)
+                          : const Color.fromARGB(255, 0, 0, 0),
+                    ),
                   ),
                 ],
               ),

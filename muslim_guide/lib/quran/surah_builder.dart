@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:muslim_guide/providers/theme_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import 'constant.dart';
@@ -20,10 +22,22 @@ class SurahBuilder extends StatefulWidget {
 class _SurahBuilderState extends State<SurahBuilder> {
   bool view = true;
 
+  late ThemeProvider themeProvider;
+  late bool isDarkMode;
+
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) => jumbToAyah());
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => jumbToAyah());
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // Initiate the theme provider here
+    themeProvider = Provider.of<ThemeProvider>(context);
+    isDarkMode = themeProvider.themeMode == ThemeMode.dark;
   }
 
   jumbToAyah() {
@@ -49,7 +63,7 @@ class _SurahBuilderState extends State<SurahBuilder> {
                 style: TextStyle(
                   fontSize: arabicFontSize,
                   fontFamily: arabicFont,
-                  color: const Color.fromARGB(196, 0, 0, 0),
+                  color: isDarkMode ? Colors.white : Colors.black,
                 ),
               ),
               Column(
@@ -79,7 +93,9 @@ class _SurahBuilderState extends State<SurahBuilder> {
 
     return SafeArea(
       child: Container(
-        color: const Color.fromARGB(255, 253, 251, 240),
+        color: isDarkMode
+            ? const Color.fromARGB(255, 32, 32, 32)
+            : Color.fromARGB(255, 253, 251, 240),
         child: view
             ? ScrollablePositionedList.builder(
                 itemBuilder: (BuildContext context, int index) {
@@ -89,9 +105,18 @@ class _SurahBuilderState extends State<SurahBuilder> {
                           ? const Text('')
                           : const RetunBasmala(),
                       Container(
-                        color: index % 2 != 0
-                            ? const Color.fromARGB(255, 253, 251, 240)
-                            : const Color.fromARGB(255, 253, 247, 230),
+                        color: (index % 2 != 0 && !isDarkMode)
+                            ? const Color.fromARGB(255, 253, 251,
+                                240) // Light mode color for odd-indexed items
+                            : (index % 2 != 0 && isDarkMode)
+                                ? const Color.fromARGB(255, 32, 32,
+                                    32) // Dark mode color for odd-indexed items
+                                : (!isDarkMode)
+                                    ? const Color.fromARGB(255, 253, 247,
+                                        230) // Light mode color for even-indexed items
+                                    : Color.fromARGB(255, 28, 28,
+                                        28), // Dark mode color for even-indexed items
+
                         child: PopupMenuButton(
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
@@ -116,23 +141,6 @@ class _SurahBuilderState extends State<SurahBuilder> {
                                       ],
                                     ),
                                   ),
-                                  // PopupMenuItem(
-                                  //   onTap: () {},
-                                  //   child: Row(
-                                  //     //mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  //     children: const [
-                                  //       Icon(
-                                  //         Icons.share,
-                                  //         color:
-                                  //             Color.fromARGB(255, 56, 115, 59),
-                                  //       ),
-                                  //       SizedBox(
-                                  //         width: 10,
-                                  //       ),
-                                  //       Text('Share'),
-                                  //     ],
-                                  //   ),
-                                  // ),
                                 ]),
                       ),
                     ],
@@ -189,8 +197,8 @@ class _SurahBuilderState extends State<SurahBuilder> {
           widget.suraName,
           textAlign: TextAlign.center,
           style: const TextStyle(
-              fontSize: 40,
-              fontWeight: FontWeight.bold,
+              fontSize: 35,
+              fontWeight: FontWeight.normal,
               color: Colors.white,
               fontFamily: 'quran',
               shadows: [
@@ -201,7 +209,7 @@ class _SurahBuilderState extends State<SurahBuilder> {
                 ),
               ]),
         ),
-        backgroundColor: const Color.fromARGB(255, 56, 115, 59),
+        backgroundColor: const Color.fromARGB(255, 30, 87, 32),
         iconTheme: IconThemeData(
           color: Colors.white, // Changes the back button color to white
         ),
@@ -234,14 +242,20 @@ class RetunBasmala extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var themeProvider = Provider.of<ThemeProvider>(context);
+    var isDarkMode = themeProvider.themeMode == ThemeMode.dark;
+
     return Stack(children: [
-      const Center(
-        child: Text(
-          'بسم الله الرحمن الرحيم',
-          style: TextStyle(fontFamily: 'me_quran', fontSize: 30),
-          textDirection: TextDirection.rtl,
-        ),
-      ),
+      Center(
+          child: Text(
+            'بسم الله الرحمن الرحيم',
+            style: TextStyle(
+                fontFamily: 'me_quran',
+                fontSize: 30,
+                color: isDarkMode ? Colors.white : Colors.black),
+            textDirection: TextDirection.rtl,
+          ),
+          heightFactor: 1.5),
     ]);
   }
 }

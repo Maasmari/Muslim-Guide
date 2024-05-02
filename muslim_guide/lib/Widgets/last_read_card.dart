@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:muslim_guide/publishers/event_publisher.dart';
 import 'package:muslim_guide/quran/constant.dart';
-import 'package:muslim_guide/quran/surah_builder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LastReadCard extends StatefulWidget {

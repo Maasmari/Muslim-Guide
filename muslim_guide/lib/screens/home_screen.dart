@@ -31,11 +31,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(30.0), // Set your desired height here
         child: AppBar(
           //title: Text('Muslim Guide'),
+          backgroundColor:
+              isDarkMode ? Color.fromARGB(255, 28, 28, 30) : Colors.white,
 
           centerTitle: true,
         ),

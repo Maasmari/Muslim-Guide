@@ -12,17 +12,18 @@ class WriteSuggestionScreen extends StatelessWidget {
     final _formKey = GlobalKey<FormState>();
 
     void showFlashError(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-      ),
-    );
-  }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message),
+        ),
+      );
+    }
 
     void _submitSuggestion() {
-      if(_formKey.currentState!.validate()) {
+      if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
-        ListOfSuggestions.add(Suggestion(taskName: _enteredName, taskDescription: _enteredDescription));
+        ListOfSuggestions.add(Suggestion(
+            taskName: _enteredName, taskDescription: _enteredDescription));
         showFlashError(context, 'Your Suggestion has been submitted');
       }
     }
@@ -42,11 +43,7 @@ class WriteSuggestionScreen extends StatelessWidget {
               key: _formKey,
               child: Column(
                 children: [
-                  const Text(
-                    'Enter your suggestion!',
-                    style: TextStyle(fontSize: 28, fontStyle: FontStyle.italic),
-                  ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 40),
                   TextFormField(
                     maxLength: 30,
                     decoration: const InputDecoration(
@@ -57,13 +54,16 @@ class WriteSuggestionScreen extends StatelessWidget {
                       _enteredName = value!;
                     },
                     validator: (String? value) {
-                      if(value == null || value.isEmpty || value.trim().length <= 1 || value.trim().length > 30){
+                      if (value == null ||
+                          value.isEmpty ||
+                          value.trim().length <= 1 ||
+                          value.trim().length > 30) {
                         return 'Enter a task name. Must be more than 2 characters';
                       }
                       return null;
                     },
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 40),
                   TextFormField(
                     maxLength: 128,
                     decoration: const InputDecoration(
@@ -74,13 +74,16 @@ class WriteSuggestionScreen extends StatelessWidget {
                       _enteredDescription = value!;
                     },
                     validator: (String? value) {
-                      if(value == null || value.isEmpty || value.trim().length < 8 || value.trim().length > 128){
+                      if (value == null ||
+                          value.isEmpty ||
+                          value.trim().length < 8 ||
+                          value.trim().length > 128) {
                         return 'Enter a task description. Must be more than 8 characters';
                       }
                       return null;
                     },
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 70),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [

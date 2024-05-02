@@ -33,7 +33,9 @@ class _TaskScreenDBState extends State<TaskScreenDB> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tasks'),
+        title:
+            Text('Tasks', style: TextStyle(color: Colors.white, fontSize: 23)),
+        backgroundColor: const Color.fromARGB(255, 30, 87, 32),
       ),
       body: Center(
         child: Column(

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:io';
 import 'package:muslim_guide/widget_tree.dart';
-import 'providers/task_provider.dart'; // Ensure you have this import pointing to your TaskProvider
+import 'providers/task_provider.dart';
+import 'providers/theme_provider.dart'; // Ensure this is the correct path to your ThemeProvider
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,19 +26,37 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final brightness = MediaQuery.of(context).platformBrightness;
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => TaskProvider()),
         ChangeNotifierProvider(
             create: (_) =>
-                TaskProvider()), // Your TaskProvider or other providers
+                ThemeProvider(brightness: brightness)), // Add this line
       ],
-      child: MaterialApp(
-        title: 'Muslim Guide',
-        theme: ThemeData(
-          primarySwatch: Colors.green,
-        ),
-        home:
-            const WidgetTree(), // Ensure this widget uses Provider if necessary
+      child: Consumer<ThemeProvider>(
+        // Use Consumer to listen for changes
+        builder: (context, themeProvider, _) {
+          print(
+              "Rebuilding MaterialApp with ThemeMode: ${themeProvider.themeMode}");
+          print("Current Theme Mode: ${themeProvider.themeMode}");
+          print("Light Theme Data: ${ThemeData.light().toString()}");
+          print("Dark Theme Data: ${ThemeData.dark().toString()}");
+          return MaterialApp(
+            title: 'Muslim Guide',
+            theme: ThemeData(
+              primarySwatch: Colors.green,
+              brightness: Brightness.light,
+            ),
+            darkTheme: ThemeData(
+              primarySwatch: Colors.green,
+              brightness: Brightness.dark,
+            ),
+            themeMode:
+                themeProvider.themeMode, // Controlled by the themeProvider
+            home: const WidgetTree(),
+          );
+        },
       ),
     );
   }

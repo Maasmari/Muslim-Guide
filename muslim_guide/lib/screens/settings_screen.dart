@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:muslim_guide/providers/theme_provider.dart';
 import 'package:muslim_guide/screens/profile_screen.dart';
 import 'package:muslim_guide/screens/write_suggestion_screen.dart';
+import 'package:provider/provider.dart';
 import '../database/auth.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -53,9 +55,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context,
+        listen: true); // Access the ThemeProvider
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings', style: TextStyle(color: Colors.white)),
+        title: Text('Settings',
+            style: TextStyle(color: Colors.white, fontSize: 23)),
         backgroundColor: const Color.fromARGB(255, 30, 87, 32),
       ),
       body: ListView(
@@ -74,11 +80,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               CupertinoFormRow(
-                prefix: Text('Send Feedback'),
+                prefix: Text('Suggest a task'),
                 child: CupertinoButton(
                   child: Text('Go'),
                   onPressed: () {
-                    // Navigate to profile writeSuggestionScreen() screen
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const WriteSuggestionScreen()));
                   },
@@ -88,16 +93,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 prefix: Text('Log Out'),
                 child: CupertinoButton(
                   child: Text('Tap to log out',
-                      style: TextStyle(color: Colors.red)),
+                      style: TextStyle(
+                          color: const Color.fromARGB(255, 255, 38, 23))),
                   onPressed: () => confirmSignOut(context),
                 ),
               ),
               CupertinoFormRow(
-                child: Column(
-                  children: [
-                    Text('Dark/Light Mode'),
-                    Text('Change your device from Dark/Light mode to switch.'),
-                  ],
+                prefix: Text('Dark Mode'),
+                child: CupertinoSwitch(
+                  value: themeProvider.themeMode == ThemeMode.dark,
+                  onChanged: (bool value) {
+                    themeProvider.toggleTheme(value);
+                  },
                 ),
               ),
             ],

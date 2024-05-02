@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:muslim_guide/providers/theme_provider.dart';
 import 'package:muslim_guide/screens/home_screen.dart';
 import 'package:muslim_guide/screens/performance_screen.dart';
 import 'package:muslim_guide/screens/schedule_screen.dart';
 import 'package:muslim_guide/screens/settings_screen.dart';
 import 'package:muslim_guide/quran/quran.dart';
 import 'package:muslim_guide/database/test_node.dart';
-
-var kColorScheme = ColorScheme.fromSeed(
-  seedColor: Color.fromARGB(255, 0, 134, 0),
-);
-
-var kDarkColorScheme = ColorScheme.fromSeed(
-  brightness: Brightness.dark,
-  seedColor: Color.fromARGB(255, 0, 54, 7),
-);
 
 class MuslimGuide extends StatefulWidget {
   const MuslimGuide({super.key});
@@ -45,8 +38,19 @@ class _MuslimGuideState extends State<MuslimGuide> {
 
   @override
   Widget build(BuildContext context) {
-    // For simplicity, user information retrieval has been removed. Implement as necessary.
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    var kColorScheme = ColorScheme.fromSeed(
+      seedColor: Color.fromARGB(255, 0, 134, 0),
+    );
+
+    var kDarkColorScheme = ColorScheme.fromSeed(
+      brightness: Brightness.dark,
+      seedColor: Color.fromARGB(255, 0, 54, 7),
+    );
+
     return MaterialApp(
+      themeMode:
+          themeProvider.themeMode, // Use the theme mode from the theme provider
       darkTheme: ThemeData.dark().copyWith(
         colorScheme: kDarkColorScheme,
         cardTheme: const CardTheme().copyWith(

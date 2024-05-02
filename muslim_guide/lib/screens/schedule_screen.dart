@@ -71,7 +71,8 @@ class _ScheduleState extends State<ScheduleScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Schedule'),
+        title: const Text('Schedule',
+            style: TextStyle(color: Colors.white, fontSize: 23)),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 30, 87, 32),
         actions: [
@@ -96,7 +97,9 @@ class _ScheduleState extends State<ScheduleScreen> {
             lastDay: lastDate,
             locale: 'en_US',
             headerStyle: const HeaderStyle(
-                formatButtonVisible: false, titleCentered: true),
+              formatButtonVisible: false,
+              titleCentered: true,
+            ),
             availableGestures: AvailableGestures.all,
             onDaySelected: _onDaySelected,
             selectedDayPredicate: (day) => isSameDay(day, today),
