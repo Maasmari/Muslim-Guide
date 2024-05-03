@@ -28,35 +28,38 @@ class Chart extends StatelessWidget {
     DateTime.now().subtract(const Duration(days: 3)),
     DateTime.now().subtract(const Duration(days: 2)),
     DateTime.now().subtract(const Duration(days: 1)),
-    DateTime.now()];
+    DateTime.now()
+  ];
   // final List<Task> completedtasks = getCompletedTasks();
 
   @override
   Widget build(BuildContext context) {
     List<Task> MyTasks = Provider.of<TaskProvider>(context).assignedTasks;
-    
-    double maxTotalTasksInADay() { //might be slow but it should work
+
+    double maxTotalTasksInADay() {
+      //might be slow but it should work
       double max = 0;
       double counter = 0;
-      for(int i = 0; i < 7; i++) {
-        for(int j = 0; j < MyTasks.length; j++) {
-          if(MyTasks[j].date == DateTime.now().subtract(Duration(days: i))) {
+      for (int i = 0; i < 7; i++) {
+        for (int j = 0; j < MyTasks.length; j++) {
+          if (MyTasks[j].date == DateTime.now().subtract(Duration(days: i))) {
             ++counter;
           }
         }
-        if(counter > max) {
+        if (counter > max) {
           max = counter;
         }
         counter = 0;
       }
-     return max;
+      return max;
     }
+
     double maxTotalTasksInDay = maxTotalTasksInADay();
 
     List<Task> getCompletedTasks(DateTime day) {
       List<Task> completed = [];
-      for(int i = 0; i < MyTasks.length; i++){
-        if(MyTasks[i].date == day && MyTasks[i].isCompleted){
+      for (int i = 0; i < MyTasks.length; i++) {
+        if (MyTasks[i].date == day && MyTasks[i].isCompleted) {
           completed.add(MyTasks[i]);
         }
       }
@@ -92,7 +95,9 @@ class Chart extends StatelessWidget {
                 // ignore: unused_local_variable
                 for (final day in days) // alternative to map()
                   ChartBar(
-                    fill: getCompletedTasks(day).length == 0 ? 0 : getCompletedTasks(day).length / maxTotalTasksInDay,
+                    fill: getCompletedTasks(day).length == 0
+                        ? 0
+                        : getCompletedTasks(day).length / maxTotalTasksInDay,
                     color: Color.fromARGB(255, 199, 119, 0),
                   )
               ],
@@ -100,8 +105,8 @@ class Chart extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           Row(
-            children:
-            days.map(
+            children: days
+                .map(
                   (day) => Expanded(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(14, 0, 4, 0),

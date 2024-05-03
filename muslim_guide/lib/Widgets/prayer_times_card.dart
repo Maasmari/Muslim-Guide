@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hijri/hijri_calendar.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/theme_provider.dart';
 
 // Define a model for prayer times to pass to the widget
 class LocalPrayerTimes {
@@ -146,12 +149,18 @@ class _PrayerTimeCardState extends State<PrayerTimeCard> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context,
+        listen: true); // Access the ThemeProvider
+    bool isDarkMode = themeProvider.themeMode == ThemeMode.dark;
     if (_isLoading) {
       return Container(
           width: double.infinity,
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 39, 45, 213),
+            // color: const Color.fromARGB(255, 39, 45, 213),
+            color: isDarkMode
+                ? const Color.fromARGB(255, 39, 45, 213)
+                : Colors.white,
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Center(
@@ -172,7 +181,9 @@ class _PrayerTimeCardState extends State<PrayerTimeCard> {
       width: double.infinity,
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 39, 45, 213),
+        color: isDarkMode
+            ? Color.fromARGB(255, 15, 20, 166)
+            : Color.fromARGB(255, 25, 53, 209),
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Column(

@@ -68,7 +68,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ListView(
         children: <Widget>[
           CupertinoFormSection.insetGrouped(
-            header: Text('General'),
+            margin: EdgeInsets.all(10),
+            //header: Text('General'),
             children: [
               CupertinoFormRow(
                 prefix: Text('Profile'),
@@ -91,21 +92,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               CupertinoFormRow(
-                prefix: Text('Log Out'),
-                child: CupertinoButton(
-                  child: Text('Tap to log out',
-                      style: TextStyle(
-                          color: const Color.fromARGB(255, 255, 38, 23))),
-                  onPressed: () => confirmSignOut(context),
-                ),
-              ),
-              CupertinoFormRow(
                 prefix: Text('Dark Mode'),
                 child: CupertinoSwitch(
                   value: themeProvider.themeMode == ThemeMode.dark,
                   onChanged: (bool value) {
                     themeProvider.toggleTheme(value);
                   },
+                ),
+              ),
+              CupertinoFormRow(
+                prefix: Text('Log Out'),
+                child: CupertinoButton(
+                  child: Text('Tap to log out',
+                      style: TextStyle(
+                          color: const Color.fromARGB(255, 255, 38, 23))),
+                  onPressed: () => confirmSignOut(context),
                 ),
               ),
             ],

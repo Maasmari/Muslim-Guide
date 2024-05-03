@@ -85,14 +85,18 @@ class TaskProvider with ChangeNotifier {
       );
 
       if (response.statusCode == 201) {
-        var taskToMove = _unassignedTasks.firstWhere(
-          (task) => task.id == taskID,
-          //orElse: () => null,
-        );
-        _unassignedTasks.remove(taskToMove);
-        _assignedTasks.add(taskToMove);
+        // Collect all tasks that match the condition
+        var tasksToMove =
+            _unassignedTasks.where((task) => task.id == taskID).toList();
+
+        // Remove all found tasks from _unassignedTasks
+        _unassignedTasks.removeWhere((task) => task.id == taskID);
+
+        // Add all found tasks to _assignedTasks
+        _assignedTasks.addAll(tasksToMove);
+
         notifyListeners();
-        print('Task assigned successfully!');
+        print('Tasks assigned successfully!');
       } else {
         final error = json.decode(response.body)['error'] ?? 'Unknown error';
         print('Failed to assign the task: $error');
@@ -124,14 +128,18 @@ class TaskProvider with ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        var taskToUnassign = _assignedTasks.firstWhere(
-          (task) => task.id == taskID,
-        );
+        // Collect all tasks that match the condition
+        var tasksToUnassign =
+            _assignedTasks.where((task) => task.id == taskID).toList();
 
-        _assignedTasks.remove(taskToUnassign);
-        _unassignedTasks.add(taskToUnassign);
+        // Remove all found tasks from _assignedTasks
+        _assignedTasks.removeWhere((task) => task.id == taskID);
+
+        // Add all found tasks to _unassignedTasks
+        _unassignedTasks.addAll(tasksToUnassign);
+
         notifyListeners();
-        print('Task unassigned successfully!');
+        print('Tasks unassigned successfully!');
       } else {
         final responseBody = json.decode(response.body);
         final error = responseBody['error'] ?? 'Unknown server-side error';

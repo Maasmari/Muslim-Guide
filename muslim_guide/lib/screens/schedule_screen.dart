@@ -51,8 +51,9 @@ class _ScheduleState extends State<ScheduleScreen> {
         case TaskFrequency.daily:
           return true; // Show daily tasks every day
         case TaskFrequency.weekly:
+          int adjustedDayOfWeek = day.weekday == 7 ? 1 : day.weekday + 1;
           return task.day_of_week ==
-              day.weekday; // Show weekly tasks on specified day
+              adjustedDayOfWeek; // Show weekly tasks on specified day
         case TaskFrequency.monthly:
           return task.day_of_month ==
               day.day; // Show monthly tasks on specified day of month

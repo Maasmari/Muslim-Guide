@@ -25,8 +25,36 @@ class _LoginScreenState extends State<LoginScreen> {
             email: _controllerEmail.text.trim(),
             password: _controllerPassword.text.trim());
       } on FirebaseAuthException catch (e) {
+        String userFriendlyMessage;
+        switch (e.code) {
+          case 'user-not-found':
+            userFriendlyMessage =
+                "No user found for that email. Please sign up.";
+            break;
+          case 'invalid-credential':
+            userFriendlyMessage =
+                "Incorrect email or password. Please try again.";
+            break;
+          case 'invalid-email':
+            userFriendlyMessage = 'Invalid email address.';
+            break;
+          case 'user-disabled':
+            userFriendlyMessage = "This user has been disabled.";
+            break;
+          case 'too-many-requests':
+            userFriendlyMessage = "Too many requests. Please try again later.";
+            break;
+          case 'operation-not-allowed':
+            userFriendlyMessage =
+                "Signing in with email and password is not enabled.";
+            break;
+          default:
+            userFriendlyMessage =
+                e.message ?? "An error occurred. Please try again.";
+            break;
+        }
         setState(() {
-          errorMessage = e.message;
+          errorMessage = userFriendlyMessage;
         });
       }
     }
@@ -54,6 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _entryField(String title, TextEditingController controller,
       {bool isPassword = false, bool isUsername = false}) {
     return TextFormField(
+      cursorColor: Colors.green,
       controller: controller,
       obscureText: isPassword ? _isPasswordHidden : false,
       validator: (value) {
@@ -63,9 +92,9 @@ class _LoginScreenState extends State<LoginScreen> {
         return null;
       },
       decoration: InputDecoration(
-        labelStyle: TextStyle(color: const Color.fromARGB(255, 33, 133, 37)),
+        labelStyle: TextStyle(color: Colors.green),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: const Color.fromARGB(255, 33, 133, 37)),
+          borderSide: BorderSide(color: Colors.green),
         ),
         labelText: title,
         border: OutlineInputBorder(
@@ -123,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       child: Text(
         isLogin ? 'Need an account? Register' : 'Have an account? Login',
-        style: TextStyle(color: const Color.fromARGB(255, 33, 133, 37)),
+        style: TextStyle(color: Colors.green),
       ),
     );
   }

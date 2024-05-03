@@ -49,6 +49,7 @@ class _MuslimGuideState extends State<MuslimGuide> {
     );
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       themeMode:
           themeProvider.themeMode, // Use the theme mode from the theme provider
       darkTheme: ThemeData.dark().copyWith(

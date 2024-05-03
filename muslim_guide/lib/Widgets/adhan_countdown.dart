@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:muslim_guide/providers/prayer_countdown_notifier.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/theme_provider.dart';
+
 final brightness =
     WidgetsBinding.instance.platformDispatcher.platformBrightness;
 bool isDarkMode = brightness == Brightness.dark;
@@ -22,7 +24,9 @@ class AdhanCountdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final themeProvider = Provider.of<ThemeProvider>(context,
+        listen: true); // Access the ThemeProvider
+    bool isDarkMode = themeProvider.themeMode == ThemeMode.dark;
     return ChangeNotifierProvider(
       create: (_) => PrayerCountdownNotifier(coordinates),
       child: Consumer<PrayerCountdownNotifier>(

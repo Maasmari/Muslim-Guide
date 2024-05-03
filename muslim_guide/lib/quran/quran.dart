@@ -22,6 +22,7 @@ class _MyAppState extends State<Quran> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Quran',
       theme: ThemeData(
         primarySwatch: Colors.green,

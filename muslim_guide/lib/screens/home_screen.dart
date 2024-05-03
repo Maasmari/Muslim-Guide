@@ -7,6 +7,8 @@ import 'package:muslim_guide/widgets/prayer_times_card.dart';
 import 'package:adhan/adhan.dart';
 import 'package:provider/provider.dart';
 
+import '../providers/theme_provider.dart';
+
 class HomeScreen extends StatefulWidget {
   final Function? changeScreen;
   const HomeScreen({super.key, this.changeScreen});
@@ -31,7 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final themeProvider = Provider.of<ThemeProvider>(context,
+        listen: true); // Access the ThemeProvider
+    bool isDarkMode = themeProvider.themeMode == ThemeMode.dark;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(30.0), // Set your desired height here
@@ -65,7 +69,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: 'Your Tasks',
                 tasks: Provider.of<TaskProvider>(context, listen: true)
                     .assignedTasks,
-                color: Colors.purple,
+                color: isDarkMode
+                    ? Color.fromARGB(255, 131, 3, 153)
+                    : Color.fromARGB(255, 175, 32, 201),
               ),
             ),
             Padding(
@@ -74,7 +80,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 title: 'Optional Tasks',
                 tasks: Provider.of<TaskProvider>(context, listen: true)
                     .assignedTasks,
-                color: Color.fromARGB(255, 31, 175, 195),
+                color: isDarkMode
+                    ? Color.fromARGB(255, 0, 137, 164)
+                    : Color.fromARGB(255, 32, 176, 201),
               ),
             ),
           ],

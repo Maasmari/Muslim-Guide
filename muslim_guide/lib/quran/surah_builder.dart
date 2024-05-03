@@ -213,23 +213,23 @@ class _SurahBuilderState extends State<SurahBuilder> {
         iconTheme: IconThemeData(
           color: Colors.white, // Changes the back button color to white
         ),
-        actions: <Widget>[
-          // Mushaf Mode button on the right side
-          Tooltip(
-            message: 'Mushaf Mode',
-            child: TextButton(
-              child: const Icon(
-                Icons.chrome_reader_mode,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                setState(() {
-                  view = !view;
-                });
-              },
-            ),
-          ),
-        ],
+        // actions: <Widget>[
+        //   // Mushaf Mode button on the right side
+        //   Tooltip(
+        //     message: 'Mushaf Mode',
+        //     child: TextButton(
+        //       child: const Icon(
+        //         Icons.chrome_reader_mode,
+        //         color: Colors.white,
+        //       ),
+        //       onPressed: () {
+        //         setState(() {
+        //           view = !view;
+        //         });
+        //       },
+        //     ),
+        //   ),
+        // ],
       ),
       body: SingleSuraBuilder(
           LengthOfSura), // Assuming this is a custom widget you've defined

@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:muslim_guide/providers/theme_provider.dart';
 import 'package:muslim_guide/publishers/event_publisher.dart';
 import 'package:muslim_guide/quran/constant.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LastReadCard extends StatefulWidget {
@@ -54,11 +56,16 @@ class _LastReadCardState extends State<LastReadCard> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context,
+        listen: true); // Access the ThemeProvider
+    bool isDarkMode = themeProvider.themeMode == ThemeMode.dark;
     return Container(
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 47, 160, 51),
+        color: isDarkMode
+            ? Color.fromARGB(255, 22, 143, 16)
+            : Color.fromARGB(255, 31, 175, 29),
         borderRadius: BorderRadius.circular(10.0),
         boxShadow: const [
           BoxShadow(

@@ -37,12 +37,8 @@ class MyApp extends StatelessWidget {
       child: Consumer<ThemeProvider>(
         // Use Consumer to listen for changes
         builder: (context, themeProvider, _) {
-          print(
-              "Rebuilding MaterialApp with ThemeMode: ${themeProvider.themeMode}");
-          print("Current Theme Mode: ${themeProvider.themeMode}");
-          print("Light Theme Data: ${ThemeData.light().toString()}");
-          print("Dark Theme Data: ${ThemeData.dark().toString()}");
           return MaterialApp(
+            debugShowCheckedModeBanner: false,
             title: 'Muslim Guide',
             theme: ThemeData(
               primarySwatch: Colors.green,

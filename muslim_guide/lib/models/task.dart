@@ -19,6 +19,7 @@ class Task {
   bool isCompleted;
   int day_of_week;
   int day_of_month;
+  int month_of_year;
 
   Task({
     required this.id,
@@ -29,8 +30,9 @@ class Task {
     required this.isCompleted,
     required this.date,
     required this.time,
-    required this.day_of_week, // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+    required this.day_of_week, // 1 = Sunday, 1 = Monday, ..., 7 = Saturday
     required this.day_of_month, // 1-31
+    required this.month_of_year, // 1-12
   });
 
   factory Task.fromJson(Map<String, dynamic> json) {
@@ -54,6 +56,7 @@ class Task {
           : TimeOfDay(hour: 0, minute: 0),
       day_of_week: json['day_of_week'] ?? 0,
       day_of_month: json['day_of_month'] ?? 0,
+      month_of_year: json['month_of_year'] ?? 0,
     );
   }
 
