@@ -154,6 +154,7 @@ class _PrayerTimeCardState extends State<PrayerTimeCard> {
     bool isDarkMode = themeProvider.themeMode == ThemeMode.dark;
     if (_isLoading) {
       return Container(
+          height: 145,
           width: double.infinity,
           padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
@@ -178,6 +179,8 @@ class _PrayerTimeCardState extends State<PrayerTimeCard> {
     }
 
     return Container(
+      height: 145,
+      constraints: BoxConstraints(minHeight: 145.0),
       width: double.infinity,
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -193,7 +196,7 @@ class _PrayerTimeCardState extends State<PrayerTimeCard> {
             style: const TextStyle(
                 color: Colors.white, fontWeight: FontWeight.bold),
           ),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 13.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -204,7 +207,7 @@ class _PrayerTimeCardState extends State<PrayerTimeCard> {
               _buildPrayerTimeColumn('Isha', _prayerTimes!.isha),
             ],
           ),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 20.0),
           Text(
             widget.city,
             style: const TextStyle(color: Colors.white70),

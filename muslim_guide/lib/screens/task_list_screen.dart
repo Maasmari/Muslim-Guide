@@ -18,7 +18,7 @@ class _TaskListState extends State<TaskListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'List of tasks',
+          'Add new tasks',
           style: TextStyle(color: Colors.white),
         ),
         iconTheme: const IconThemeData(

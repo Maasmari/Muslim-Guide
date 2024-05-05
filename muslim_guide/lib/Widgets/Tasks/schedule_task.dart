@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:muslim_guide/models/task.dart';
+import 'package:muslim_guide/providers/task_provider.dart';
+import 'package:provider/provider.dart';
 
 final DateFormat formatterYMD =
     DateFormat('yyyy-MM-dd'); // Ensure this formatter is declared
@@ -205,34 +207,51 @@ class _ScheduleTaskState extends State<ScheduleTask> {
       // _selectedTime, _selectedDayOfWeek, _selectedDayOfMonth, and _selectedDate
       // and perform the scheduling accordingly.
 
+      //make the task's time, day of week, day of month, month of year null first
+      //then assign the selected values to them
+
       // For example, you can print the selected parameters for demonstration:
-      var freq = _taskFrequency.toString().split('.').last;
+      String freq = _taskFrequency.toString().split('.').last;
       //display time as 13:00:00 add 12 if it is PM
-      var time = _selectedTime != null
+      String? time = _selectedTime != null
           ? '${_selectedTime!.hour}:${_selectedTime!.minute}:00'
           : null;
-      var dayOfWeek =
+      int? dayOfWeek =
           _selectedDayOfWeek != null ? _selectedDayOfWeek! + 1 : null;
-      var dayOfMonth = _selectedDayOfMonth;
-      var month = _selectedMonth;
-      var taskID = widget.task.id;
+      int? dayOfMonth = _selectedDayOfMonth;
+      int? monthOfYear = _selectedMonth;
+      String taskID = widget.task.id;
       FirebaseAuth auth = FirebaseAuth.instance;
       User? user = await auth.currentUser;
       String userID = '';
       if (user != null) {
         userID = user.uid;
-        print('User ID: $userID');
-      } else {
-        print('User not signed in');
       }
 
       print('Frequency: $freq');
       print('Time: $time');
       print('Day of Week: $dayOfWeek');
       print('Day of Month: $dayOfMonth');
-      print('Month: $month');
+      print('Month: $monthOfYear');
       print('Task id: $taskID');
       print('user id: $userID');
+
+      TaskProvider taskProvider =
+          Provider.of<TaskProvider>(context, listen: false);
+      taskProvider.assignTask(userID, taskID);
+
+      //wait for the task to be assigned
+      await Future.delayed(Duration(seconds: 1));
+
+      taskProvider.createSchedule(
+        freq,
+        time,
+        dayOfWeek,
+        dayOfMonth,
+        monthOfYear,
+        taskID,
+        userID,
+      );
     }
 
     return Scaffold(
@@ -323,9 +342,26 @@ class _ScheduleTaskState extends State<ScheduleTask> {
                 backgroundColor: const Color.fromARGB(255, 30, 87, 32),
               ),
               onPressed: () {
-                // Add your task scheduling logic here
+                // if the time is not selected show a snackbar
+                if (_selectedTime == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      backgroundColor: const Color.fromARGB(255, 196, 48, 38),
+                      content: Text('Please select a time!'),
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
+                  return;
+                }
                 scheduleTask();
                 Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    backgroundColor: Colors.green,
+                    content: Text('Task added!'),
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
               },
               child: Text('Save Task', style: TextStyle(color: Colors.white)),
             )

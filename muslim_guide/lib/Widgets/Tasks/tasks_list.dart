@@ -86,16 +86,31 @@ class TasksList extends StatelessWidget {
         ),
         direction:
             DismissDirection.endToStart, // Only allow swiping in one direction
+        confirmDismiss: (direction) async {
+          if (tasks[index].taskType == TaskType.compulsory) {
+            ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+              backgroundColor: Colors.red,
+              content: Text(
+                  'This task is compulsory and cannot be deleted'), // Show error message
+              duration: Duration(
+                  seconds: 2), // Optional: adjust duration of the snack bar
+            ));
+            return false; // Prevent dismiss
+          }
+          return true; // Allow dismiss for non-compulsory tasks
+        },
         onDismissed: (direction) {
           // Call provider method to remove the task
           Provider.of<TaskProvider>(ctx, listen: false).removeTask(
               FirebaseAuth.instance.currentUser!.uid,
               tasks[index].id); // Assume removeTask takes task ID
           ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
-                  content: Text('Task deleted')) // Show confirmation message
-              );
+              backgroundColor: Colors.green,
+              content: Text('Task deleted') // Show confirmation message
+              ));
         },
-        child: TaskItem(task: tasks[index], key: UniqueKey()),
+        child: TaskItem(
+            task: tasks[index], key: UniqueKey()), // Render each task item
       ),
     );
   }

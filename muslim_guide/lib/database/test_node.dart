@@ -23,7 +23,7 @@ class _TaskScreenDBState extends State<TaskScreenDB> {
       String userID = user.uid;
       Provider.of<TaskProvider>(context, listen: false)
         ..fetchUnassignedTasks(userID)
-        ..fetchAssignedTasks(userID);
+        ..setAssignedTasks(userID);
     } else {
       print('User not signed in');
     }
@@ -40,6 +40,62 @@ class _TaskScreenDBState extends State<TaskScreenDB> {
       body: Center(
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Compulsory Tasks',
+                  style: Theme.of(context).textTheme.titleLarge),
+            ),
+            Expanded(
+              child: Consumer<TaskProvider>(
+                builder: (context, taskProvider, child) {
+                  var compulsoryTasks = taskProvider.compulsoryTasks;
+                  return ListView.builder(
+                    itemCount: compulsoryTasks.length,
+                    itemBuilder: (context, index) {
+                      Task task = compulsoryTasks[index];
+                      return ListTile(
+                        title: Text(
+                            '${task.taskName}, ID: ${task.id}, Type: ${task.taskType.toString().split('.').last}, Freq: ${task.taskFrequency.toString().split('.').last}'),
+                        subtitle: Text(task.taskDescription),
+                        trailing: IconButton(
+                          icon: Icon(Icons.add),
+                          onPressed: () => taskProvider.assignTask(
+                              FirebaseAuth.instance.currentUser!.uid, task.id),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Scheduled Tasks',
+                  style: Theme.of(context).textTheme.titleLarge),
+            ),
+            Expanded(
+              child: Consumer<TaskProvider>(
+                builder: (context, taskProvider, child) {
+                  var scheduledTasks = taskProvider.scheduledTasks;
+                  return ListView.builder(
+                    itemCount: scheduledTasks.length,
+                    itemBuilder: (context, index) {
+                      Task task = scheduledTasks[index];
+                      return ListTile(
+                        title: Text(
+                            '${task.taskName}, ID: ${task.id}, Type: ${task.taskType.toString().split('.').last}, Freq: ${task.taskFrequency.toString().split('.').last}'),
+                        subtitle: Text(task.taskDescription),
+                        trailing: IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () => taskProvider.removeTask(
+                              FirebaseAuth.instance.currentUser!.uid, task.id),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text('Unassigned Tasks',

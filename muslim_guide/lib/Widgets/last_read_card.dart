@@ -60,6 +60,7 @@ class _LastReadCardState extends State<LastReadCard> {
         listen: true); // Access the ThemeProvider
     bool isDarkMode = themeProvider.themeMode == ThemeMode.dark;
     return Container(
+      height: 145,
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
       decoration: BoxDecoration(
@@ -89,26 +90,25 @@ class _LastReadCardState extends State<LastReadCard> {
                 ),
               ),
               Spacer(),
-              GestureDetector(
-                onTap: () async => {
-                  widget.changeScreen?.call(4),
-                  // if (await readBookmark() == true)
-                  //   {
-                  //     Navigator.push(
-                  //         context,
-                  //         MaterialPageRoute(
-                  //             builder: (context) => SurahBuilder(
-                  //                   arabic: quran[0],
-                  //                   sura: bookmarkedSura - 1,
-                  //                   suraName: arabicName[bookmarkedSura - 1]
-                  //                       ['name'],
-                  //                   ayah: bookmarkedAyah,
-                  //                 )))
-                  //   }
-                }, // Assuming changeScreen is a method defined in your widget class
-                child: Icon(Icons.arrow_forward_ios,
-                    color: Colors.white, size: 30.0),
-              ),
+              //GestureDetector(
+              //onTap: () async => {
+              // widget.changeScreen?.call(4),
+              // if (await readBookmark() == true)
+              //   {
+              //     Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: (context) => SurahBuilder(
+              //                   arabic: quran[0],
+              //                   sura: bookmarkedSura - 1,
+              //                   suraName: arabicName[bookmarkedSura - 1]
+              //                       ['name'],
+              //                   ayah: bookmarkedAyah,
+              //                 )))
+              //   }
+              //}, // Assuming changeScreen is a method defined in your widget class
+              Icon(Icons.arrow_forward_ios, color: Colors.white, size: 30.0),
+              //),
             ],
           ),
           SizedBox(height: 10.0),
@@ -119,14 +119,14 @@ class _LastReadCardState extends State<LastReadCard> {
             style: TextStyle(
               color: Color.fromARGB(222, 255, 255, 255),
               //fontWeight: FontWeight.bold,
-              fontSize: 14.0,
+              fontSize: 18.0,
             ),
           ),
           Text(
             'Ayah No: ${bookmarkedAyahs + 1}', // Adjusted variable name to match the context
             style: TextStyle(
               color: Colors.white70,
-              fontSize: 11.0,
+              fontSize: 13.0,
             ),
           ),
         ],

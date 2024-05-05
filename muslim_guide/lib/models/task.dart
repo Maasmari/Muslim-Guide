@@ -17,6 +17,7 @@ class Task {
   DateTime date;
   TimeOfDay time;
   bool isCompleted;
+  int isAdjustable;
   int day_of_week;
   int day_of_month;
   int month_of_year;
@@ -28,6 +29,7 @@ class Task {
     required this.taskType, // optional or compulsory
     required this.taskFrequency, // daily, weekly, monthly, yearly, once
     required this.isCompleted,
+    required this.isAdjustable,
     required this.date,
     required this.time,
     required this.day_of_week, // 1 = Sunday, 1 = Monday, ..., 7 = Saturday
@@ -48,6 +50,7 @@ class Task {
               f.toString().split('.').last == (json['schedule_type'] ?? 'once'),
           orElse: () => TaskFrequency.once),
       isCompleted: json['isCompleted'] ?? false,
+      isAdjustable: json['isAdjustable'] ?? false,
       date: json['start_date'] != null
           ? DateTime.parse(json['start_date'])
           : DateTime.now(),
