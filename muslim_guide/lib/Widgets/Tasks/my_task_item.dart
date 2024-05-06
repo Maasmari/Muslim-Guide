@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:muslim_guide/Widgets/checkbox.dart';
 import 'package:muslim_guide/models/task.dart';
 
-// ignore: must_be_immutable
-class TaskItem extends StatelessWidget {
-  TaskItem({Key? key, required this.task, required this.now}) : super(key: key);
+class MyTaskItem extends StatelessWidget {
+  const MyTaskItem({Key? key, required this.task}) : super(key: key);
 
   final Task task;
-  DateTime now;
 
   @override
   Widget build(BuildContext context) {
+    //create a map of month names
     final Map<int, String> monthNames = {
       1: 'January',
       2: 'February',
@@ -25,6 +23,7 @@ class TaskItem extends StatelessWidget {
       11: 'November',
       12: 'December',
     };
+
     return Card(
       elevation: 5, // Adds shadow for a 3D effect
       margin: const EdgeInsets.all(8), // Uniform margin for better spacing
@@ -38,21 +37,15 @@ class TaskItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start, // Align text to start
           children: [
-            Row(
-              children: [
-                Text(
-                  task.taskName,
-                  style: const TextStyle(
-                    color: Colors.white, // White text for better contrast
-                    fontWeight: FontWeight.bold, // Bold for emphasis
-                    fontSize: 20, // Larger font size for better readability
-                  ),
-                ), // Spacing between text and icon
-                const Spacer(),
-                CheckboxTask(task: task, now: now), // Custom checkbox widget
-              ],
+            Text(
+              task.taskName,
+              style: const TextStyle(
+                fontSize: 20, // Slightly smaller font size for subtlety
+                fontWeight: FontWeight.bold, // Bold font for emphasis
+                color: Colors.white, // White text for contrast
+              ),
             ),
-            //const SizedBox(height: 8), // Slightly larger space
+            const SizedBox(height: 8), // Slightly larger space
             Text(
               task.taskDescription,
               style: const TextStyle(

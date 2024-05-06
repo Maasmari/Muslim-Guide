@@ -26,6 +26,7 @@ class _ScheduleTaskState extends State<ScheduleTask> {
   int? _selectedDayOfWeek;
   int? _selectedDayOfMonth;
   int? _selectedMonth;
+  int? _selectedYear;
   DateTime? _selectedDate;
 
   final Map<int, String> _weekDaysMap = {
@@ -185,7 +186,7 @@ class _ScheduleTaskState extends State<ScheduleTask> {
   void _onceDatePicker() async {
     final DateTime now = DateTime.now();
     final DateTime firstDate = DateTime(now.year);
-    final DateTime lastDate = DateTime(now.year);
+    final DateTime lastDate = DateTime(now.year + 100);
     final DateTime? pickedDate = await showDatePicker(
       context: context,
       initialDate: _selectedDate ?? now,
@@ -195,6 +196,9 @@ class _ScheduleTaskState extends State<ScheduleTask> {
     if (pickedDate != null) {
       setState(() {
         _selectedDate = pickedDate;
+        _selectedDayOfMonth = pickedDate.day;
+        _selectedMonth = pickedDate.month;
+        _selectedYear = pickedDate.year;
       });
     }
   }
@@ -220,6 +224,7 @@ class _ScheduleTaskState extends State<ScheduleTask> {
           _selectedDayOfWeek != null ? _selectedDayOfWeek! + 1 : null;
       int? dayOfMonth = _selectedDayOfMonth;
       int? monthOfYear = _selectedMonth;
+      int? year = _selectedYear;
       String taskID = widget.task.id;
       FirebaseAuth auth = FirebaseAuth.instance;
       User? user = await auth.currentUser;
@@ -249,6 +254,7 @@ class _ScheduleTaskState extends State<ScheduleTask> {
         dayOfWeek,
         dayOfMonth,
         monthOfYear,
+        year,
         taskID,
         userID,
       );
@@ -272,6 +278,7 @@ class _ScheduleTaskState extends State<ScheduleTask> {
                   _selectedDayOfWeek = null;
                   _selectedTime = null;
                   _selectedMonth = null;
+                  _selectedYear = null;
                 });
               },
               items: TaskFrequency.values.map((TaskFrequency frequency) {

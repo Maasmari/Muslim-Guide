@@ -30,8 +30,14 @@ class TaskProvider with ChangeNotifier {
     _assignedTasks =
         _compulsoryTasks + _scheduledTasks + _assignedOptionalTasks;
 
-    _assignedTasks.sort((a, b) => (a.time.hour * 60 + a.time.minute)
-        .compareTo(b.time.hour * 60 + b.time.minute));
+    _assignedTasks.sort((a, b) {
+      // Convert hours and minutes to total minutes from midnight
+      int minutesA = a.time.hour * 60 + a.time.minute;
+      int minutesB = b.time.hour * 60 + b.time.minute;
+
+      // Compare the total minutes to sort the tasks
+      return minutesA.compareTo(minutesB);
+    });
 
     notifyListeners();
   }
@@ -188,6 +194,7 @@ class TaskProvider with ChangeNotifier {
       int? day_of_week,
       int? day_of_month,
       int? month_of_year,
+      int? year,
       String taskID,
       String userID) async {
     try {
@@ -203,6 +210,7 @@ class TaskProvider with ChangeNotifier {
           'dayOfWeek': day_of_week,
           'dayOfMonth': day_of_month,
           'monthOfYear': month_of_year,
+          'year': year,
           'taskID': taskID,
           'userID': userID,
         }),

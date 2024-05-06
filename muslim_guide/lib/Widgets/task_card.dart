@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:muslim_guide/models/task.dart';
 
-class TaskCard extends StatelessWidget {
+class TaskCard extends StatefulWidget {
   final String title;
   final List<Task> tasks;
   final Color color;
@@ -9,13 +9,18 @@ class TaskCard extends StatelessWidget {
   TaskCard({required this.title, required this.tasks, required this.color});
 
   @override
+  _TaskCardState createState() => _TaskCardState();
+}
+
+class _TaskCardState extends State<TaskCard> {
+  @override
   Widget build(BuildContext context) {
     // Define a fixed height for the card
     const double cardHeight = 145.0; // Change this value as needed
 
     return Card(
       elevation: 4.0,
-      color: color,
+      color: widget.color,
       margin: const EdgeInsets.all(0.0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -30,7 +35,7 @@ class TaskCard extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    title,
+                    widget.title,
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
@@ -47,16 +52,14 @@ class TaskCard extends StatelessWidget {
                 // Makes the list of tasks scrollable within the fixed height
                 child: SingleChildScrollView(
                   child: Column(
-                    children: tasks
+                    children: widget.tasks
                         .map((task) => Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 4.0),
                               child: Row(
                                 children: [
                                   Icon(
-                                    task.isCompleted
-                                        ? Icons.check_circle
-                                        : Icons.radio_button_unchecked,
+                                    Icons.radio_button_unchecked,
                                     color: Colors.white,
                                     size: 20.0,
                                   ),

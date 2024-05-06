@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:muslim_guide/Widgets/Tasks/tasks_list.dart';
+import 'package:muslim_guide/Widgets/Tasks/my_tasks_list.dart';
 import 'package:muslim_guide/models/task.dart';
 import 'package:muslim_guide/providers/task_provider.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +38,6 @@ class _MyTasks extends State<MyTasks> {
     List<Task> tasks =
         Provider.of<TaskProvider>(context, listen: true).assignedTasks;
     return Padding(
-        padding: const EdgeInsets.all(15.0), child: TasksList(tasks: tasks));
+        padding: const EdgeInsets.all(15.0), child: MyTasksList(tasks: tasks));
   }
 }

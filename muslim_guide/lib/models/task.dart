@@ -21,6 +21,7 @@ class Task {
   int day_of_week;
   int day_of_month;
   int month_of_year;
+  int year;
 
   Task({
     required this.id,
@@ -35,6 +36,7 @@ class Task {
     required this.day_of_week, // 1 = Sunday, 1 = Monday, ..., 7 = Saturday
     required this.day_of_month, // 1-31
     required this.month_of_year, // 1-12
+    required this.year,
   });
 
   factory Task.fromJson(Map<String, dynamic> json) {
@@ -60,6 +62,7 @@ class Task {
       day_of_week: json['day_of_week'] ?? 0,
       day_of_month: json['day_of_month'] ?? 0,
       month_of_year: json['month_of_year'] ?? 0,
+      year: json['year_of_schedule'] ?? 0,
     );
   }
 

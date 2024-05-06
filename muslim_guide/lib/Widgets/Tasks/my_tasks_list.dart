@@ -1,20 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:muslim_guide/Widgets/Tasks/my_task_item.dart';
 import 'package:provider/provider.dart';
-import 'package:muslim_guide/Widgets/Tasks/task_item.dart';
 import 'package:muslim_guide/models/task.dart';
 import 'package:muslim_guide/providers/task_provider.dart';
 
-// ignore: must_be_immutable
-class TasksList extends StatelessWidget {
-  TasksList({
+class MyTasksList extends StatelessWidget {
+  const MyTasksList({
     super.key,
     required this.tasks,
-    required this.now,
   });
 
   final List<Task> tasks;
-  DateTime now;
 
   @override
   Widget build(BuildContext context) {
@@ -112,10 +109,8 @@ class TasksList extends StatelessWidget {
               content: Text('Task deleted') // Show confirmation message
               ));
         },
-        child: TaskItem(
-            task: tasks[index],
-            key: UniqueKey(),
-            now: now), // Render each task item
+        child: MyTaskItem(
+            task: tasks[index], key: UniqueKey()), // Render each task item
       ),
     );
   }

@@ -57,6 +57,10 @@ class _ScheduleState extends State<ScheduleScreen> {
         case TaskFrequency.monthly:
           return task.day_of_month ==
               day.day; // Show monthly tasks on specified day of month
+        case TaskFrequency.yearly:
+          return task.day_of_month == day.day &&
+              task.month_of_year ==
+                  day.month; // Show yearly tasks on specified day of month and month
         default:
           return false; // For other frequencies (yearly, once, etc.), don't show on this day
       }
@@ -111,7 +115,7 @@ class _ScheduleState extends State<ScheduleScreen> {
             child: ValueListenableBuilder<List<Task>>(
               valueListenable: _selectedTasks,
               builder: (context, value, _) {
-                return TasksList(tasks: _getTasksForDay(today));
+                return TasksList(tasks: _getTasksForDay(today), now: today);
               },
             ),
           ),
