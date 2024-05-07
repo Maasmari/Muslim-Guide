@@ -98,3 +98,36 @@ Future<bool> checkTaskCompletion(
     return false;
   }
 }
+
+//get the number of tasks completed in a day
+Future<int> getCompletedTasksCount(String userID, DateTime date) async {
+  Uri apiUrl = Uri.parse(
+      'https://us-central1-muslim-guide-417618.cloudfunctions.net/app/task_completion/get_number_of_tasks_completed'); // Adjust this URL to match your server
+
+  // Format the date to YYYY-MM-DD
+  String formattedDate = date.toIso8601String().substring(0, 10);
+
+  try {
+    final response = await http.get(
+      apiUrl.replace(queryParameters: <String, String>{
+        'userID': userID,
+        'specificDate': formattedDate,
+      }),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      // Parse the JSON response
+      var responseData = jsonDecode(response.body);
+      return responseData['tasksCompleted'] as int;
+    } else {
+      print('Failed to get completed tasks count: ${response.body}');
+      return 0;
+    }
+  } catch (e) {
+    print('Error occurred while getting completed tasks count: $e');
+    return 0;
+  }
+}

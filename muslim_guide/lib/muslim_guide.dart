@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:muslim_guide/providers/task_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:muslim_guide/providers/theme_provider.dart';
 import 'package:muslim_guide/screens/home_screen.dart';
@@ -6,7 +8,6 @@ import 'package:muslim_guide/screens/performance_screen.dart';
 import 'package:muslim_guide/screens/schedule_screen.dart';
 import 'package:muslim_guide/screens/settings_screen.dart';
 import 'package:muslim_guide/quran/quran.dart';
-import 'package:muslim_guide/database/test_node.dart';
 
 class MuslimGuide extends StatefulWidget {
   const MuslimGuide({super.key});
@@ -23,11 +24,28 @@ class _MuslimGuideState extends State<MuslimGuide> {
   void initState() {
     super.initState();
     pages.add(HomeScreen(changeScreen: _selectPage));
-    pages.add(PerformanceScreen());
-    pages.add(TaskScreenDB());
+
     pages.add(const ScheduleScreen());
+    pages.add(PerformanceScreen());
+    // pages.add(TaskScreenDB());
     pages.add(const Quran());
     pages.add(SettingsScreen());
+    initUser();
+  }
+
+  void initUser() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = await auth.currentUser;
+    if (user != null) {
+      String userID = user.uid;
+      // Ensure the context is available for Provider.of
+      Future.delayed(Duration.zero, () {
+        Provider.of<TaskProvider>(context, listen: false)
+          ..fetchUnassignedTasks(userID)
+          ..setAssignedTasks(userID)
+          ..assignAllCompulsoryTasks(userID);
+      });
+    }
   }
 
   void _selectPage(int index) {
@@ -113,14 +131,15 @@ class _MuslimGuideState extends State<MuslimGuide> {
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.bar_chart),
-              label: 'Performance',
-            ),
-            BottomNavigationBarItem(icon: Icon(Icons.task), label: 'Tasks'),
-            BottomNavigationBarItem(
               icon: Icon(Icons.calendar_month),
               label: 'Schedule',
             ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.bar_chart),
+              label: 'Performance',
+            ),
+            //  BottomNavigationBarItem(icon: Icon(Icons.task), label: 'Tasks'),
+
             BottomNavigationBarItem(
               icon: Icon(Icons.book_sharp),
               label: 'Quran',

@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
                 onTap: () {
-                  widget.changeScreen?.call(4);
+                  widget.changeScreen?.call(3);
                 },
                 child: lastRead,
               ),

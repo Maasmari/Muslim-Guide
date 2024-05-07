@@ -29,7 +29,7 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
             SizedBox(
               height: 20,
             ),
-            Text('Current 7 day period',
+            Text('Last 7 days ',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             SizedBox(height: 20),
             Text(firstdate + ' - ' + lastdate,

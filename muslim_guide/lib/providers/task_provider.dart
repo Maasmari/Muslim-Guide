@@ -21,9 +21,9 @@ class TaskProvider with ChangeNotifier {
   List<Task> get scheduledTasks => _scheduledTasks;
 
   Future<void> setAssignedTasks(String userID) async {
-    await assignAllCompulsoryTasks(userID);
-
     await fetchCompulsoryTasks();
+    _assignedTasks = _compulsoryTasks;
+    notifyListeners();
     await fetchScheduledTasks(userID);
     await fetchAssignedOptionalTasks(userID);
 
