@@ -34,21 +34,42 @@ Color determineBarColor(double fill) {
 }
 
 class Chart extends StatefulWidget {
-  const Chart({Key? key}) : super(key: key);
+  final DateTime startDate;
+
+  const Chart({Key? key, required this.startDate}) : super(key: key);
 
   @override
   _ChartState createState() => _ChartState();
 }
 
 class _ChartState extends State<Chart> {
-  final List<DateTime> days = List.generate(
-      7, (index) => DateTime.now().subtract(Duration(days: 6 - index)));
+  late List<DateTime> days;
   Map<DateTime, int> maxTasksCache = {};
   Map<DateTime, int> completedTasksCache = {};
 
   @override
   void initState() {
     super.initState();
+    _updateDaysList();
+  }
+
+  @override
+  void didUpdateWidget(covariant Chart oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.startDate != widget.startDate) {
+      _updateDaysList();
+    }
+  }
+
+  void _updateDaysList() {
+    days = List.generate(
+      7,
+      (index) => widget.startDate.add(Duration(days: index)),
+    );
+    // Reorder the days list so that it starts from Sunday
+    if (days.isNotEmpty && days.first.weekday != DateTime.sunday) {
+      days.insert(0, days.removeLast());
+    }
   }
 
   bool taskMatchesDate(Task task, DateTime date) {
@@ -79,7 +100,8 @@ class _ChartState extends State<Chart> {
   }
 
   Future<int> getCount(String userId, DateTime date) async {
-    return await getCompletedTasksCount(userId, date);
+    return await getCompletedTasksCount(
+        FirebaseAuth.instance.currentUser!.uid, date);
   }
 
   @override

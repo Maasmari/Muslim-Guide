@@ -206,17 +206,8 @@ class _ScheduleTaskState extends State<ScheduleTask> {
   @override
   Widget build(BuildContext context) {
     Future<void> scheduleTask() async {
-      // Logic to save the task based on selected parameters
-      // You can access the selected parameters such as _taskFrequency,
-      // _selectedTime, _selectedDayOfWeek, _selectedDayOfMonth, and _selectedDate
-      // and perform the scheduling accordingly.
-
-      //make the task's time, day of week, day of month, month of year null first
-      //then assign the selected values to them
-
-      // For example, you can print the selected parameters for demonstration:
+      // Prepare the data
       String freq = _taskFrequency.toString().split('.').last;
-      //display time as 13:00:00 add 12 if it is PM
       String? time = _selectedTime != null
           ? '${_selectedTime!.hour}:${_selectedTime!.minute}:00'
           : null;
@@ -226,13 +217,13 @@ class _ScheduleTaskState extends State<ScheduleTask> {
       int? monthOfYear = _selectedMonth;
       int? year = _selectedYear;
       String taskID = widget.task.id;
+
+      // Get user ID
       FirebaseAuth auth = FirebaseAuth.instance;
       User? user = await auth.currentUser;
-      String userID = '';
-      if (user != null) {
-        userID = user.uid;
-      }
+      String userID = user?.uid ?? '';
 
+      // Debug prints
       print('Frequency: $freq');
       print('Time: $time');
       print('Day of Week: $dayOfWeek');
@@ -241,23 +232,40 @@ class _ScheduleTaskState extends State<ScheduleTask> {
       print('Task id: $taskID');
       print('user id: $userID');
 
-      TaskProvider taskProvider =
-          Provider.of<TaskProvider>(context, listen: false);
-      taskProvider.assignTask(userID, taskID);
+      // Ensure the userID is not empty
+      if (userID.isEmpty) {
+        print('User ID is empty, cannot proceed.');
+        return;
+      }
 
-      //wait for the task to be assigned
-      await Future.delayed(Duration(seconds: 1));
+      try {
+        TaskProvider taskProvider =
+            Provider.of<TaskProvider>(context, listen: false);
 
-      taskProvider.createSchedule(
-        freq,
-        time,
-        dayOfWeek,
-        dayOfMonth,
-        monthOfYear,
-        year,
-        taskID,
-        userID,
-      );
+        // Assign task to user
+        await taskProvider.assignTask(userID,
+            taskID); // Make sure this method is also awaited if asynchronous
+        print('Task assigned');
+
+        // Create schedule
+        await taskProvider.createSchedule(
+          freq,
+          time,
+          dayOfWeek,
+          dayOfMonth,
+          monthOfYear,
+          year,
+          taskID,
+          userID,
+        );
+        print('Schedule created');
+
+        // Fetch completion records
+        taskProvider.fetchCompletionRecords(userID);
+        print('Completion records fetched');
+      } catch (e) {
+        print('An error occurred during task scheduling: $e');
+      }
     }
 
     return Scaffold(

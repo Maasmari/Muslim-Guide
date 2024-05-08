@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:muslim_guide/providers/task_provider.dart';
 
 Future<void> createTaskCompletion(
     String userID, String taskID, DateTime date) async {
@@ -24,7 +25,8 @@ Future<void> createTaskCompletion(
 
     if (response.statusCode == 200) {
       print('Task completion record created successfully.');
-      // Optionally, handle the response data
+      TaskProvider provider = TaskProvider();
+      provider.fetchCompletionRecords(userID);
     } else {
       print('Failed to create task completion record: ${response.body}');
     }
@@ -56,7 +58,8 @@ Future<void> deleteTaskCompletion(
 
     if (response.statusCode == 200) {
       print('Task completion record deleted successfully.');
-      // Optionally, handle the response data
+      TaskProvider provider = TaskProvider();
+      provider.fetchCompletionRecords(userID);
     } else {
       print('Failed to delete task completion record: ${response.body}');
     }
@@ -100,6 +103,7 @@ Future<bool> checkTaskCompletion(
 }
 
 //get the number of tasks completed in a day
+
 Future<int> getCompletedTasksCount(String userID, DateTime date) async {
   Uri apiUrl = Uri.parse(
       'https://us-central1-muslim-guide-417618.cloudfunctions.net/app/task_completion/get_number_of_tasks_completed'); // Adjust this URL to match your server

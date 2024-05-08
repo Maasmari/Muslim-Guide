@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:muslim_guide/models/completion_record.dart';
 import 'dart:convert';
 import 'package:muslim_guide/models/task.dart';
 
@@ -19,6 +20,38 @@ class TaskProvider with ChangeNotifier {
   List<Task> get assignedOptionalTasks => _assignedOptionalTasks;
   List<Task> get compulsoryTasks => _compulsoryTasks;
   List<Task> get scheduledTasks => _scheduledTasks;
+
+  List<CompletionRecord> _completionRecords = [];
+  List<CompletionRecord> get completionRecords => _completionRecords;
+
+  //fetch the completion records of a user by sending the userID in the body of the request
+  Future<void> fetchCompletionRecords(String userID) async {
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'https://us-central1-muslim-guide-417618.cloudfunctions.net/app/task_completion/get_all_tasks_completed?userID=$userID'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        print(response.body);
+        _completionRecords =
+            (json.decode(response.body)['completion_records'] as List)
+                .map<CompletionRecord>(
+                    (recordJson) => CompletionRecord.fromJson(recordJson))
+                .toList();
+        print('Completion records fetched successfully!');
+        notifyListeners();
+      } else {
+        print(
+            'Failed to load completion records with status code ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching completion records: $e');
+    }
+  }
 
   Future<void> setAssignedTasks(String userID) async {
     await fetchCompulsoryTasks();

@@ -43,7 +43,8 @@ class _MuslimGuideState extends State<MuslimGuide> {
         Provider.of<TaskProvider>(context, listen: false)
           ..fetchUnassignedTasks(userID)
           ..setAssignedTasks(userID)
-          ..assignAllCompulsoryTasks(userID);
+          ..assignAllCompulsoryTasks(userID)
+          ..fetchCompletionRecords(userID);
       });
     }
   }
