@@ -39,7 +39,9 @@ class PerformanceTaskItem extends StatelessWidget {
           return Card(
             elevation: 5,
             margin: const EdgeInsets.all(8),
-            color: isCompleted ? Colors.green : Colors.red,
+            color: isCompleted
+                ? const Color.fromARGB(255, 21, 147, 25)
+                : const Color.fromARGB(255, 225, 44, 31),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),

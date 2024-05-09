@@ -25,11 +25,18 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
     _calculateStartDate();
     _selectedTasks = ValueNotifier<List<Task>>([]);
 
-    final taskProvider = Provider.of<TaskProvider>(context, listen: false);
-    assignedTasks = taskProvider.assignedTasks;
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
-        _selectedTasks.value = _getTasksForDay(_selectedDay);
+        try {
+          final taskProvider =
+              Provider.of<TaskProvider>(context, listen: false);
+          assignedTasks = taskProvider.assignedTasks;
+          _selectedDay = DateTime.now(); // Adjust as necessary
+          _handleDaySelected(_selectedDay);
+          _selectedTasks.value = _getTasksForDay(_selectedDay);
+        } catch (e) {
+          print('Error initializing tasks: $e');
+        }
       }
     });
   }
@@ -96,6 +103,7 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
   Widget build(BuildContext context) {
     final taskProvider = Provider.of<TaskProvider>(context);
     assignedTasks = taskProvider.assignedTasks;
+    _selectedTasks.value = _getTasksForDay(_selectedDay);
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
