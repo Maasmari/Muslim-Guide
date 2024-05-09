@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:muslim_guide/models/task.dart';
+import 'package:muslim_guide/screens/forum_screen.dart';
 
 class MyTaskItem extends StatelessWidget {
   const MyTaskItem({Key? key, required this.task}) : super(key: key);
@@ -109,6 +110,18 @@ class MyTaskItem extends StatelessWidget {
                     style: const TextStyle(
                         color: Colors.white), // Consistent text color
                   ),
+                const Spacer(),
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ForumWidget(
+                                taskID: task.id, taskName: task.taskName)));
+                  },
+                  icon: Icon(Icons.comment, color: Colors.white), // Add button
+                  tooltip: 'View task forum', // Tooltip for better UX
+                ),
               ],
             ),
           ],

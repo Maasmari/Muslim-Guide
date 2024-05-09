@@ -334,4 +334,23 @@ class TaskProvider with ChangeNotifier {
       print('Failed to assign task: $e');
     }
   }
+
+  List<Task> getTasksForDay(DateTime day) {
+    return _assignedTasks.where((task) {
+      switch (task.taskFrequency) {
+        case TaskFrequency.daily:
+          return true;
+        case TaskFrequency.weekly:
+          int adjustedDayOfWeek = day.weekday == 7 ? 1 : day.weekday + 1;
+          return task.day_of_week == adjustedDayOfWeek;
+        case TaskFrequency.monthly:
+          return task.day_of_month == day.day;
+        case TaskFrequency.yearly:
+          return task.day_of_month == day.day &&
+              task.month_of_year == day.month;
+        default:
+          return false;
+      }
+    }).toList();
+  }
 }

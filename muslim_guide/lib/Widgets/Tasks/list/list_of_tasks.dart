@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:muslim_guide/models/task.dart';
 import 'package:muslim_guide/Widgets/Tasks/schedule_task.dart';
 import 'package:muslim_guide/providers/task_provider.dart';
+import 'package:muslim_guide/screens/forum_screen.dart';
 import 'package:provider/provider.dart';
 
 // This class is the same as task_item.dart but without the checkbox and with an add button
@@ -54,13 +55,33 @@ class ListofTaskItems extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start, // Align text to start
           children: [
-            Text(
-              task.taskName,
-              style: const TextStyle(
-                fontSize: 20, // Slightly smaller font size for subtlety
-                fontWeight: FontWeight.bold, // Bold font for emphasis
-                color: Colors.white, // White text for contrast
-              ),
+            Row(
+              children: [
+                Text(
+                  task.taskName,
+                  style: const TextStyle(
+                    color: Colors.white, // White text for contrast
+                    fontSize: 20, // Larger font for emphasis
+                  ),
+                ),
+                const Spacer(),
+                IconButton(
+                  onPressed: () {
+                    if (task.isAdjustable == 1) {
+                      _openAddTaskOverlay();
+                    } else {
+                      _assignTask(
+                          FirebaseAuth.instance.currentUser!.uid, task.id);
+                    }
+                  },
+                  icon: task.isAdjustable == 1
+                      ? Icon(Icons.add,
+                          color: Colors
+                              .white) // Show calendar icon if the task is adjustable
+                      : Icon(Icons.add, color: Colors.white), // Add button
+                  tooltip: 'Add Task', // Tooltip for better UX
+                ),
+              ],
             ),
             const SizedBox(height: 8), // Slightly larger space
             Text(
@@ -107,19 +128,14 @@ class ListofTaskItems extends StatelessWidget {
                 const Spacer(),
                 IconButton(
                   onPressed: () {
-                    if (task.isAdjustable == 1) {
-                      _openAddTaskOverlay();
-                    } else {
-                      _assignTask(
-                          FirebaseAuth.instance.currentUser!.uid, task.id);
-                    }
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ForumWidget(
+                                taskID: task.id, taskName: task.taskName)));
                   },
-                  icon: task.isAdjustable == 1
-                      ? Icon(Icons.add,
-                          color: Colors
-                              .white) // Show calendar icon if the task is adjustable
-                      : Icon(Icons.add, color: Colors.white), // Add button
-                  tooltip: 'Add Task', // Tooltip for better UX
+                  icon: Icon(Icons.comment, color: Colors.white), // Add button
+                  tooltip: 'View task forum', // Tooltip for better UX
                 ),
               ],
             ),

@@ -35,8 +35,10 @@ Color determineBarColor(double fill) {
 
 class Chart extends StatefulWidget {
   final DateTime startDate;
+  final Function(DateTime) onDaySelected;
 
-  const Chart({Key? key, required this.startDate}) : super(key: key);
+  const Chart({Key? key, required this.startDate, required this.onDaySelected})
+      : super(key: key);
 
   @override
   _ChartState createState() => _ChartState();
@@ -63,13 +65,21 @@ class _ChartState extends State<Chart> {
 
   void _updateDaysList() {
     days = List.generate(
-      7,
-      (index) => widget.startDate.add(Duration(days: index)),
-    );
-    // Reorder the days list so that it starts from Sunday
+        7, (index) => widget.startDate.add(Duration(days: index)));
     if (days.isNotEmpty && days.first.weekday != DateTime.sunday) {
       days.insert(0, days.removeLast());
     }
+  }
+
+  Future<int> getMaxTasksForDay(DateTime date) async {
+    final tasks =
+        Provider.of<TaskProvider>(context, listen: false).assignedTasks;
+    return tasks.where((task) => taskMatchesDate(task, date)).length;
+  }
+
+  Future<int> getCount(String userId, DateTime date) async {
+    return await getCompletedTasksCount(
+        FirebaseAuth.instance.currentUser!.uid, date);
   }
 
   bool taskMatchesDate(Task task, DateTime date) {
@@ -93,17 +103,6 @@ class _ChartState extends State<Chart> {
     }
   }
 
-  Future<int> getMaxTasksForDay(DateTime date) async {
-    final tasks =
-        Provider.of<TaskProvider>(context, listen: false).assignedTasks;
-    return tasks.where((task) => taskMatchesDate(task, date)).length;
-  }
-
-  Future<int> getCount(String userId, DateTime date) async {
-    return await getCompletedTasksCount(
-        FirebaseAuth.instance.currentUser!.uid, date);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -116,7 +115,7 @@ class _ChartState extends State<Chart> {
         gradient: LinearGradient(
           colors: [
             Theme.of(context).colorScheme.primary.withOpacity(0.3),
-            Theme.of(context).colorScheme.primary.withOpacity(0.0),
+            Theme.of(context).colorScheme.primary.withOpacity(0.0)
           ],
           begin: Alignment.bottomCenter,
           end: Alignment.topCenter,
@@ -165,9 +164,12 @@ class _ChartState extends State<Chart> {
             children: days
                 .map(
                   (day) => Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(14, 0, 4, 0),
-                      child: Text(formatter.format(day)),
+                    child: GestureDetector(
+                      onTap: () => widget.onDaySelected(day),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(14, 0, 4, 0),
+                        child: Text(formatter.format(day)),
+                      ),
                     ),
                   ),
                 )

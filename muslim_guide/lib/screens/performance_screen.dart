@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:muslim_guide/Widgets/Tasks/performance_task_list.dart';
 import 'package:muslim_guide/Widgets/chart.dart';
+import 'package:muslim_guide/models/task.dart';
+import 'package:muslim_guide/providers/task_provider.dart';
+import 'package:provider/provider.dart';
 
 final DateFormat formatterYMD = DateFormat.yMEd();
 
@@ -11,77 +15,133 @@ class PerformanceScreen extends StatefulWidget {
 
 class _PerformanceScreenState extends State<PerformanceScreen> {
   late DateTime _startDate;
+  DateTime _selectedDay = DateTime.now(); // Initialized with current date
+  List<Task> assignedTasks = [];
+  late final ValueNotifier<List<Task>> _selectedTasks;
 
   @override
   void initState() {
     super.initState();
     _calculateStartDate();
+    _selectedTasks = ValueNotifier<List<Task>>([]);
+
+    final taskProvider = Provider.of<TaskProvider>(context, listen: false);
+    assignedTasks = taskProvider.assignedTasks;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _selectedTasks.value = _getTasksForDay(_selectedDay);
+      }
+    });
   }
 
   void _calculateStartDate() {
-    // Get the current date
-    DateTime currentDate = DateTime.now();
-    // Calculate the difference between the current date's weekday and Sunday (7)
-    int daysUntilSunday = 7 - currentDate.weekday;
-    // Adjust the start date to the nearest Sunday
-    _startDate = currentDate.add(Duration(days: daysUntilSunday));
+    //find this sunday
+    DateTime now = DateTime.now();
+    _startDate = now.subtract(Duration(days: now.weekday));
   }
 
   void _navigateToPreviousWeek() {
     setState(() {
       _startDate = _startDate.subtract(Duration(days: 7));
+      _selectedTasks.value = _getTasksForDay(_startDate);
     });
   }
 
   void _navigateToNextWeek() {
     setState(() {
-      _startDate = _startDate.add(Duration(days: 7));
+      DateTime nextStartDate = _startDate.add(Duration(days: 7));
+      if (!nextStartDate.isAfter(DateTime.now())) {
+        _startDate = nextStartDate;
+        _selectedTasks.value = _getTasksForDay(_startDate);
+      }
     });
   }
 
   String _getWeekText() {
     DateTime endDate = _startDate.add(Duration(days: 6));
-    final String firstdate = formatterYMD.format(_startDate);
-    final String lastdate = formatterYMD.format(endDate);
-    return '$firstdate - $lastdate';
+    return '${formatterYMD.format(_startDate)} - ${formatterYMD.format(endDate)}';
+  }
+
+  void _handleDaySelected(DateTime day) {
+    setState(() {
+      _selectedDay = day;
+      _selectedTasks.value =
+          _getTasksForDay(day); // Update the tasks for the selected day
+    });
+  }
+
+  List<Task> _getTasksForDay(DateTime day) {
+    var filteredTasks = assignedTasks.where((task) {
+      switch (task.taskFrequency) {
+        case TaskFrequency.daily:
+          return true;
+        case TaskFrequency.weekly:
+          int adjustedDayOfWeek = day.weekday == 7 ? 1 : day.weekday + 1;
+          return task.day_of_week == adjustedDayOfWeek;
+        case TaskFrequency.monthly:
+          return task.day_of_month == day.day;
+        case TaskFrequency.yearly:
+          return task.day_of_month == day.day &&
+              task.month_of_year == day.month;
+        default:
+          return false;
+      }
+    }).toList();
+
+    print("Filtered Tasks for ${day.toIso8601String()}: $filteredTasks");
+    return filteredTasks;
   }
 
   @override
   Widget build(BuildContext context) {
+    final taskProvider = Provider.of<TaskProvider>(context);
+    assignedTasks = taskProvider.assignedTasks;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
-          'Performance',
-          style: TextStyle(color: Colors.white, fontSize: 23),
-        ),
-        backgroundColor: const Color.fromARGB(255, 30, 87, 32),
+        title: Text('Performance',
+            style: TextStyle(color: Colors.white, fontSize: 23)),
+        backgroundColor: Color.fromARGB(255, 30, 87, 32),
       ),
       body: Center(
         child: Column(
           children: [
-            SizedBox(
-              height: 20,
-            ),
+            SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 IconButton(
-                  icon: Icon(Icons.arrow_left),
-                  onPressed: _navigateToPreviousWeek,
-                ),
-                Text(
-                  _getWeekText(), // Updated to dynamically display week text
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
+                    icon: Icon(Icons.arrow_left),
+                    onPressed: _navigateToPreviousWeek),
+                Text(_getWeekText(),
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 IconButton(
-                  icon: Icon(Icons.arrow_right),
-                  onPressed: _navigateToNextWeek,
-                ),
+                    icon: Icon(Icons.arrow_right),
+                    onPressed: _navigateToNextWeek),
               ],
             ),
             SizedBox(height: 20),
-            Chart(startDate: _startDate),
+            Chart(
+                startDate: _startDate,
+                onDaySelected:
+                    _handleDaySelected), // Ensure this widget uses the callback correctly
+            SizedBox(height: 10),
+            //put the selected day here as 15/10/2021
+            Text(formatterYMD.format(_selectedDay),
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+            SizedBox(height: 10),
+            Expanded(
+              child: ValueListenableBuilder<List<Task>>(
+                valueListenable: _selectedTasks,
+                builder: (context, value, _) {
+                  return PerformanceTasksList(
+                      tasks: value,
+                      now:
+                          _selectedDay); // Ensure this widget is implemented to display tasks
+                },
+              ),
+            ),
           ],
         ),
       ),
