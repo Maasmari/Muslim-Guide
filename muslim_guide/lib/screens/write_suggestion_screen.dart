@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:muslim_guide/models/suggestion.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class WriteSuggestionScreen extends StatelessWidget {
   const WriteSuggestionScreen({Key? key}) : super(key: key);
@@ -11,20 +13,42 @@ class WriteSuggestionScreen extends StatelessWidget {
 
     final _formKey = GlobalKey<FormState>();
 
-    void showFlashError(BuildContext context, String message) {
+    void showFlashError(BuildContext context, String message, Color color) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
+          backgroundColor: color,
           content: Text(message),
         ),
       );
     }
 
-    void _submitSuggestion() {
+    void _submitSuggestion() async {
       if (_formKey.currentState!.validate()) {
         _formKey.currentState!.save();
-        ListOfSuggestions.add(Suggestion(
-            taskName: _enteredName, taskDescription: _enteredDescription));
-        showFlashError(context, 'Your Suggestion has been submitted');
+
+        var url = Uri.parse(
+            'https://us-central1-muslim-guide-417618.cloudfunctions.net/app/suggestion/new');
+        var response = await http.post(url,
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: jsonEncode({
+              'taskName': _enteredName,
+              'taskDescription': _enteredDescription,
+              'userID': FirebaseAuth.instance.currentUser!.uid,
+            }));
+
+        if (response.statusCode == 200) {
+          showFlashError(
+              context, 'Your Suggestion has been submitted', Colors.green);
+          // Clear the fields after successful submission
+          _formKey.currentState!.reset();
+          _enteredName = '';
+          _enteredDescription = '';
+        } else {
+          showFlashError(context,
+              'Failed to submit suggestion: ${response.body}', Colors.red);
+        }
       }
     }
 
@@ -32,7 +56,7 @@ class WriteSuggestionScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Write a Suggestion',
-          style: TextStyle(fontSize: 18),
+          style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
         backgroundColor: const Color.fromARGB(255, 30, 87, 32),

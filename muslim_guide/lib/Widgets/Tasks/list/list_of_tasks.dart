@@ -51,7 +51,7 @@ class ListofTaskItems extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16), // More balanced padding
+        padding: const EdgeInsets.all(10), // More balanced padding
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start, // Align text to start
           children: [
@@ -83,13 +83,33 @@ class ListofTaskItems extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 8), // Slightly larger space
-            Text(
-              task.taskDescription,
-              style: const TextStyle(
-                color: Colors.white70, // Lighter white for description
-              ),
+            //const SizedBox(height: 8), // Slightly larger space
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    task.taskDescription,
+                    style: const TextStyle(
+                      color: Colors.white70, // Lighter white for description
+                    ),
+                    overflow: TextOverflow
+                        .clip, // Clip the overflow if it's still too long even after wrapping
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ForumWidget(
+                                taskID: task.id, taskName: task.taskName)));
+                  },
+                  icon: const Icon(Icons.comment, color: Colors.white),
+                  tooltip: 'View task forum', // Tooltip for better UX
+                ),
+              ],
             ),
+
             const SizedBox(height: 12), // Larger space before the row
             Row(
               children: [
@@ -125,18 +145,6 @@ class ListofTaskItems extends StatelessWidget {
                       color: Colors.white, // White text for contrast
                     ),
                   ),
-                const Spacer(),
-                IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => ForumWidget(
-                                taskID: task.id, taskName: task.taskName)));
-                  },
-                  icon: Icon(Icons.comment, color: Colors.white), // Add button
-                  tooltip: 'View task forum', // Tooltip for better UX
-                ),
               ],
             ),
           ],

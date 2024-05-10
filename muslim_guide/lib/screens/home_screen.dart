@@ -93,8 +93,6 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
                 onTap: () {
-                  // Handle the tap event. Navigate, open a dialog, etc.
-                  print('TaskCard tapped!');
                   // Example: Navigate to a new screen
                   Navigator.push(
                     context,

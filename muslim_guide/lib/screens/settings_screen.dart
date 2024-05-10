@@ -1,7 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:muslim_guide/providers/theme_provider.dart';
-import 'package:muslim_guide/screens/profile_screen.dart';
+import 'package:muslim_guide/screens/suggestion_screen.dart';
 import 'package:muslim_guide/screens/write_suggestion_screen.dart';
 import 'package:provider/provider.dart';
 import '../database/auth.dart';
@@ -12,6 +13,8 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  User? user = FirebaseAuth.instance.currentUser;
+
   Future<void> signOut() async {
     await Auth().signOut();
   }
@@ -33,12 +36,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           actions: <Widget>[
             CupertinoDialogAction(
-              child: Text('Cancel',
-                  style:
-                      TextStyle(color: isDarkMode ? Colors.blue : Colors.blue)),
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
+              child: Text('Cancel', style: TextStyle(color: Colors.blue)),
+              onPressed: () => Navigator.of(context).pop(),
             ),
             CupertinoDialogAction(
               child: Text('Log Out', style: TextStyle(color: Colors.red)),
@@ -55,8 +54,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context,
-        listen: true); // Access the ThemeProvider
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: true);
+
+    String displayName = user?.displayName ?? "No username";
+    String email = user?.email ?? "No email provided";
 
     return Scaffold(
       appBar: AppBar(
@@ -68,19 +69,31 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: ListView(
         children: <Widget>[
           CupertinoFormSection.insetGrouped(
-            margin: EdgeInsets.all(10),
-            //header: Text('General'),
+            margin: EdgeInsets.fromLTRB(10, 20, 10, 5),
             children: [
               CupertinoFormRow(
-                prefix: Text('Profile'),
+                prefix: Text('Username'),
                 child: CupertinoButton(
-                  child: Text('View'),
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const ProfileScreen()));
-                  },
+                  child: Text('@' + displayName,
+                      style:
+                          TextStyle(color: Color.fromARGB(255, 144, 145, 145))),
+                  onPressed: () {},
                 ),
               ),
+              CupertinoFormRow(
+                prefix: Text('Email'),
+                child: CupertinoButton(
+                  child: Text(email,
+                      style: TextStyle(
+                          color: const Color.fromARGB(255, 144, 145, 145))),
+                  onPressed: () {},
+                ),
+              ),
+            ],
+          ),
+          CupertinoFormSection.insetGrouped(
+            margin: EdgeInsets.fromLTRB(10, 20, 10, 5),
+            children: [
               CupertinoFormRow(
                 prefix: Text('Suggest a task'),
                 child: CupertinoButton(
@@ -91,6 +104,42 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   },
                 ),
               ),
+              CupertinoFormRow(
+                prefix: Text('My Seggestions'),
+                child: CupertinoButton(
+                  child: Text('View'),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SuggestionsScreen()));
+                  },
+                ),
+              ),
+              CupertinoFormRow(
+                prefix: Text('My Comments and Replies'),
+                child: CupertinoButton(
+                  child: Text('View'),
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => WriteSuggestionScreen()));
+                  },
+                ),
+              ),
+            ],
+          ),
+          CupertinoFormSection.insetGrouped(
+            margin: EdgeInsets.fromLTRB(10, 20, 10, 20),
+            children: [
+              // CupertinoFormRow(
+              //   prefix: Text('Profile'),
+              //   child: CupertinoButton(
+              //     child: Text('View'),
+              //     onPressed: () {
+              //       Navigator.of(context).push(MaterialPageRoute(
+              //           builder: (context) => const ProfileScreen()));
+              //     },
+              //   ),
+              // ),
+
               CupertinoFormRow(
                 prefix: Text('Dark Mode'),
                 child: CupertinoSwitch(
@@ -104,8 +153,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 prefix: Text('Log Out'),
                 child: CupertinoButton(
                   child: Text('Tap to log out',
-                      style: TextStyle(
-                          color: const Color.fromARGB(255, 255, 38, 23))),
+                      style:
+                          TextStyle(color: Color.fromARGB(255, 255, 38, 23))),
                   onPressed: () => confirmSignOut(context),
                 ),
               ),

@@ -28,14 +28,15 @@ class TaskItem extends StatelessWidget {
     };
     return Card(
       elevation: 5, // Adds shadow for a 3D effect
-      margin: const EdgeInsets.all(8), // Uniform margin for better spacing
+      margin: const EdgeInsets.fromLTRB(
+          1, 8, 1, 8), // Uniform margin for better spacing
       color: const Color.fromARGB(255, 25, 85, 134), // More modern blue shade
       shape: RoundedRectangleBorder(
         // Rounded corners for a smoother look
         borderRadius: BorderRadius.circular(10),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16), // More balanced padding
+        padding: const EdgeInsets.all(8), // More balanced padding
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start, // Align text to start
           children: [
@@ -60,7 +61,7 @@ class TaskItem extends StatelessWidget {
                 color: Colors.white70, // Lighter white for description
               ),
             ),
-            const SizedBox(height: 12), // Larger space before the row
+            //const SizedBox(height: 12), // Larger space before the row
             Row(
               children: [
                 const Icon(Icons.alarm,
