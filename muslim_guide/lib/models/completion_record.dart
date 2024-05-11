@@ -16,8 +16,6 @@ class CompletionRecord {
     //make the date to be in the format of 2022-01-26
     DateTime date = DateTime.parse(json['completion_date']);
     DateTime formattedDate = DateTime(date.year, date.month, date.day);
-    print(
-        'taskID = ${json['task_instance_taskID'].toString()} + formattedDate: $formattedDate');
     return CompletionRecord(
         taskID: json['task_instance_taskID'].toString(), date: formattedDate);
   }

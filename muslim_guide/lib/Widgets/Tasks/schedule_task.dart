@@ -223,14 +223,14 @@ class _ScheduleTaskState extends State<ScheduleTask> {
       User? user = await auth.currentUser;
       String userID = user?.uid ?? '';
 
-      // Debug prints
-      print('Frequency: $freq');
-      print('Time: $time');
-      print('Day of Week: $dayOfWeek');
-      print('Day of Month: $dayOfMonth');
-      print('Month: $monthOfYear');
-      print('Task id: $taskID');
-      print('user id: $userID');
+      // // Debug prints
+      // print('Frequency: $freq');
+      // print('Time: $time');
+      // print('Day of Week: $dayOfWeek');
+      // print('Day of Month: $dayOfMonth');
+      // print('Month: $monthOfYear');
+      // print('Task id: $taskID');
+      // print('user id: $userID');
 
       // Ensure the userID is not empty
       if (userID.isEmpty) {

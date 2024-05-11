@@ -95,7 +95,6 @@ class _PerformanceScreenState extends State<PerformanceScreen> {
       }
     }).toList();
 
-    print("Filtered Tasks for ${day.toIso8601String()}: $filteredTasks");
     return filteredTasks;
   }
 

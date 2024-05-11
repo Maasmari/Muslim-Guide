@@ -34,6 +34,52 @@ class _ForumWidgetState extends State<ForumWidget> {
     }
   }
 
+  Future<void> deleteComment(int commentID) async {
+    Uri url = Uri.parse(
+        'https://us-central1-muslim-guide-417618.cloudfunctions.net/app/disscussion_forum/delete_comment');
+
+    try {
+      final response = await http
+          .delete(url, body: jsonEncode({'commentID': commentID}), headers: {
+        'Content-Type': 'application/json',
+      });
+
+      if (response.statusCode == 200) {
+        print('Comment deleted successfully.');
+        setState(() {
+          comments = fetchForum();
+        });
+      } else {
+        throw Exception('Failed to delete comment: ${response.body}');
+      }
+    } catch (e) {
+      throw Exception('Failed to delete comment: $e');
+    }
+  }
+
+  Future<void> deleteReply(int replyID) async {
+    Uri url = Uri.parse(
+        'https://us-central1-muslim-guide-417618.cloudfunctions.net/app/disscussion_forum/delete_reply');
+    try {
+      final response = await http
+          .delete(url, body: jsonEncode({'replyID': replyID}), headers: {
+        'Content-Type': 'application/json',
+      });
+
+      if (response.statusCode == 200) {
+        print('Reply deleted successfully.');
+
+        setState(() {
+          comments = fetchForum();
+        });
+      } else {
+        throw Exception('Failed to delete reply: ${response.body}');
+      }
+    } catch (e) {
+      throw Exception('Failed to delete reply: $e');
+    }
+  }
+
   Future<void> postComment(String forumID, String userID, String commentText,
       String? Username) async {
     final response = await http.post(
@@ -120,6 +166,29 @@ class _ForumWidgetState extends State<ForumWidget> {
                                 style: TextStyle(fontSize: 20)),
                             subtitle: Text('@${comment.Username}',
                                 style: TextStyle(fontSize: 12)),
+                            trailing: (comment.userID ==
+                                    FirebaseAuth.instance.currentUser!.uid)
+                                ? IconButton(
+                                    icon: Icon(
+                                      Icons.delete,
+                                    ),
+                                    onPressed: () async {
+                                      try {
+                                        await deleteComment(comment.commentID);
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                backgroundColor: Colors.green,
+                                                content: Text(
+                                                    "Comment deleted successfully")));
+                                      } catch (e) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content: Text(
+                                                    "Failed to delete comment")));
+                                      }
+                                    },
+                                  )
+                                : null,
                           ),
                           ...comment.replies
                               .map((reply) => Padding(
@@ -129,6 +198,32 @@ class _ForumWidgetState extends State<ForumWidget> {
                                       subtitle: Text(
                                           '@${reply.Username}', // Display Username
                                           style: TextStyle(fontSize: 12)),
+                                      trailing: (reply.userID ==
+                                              FirebaseAuth
+                                                  .instance.currentUser!.uid)
+                                          ? IconButton(
+                                              icon: Icon(
+                                                Icons.delete,
+                                              ),
+                                              onPressed: () async {
+                                                try {
+                                                  await deleteReply(
+                                                      reply.replyID);
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                          backgroundColor:
+                                                              Colors.green,
+                                                          content: Text(
+                                                              "Reply deleted successfully")));
+                                                } catch (e) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                          content: Text(
+                                                              "Failed to delete reply")));
+                                                }
+                                              },
+                                            )
+                                          : null,
                                     ),
                                   ))
                               .toList(),

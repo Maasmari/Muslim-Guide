@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:muslim_guide/providers/theme_provider.dart';
+import 'package:muslim_guide/screens/my_forum_screen.dart';
 import 'package:muslim_guide/screens/suggestion_screen.dart';
 import 'package:muslim_guide/screens/write_suggestion_screen.dart';
 import 'package:provider/provider.dart';
@@ -120,7 +121,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: Text('View'),
                   onPressed: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => WriteSuggestionScreen()));
+                        builder: (context) => MyForumWidget()));
                   },
                 ),
               ),

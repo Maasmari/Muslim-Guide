@@ -36,13 +36,12 @@ class TaskProvider with ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        print(response.body);
         _completionRecords =
             (json.decode(response.body)['completion_records'] as List)
                 .map<CompletionRecord>(
                     (recordJson) => CompletionRecord.fromJson(recordJson))
                 .toList();
-        print('Completion records fetched successfully!');
+        // print('Completion records fetched successfully!');
         notifyListeners();
       } else {
         print(
@@ -87,7 +86,7 @@ class TaskProvider with ChangeNotifier {
             json.decode(response.body)['tasks'].map<Task>((taskJson) {
           return Task.fromJson(taskJson);
         }).toList();
-        print('Compulsory tasks fetched successfully!');
+        //print('Compulsory tasks fetched successfully!');
         notifyListeners();
       } else {
         throw Exception('Failed to load compulsory tasks');
@@ -109,7 +108,7 @@ class TaskProvider with ChangeNotifier {
             json.decode(response.body)['tasks'].map<Task>((taskJson) {
           return Task.fromJson(taskJson);
         }).toList();
-        print('Scheduled tasks fetched successfully!');
+        //print('Scheduled tasks fetched successfully!');
         notifyListeners();
       } else {
         throw Exception('Failed to load scheduled tasks');
@@ -323,7 +322,7 @@ class TaskProvider with ChangeNotifier {
 
       if (response.statusCode == 201) {
         notifyListeners();
-        print('All compulsory tasks assigned successfully!');
+        //print('All compulsory tasks assigned successfully!');
       } else {
         final error = json.decode(response.body)['error'] ?? 'Unknown error';
         print('Failed to assign the task: $error');
