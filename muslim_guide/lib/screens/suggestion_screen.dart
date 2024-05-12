@@ -11,6 +11,8 @@ class SuggestionService {
 
     if (response.statusCode == 200) {
       return json.decode(response.body);
+    } else if (response.statusCode == 404) {
+      return [];
     } else {
       throw Exception('Failed to load suggestions');
     }

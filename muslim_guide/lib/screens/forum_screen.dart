@@ -26,9 +26,12 @@ class _ForumWidgetState extends State<ForumWidget> {
   Future<List<Comment>> fetchForum() async {
     final response = await http.get(Uri.parse(
         'https://us-central1-muslim-guide-417618.cloudfunctions.net/app/disscussion_forum/forum_by_task?taskID=${widget.taskID}'));
+    print(response.statusCode);
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body)['comments'] as List;
       return data.map((comment) => Comment.fromJson(comment)).toList();
+    } else if (response.statusCode == 404) {
+      return [];
     } else {
       throw Exception('Failed to load forums');
     }
@@ -151,6 +154,8 @@ class _ForumWidgetState extends State<ForumWidget> {
                 return Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {
                 return Center(child: Text("Error: ${snapshot.error}"));
+              } else if (snapshot.data!.isEmpty) {
+                return Center(child: Text('No comments found'));
               } else if (snapshot.hasData) {
                 return ListView.builder(
                   itemCount: snapshot.data!.length,

@@ -126,6 +126,21 @@ class _SurahBuilderState extends State<SurahBuilder> {
                                   PopupMenuItem(
                                     onTap: () {
                                       saveBookMark(widget.sura + 1, index);
+                                      //make it green
+                                      // ScaffoldMessenger.of(context).showSnackBar(
+                                      //     const SnackBar(
+                                      //         content: Text('Bookmark Saved')));
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                            content:
+                                                const Text('Bookmark Saved'),
+                                            duration:
+                                                const Duration(seconds: 1),
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                                    255, 56, 115, 59)),
+                                      );
                                     },
                                     child: Row(
                                       children: const [

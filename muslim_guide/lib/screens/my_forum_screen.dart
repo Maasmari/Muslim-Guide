@@ -51,6 +51,8 @@ class _MyForumWidgetState extends State<MyForumWidget> {
       } else {
         return [];
       }
+    } else if (response.statusCode == 404) {
+      return [];
     } else {
       throw Exception('Failed to load forums');
     }
@@ -126,6 +128,8 @@ class _MyForumWidgetState extends State<MyForumWidget> {
                   return Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   return Center(child: Text("Error: ${snapshot.error}"));
+                } else if (snapshot.data!.isEmpty) {
+                  return Center(child: Text('No comments found'));
                 } else if (snapshot.hasData) {
                   return ListView.builder(
                     itemCount: snapshot.data!.length,

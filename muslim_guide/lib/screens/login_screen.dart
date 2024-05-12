@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:muslim_guide/database/auth.dart';
+import 'package:muslim_guide/database/register_user.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -70,7 +71,23 @@ class _LoginScreenState extends State<LoginScreen> {
         );
         await userCredential.user!
             .updateDisplayName(_controllerUsername.text.trim());
+        // Reload the user to fetch updated information
         await userCredential.user!.reload();
+        User? updatedUser = FirebaseAuth.instance.currentUser;
+
+        // Use the updated user for further operations
+        print(updatedUser!.uid);
+        print(updatedUser.email);
+        // Use null safety checks for potentially null values
+        print(updatedUser.displayName ?? "No display name set");
+
+        // Register the user, assuming these details are now not null
+        if (updatedUser.email != null && updatedUser.displayName != null) {
+          registerUser(
+              updatedUser.uid, updatedUser.email!, updatedUser.displayName!);
+        } else {
+          print("Failed to retrieve all necessary user details.");
+        }
       } on FirebaseAuthException catch (e) {
         setState(() {
           errorMessage = e.message;
