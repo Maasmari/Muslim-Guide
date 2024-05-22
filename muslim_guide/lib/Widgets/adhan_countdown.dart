@@ -1,5 +1,6 @@
 import 'package:adhan/src/coordinates.dart';
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 import 'package:muslim_guide/providers/prayer_countdown_notifier.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +38,9 @@ class AdhanCountdown extends StatelessWidget {
               text: TextSpan(
                 children: [
                   TextSpan(
-                    text: 'Time till ${notifier.nextPrayer?.name} \n',
+                    //make the first letter capital
+                    text:
+                        'Time till ${notifier.nextPrayer?.name.capitalizeFirst} \n',
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

@@ -106,7 +106,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
               CupertinoFormRow(
-                prefix: Text('My Seggestions'),
+                prefix: Text('My Suggestions'),
                 child: CupertinoButton(
                   child: Text('View'),
                   onPressed: () {
